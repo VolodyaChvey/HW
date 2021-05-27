@@ -6,15 +6,15 @@
 
     <servlet>
         <servlet-name>ServletOne</servlet-name>
-        <servlet-class>com.chvey.ServletOne</servlet-class>
+        <servlet-class>com.chvey.controller.WelcomeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletTwo</servlet-name>
-        <servlet-class>com.chvey.ServletTwo</servlet-class>
+        <servlet-class>com.chvey.controller.ProductServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ServletThree</servlet-name>
-        <servlet-class>com.chvey.ServletThree</servlet-class>
+        <servlet-class>com.chvey.controller.OrderServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

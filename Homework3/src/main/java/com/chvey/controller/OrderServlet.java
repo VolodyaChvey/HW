@@ -1,4 +1,6 @@
-package com.chvey;
+package com.chvey.controller;
+
+import com.chvey.repository.DataBase;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -9,14 +11,14 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ServletThree extends HttpServlet {
+public class OrderServlet extends HttpServlet {
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String[] prods = req.getParameterValues("products");
         String userName = req.getParameter("userName");
         PrintWriter pw = resp.getWriter();
         DataBase db = new DataBase(userName);
-        Map<String, Float> products = new HashMap<String, Float>();
+        Map<String, Float> products = new HashMap<>();
         for (String prod : prods) {
             if (db.getProducts().containsKey(prod)) {
                 products.put(prod, db.getProducts().get(prod));
