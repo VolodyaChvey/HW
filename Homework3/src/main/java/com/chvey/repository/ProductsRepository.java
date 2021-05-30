@@ -3,16 +3,19 @@ package com.chvey.repository;
 import com.chvey.domain.Product;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ProductsRepository {
-    private Map<Long, Product> productDB = new HashMap<>();
-
-    public Map<Long, Product> getProductDB() {
-        return productDB;
+    private static final Map<String, Double> priceList = new HashMap<>();
+    static {
+        priceList.put("product1",3.5);
+        priceList.put("product2",12.3);
+        priceList.put("product3",10.6);
+        priceList.put("product4",3.7);
+        priceList.put("product5",5.2);
     }
-
-    public void setProductDB(Map<Long, Product> productDB) {
-        this.productDB = productDB;
+    public static Map getProducts(){
+        return priceList;
     }
 }

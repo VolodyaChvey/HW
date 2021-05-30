@@ -1,7 +1,7 @@
 package com.chvey.controller;
 
 import com.chvey.domain.User;
-import com.chvey.repository.DataBase;
+import com.chvey.repository.ProductsRepository;
 import com.chvey.service.UserService;
 
 import javax.servlet.ServletException;
@@ -25,22 +25,20 @@ public class ProductServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String userName = req.getParameter("userName");
         User user = userService.createOrGet(userName);
-        DataBase db = new DataBase(userName);
+        Map<String, Double> priceList = ProductsRepository.getProducts();
         PrintWriter out = resp.getWriter();
-        out.println("    <div align=\"center\">\n" +
-                "        <h2>Hello " + db.getUserName() + "!</h2>\n" +
+        out.println("<div align=\"center\">\n" +
+                "        <h2>Hello " + user.getName() + "!</h2>\n" +
                 "            <label>\n" +
                 "                Make you order\n" +
                 "            </label>\n" +
                 "        <form action=\"/Homework3/servlet3\" method=\"POST\">\n" +
-                "           <input type=\"hidden\" name=\"userName\" value=\"" + db.getUserName() + "\">" +
+                "           <input type=\"hidden\" name=\"userName\" value=\"" + user.getName() + "\">" +
                 "            <p>\n" +
                 "                <select required multiple name=\"products\"  style=\"width:150px\">\n");
-        for (Map.Entry entry : db.getProducts().entrySet()) {
-            out.println("<option value=\"" + entry.getKey() + "\">" + entry.getKey() +
-                    " (" + entry.getValue() + " $)</option>\n");
+        for (Map.Entry entry : priceList.entrySet()) {
+            out.printf("<option value=\"%s\">%s (%s $)</option>", entry.getKey(), entry.getKey(), entry.getValue());
         }
-        ;
         out.println("             </select>\n" +
                 "            </p>\n" +
                 "            <p>\n" +

@@ -11,7 +11,6 @@ public class UserService {
     public User createOrGet(String userName) {
         return usersRepository.getUserByName(userName)
                 .orElseGet(() -> createUser(userName));
-
     }
 
     private User createUser(String userName) {

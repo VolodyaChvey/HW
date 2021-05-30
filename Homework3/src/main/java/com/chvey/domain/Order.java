@@ -6,7 +6,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Order {
     private static AtomicInteger count = new AtomicInteger(0);
-    private int id;
+    private long id;
     private User customer;
     private List<Product> products = new ArrayList<>();
     private double totalPrice;
@@ -16,7 +16,11 @@ public class Order {
         this.id = count.incrementAndGet();
     }
 
-    public int getId() {
+    public User getCustomer() {
+        return customer;
+    }
+
+    public long getId() {
         return id;
     }
 

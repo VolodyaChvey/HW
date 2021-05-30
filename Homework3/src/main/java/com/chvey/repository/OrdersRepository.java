@@ -2,18 +2,21 @@ package com.chvey.repository;
 
 import com.chvey.domain.Order;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class OrdersRepository {
 
-    Map<Long, Order> database = new HashMap<>();
+    private List<Order> orders=new ArrayList<>();
 
-    public Map<Long, Order> getDatabase() {
-        return database;
+
+
+    public Order save (Order order){
+        orders.add(order);
+        return order;
     }
-
-    public void setDatabase(Map<Long, Order> database) {
-        this.database = database;
+    public Optional<Order> getOrderById(Long id){
+        return orders.stream()
+                .filter(o -> o.getCustomer().getId()==id)
+                .findFirst();
     }
 }

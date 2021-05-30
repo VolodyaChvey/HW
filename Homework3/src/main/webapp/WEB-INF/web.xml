@@ -5,28 +5,28 @@
          version="3.0">
 
     <servlet>
-        <servlet-name>ServletOne</servlet-name>
+        <servlet-name>WelcomeServlet</servlet-name>
         <servlet-class>com.chvey.controller.WelcomeServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletTwo</servlet-name>
+        <servlet-name>ProductServlet</servlet-name>
         <servlet-class>com.chvey.controller.ProductServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ServletThree</servlet-name>
+        <servlet-name>OrderServlet</servlet-name>
         <servlet-class>com.chvey.controller.OrderServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>ServletOne</servlet-name>
+        <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletTwo</servlet-name>
+        <servlet-name>ProductServlet</servlet-name>
         <url-pattern>/servlet2</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ServletThree</servlet-name>
+        <servlet-name>OrderServlet</servlet-name>
         <url-pattern>/servlet3</url-pattern>
     </servlet-mapping>
 
