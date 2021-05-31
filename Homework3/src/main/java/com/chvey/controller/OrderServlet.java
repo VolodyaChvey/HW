@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.*;
@@ -26,8 +27,10 @@ public class OrderServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
+        User user =(User)session.getAttribute("userName");
         List<String> products = Arrays.asList(req.getParameterValues("products"));
-        User user = userService.createOrGet(req.getParameter("userName"));
+        //User user = userService.createOrGet(req.getParameter("userName"));
         Order order = orderService.createOrder(user, products);
         PrintWriter pw = resp.getWriter();
         pw.println("<body>\n" +

@@ -17,6 +17,15 @@
         <servlet-class>com.chvey.controller.OrderServlet</servlet-class>
     </servlet>
 
+    <filter>
+        <filter-name>Terms</filter-name>
+        <filter-class>com.chvey.filters.RequestFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>Terms</filter-name>
+        <url-pattern>/servlet2</url-pattern>
+    </filter-mapping>
+
     <servlet-mapping>
         <servlet-name>WelcomeServlet</servlet-name>
         <url-pattern>/</url-pattern>

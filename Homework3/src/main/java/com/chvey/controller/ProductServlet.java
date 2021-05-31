@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
@@ -23,8 +24,12 @@ public class ProductServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        HttpSession session = req.getSession();
         String userName = req.getParameter("userName");
+        String checkbox = req.getParameter("checkbox");
         User user = userService.createOrGet(userName);
+        session.setAttribute("userName", user);
+        session.setAttribute("checkbox", checkbox);
         Map<String, Double> priceList = ProductsRepository.getProducts();
         PrintWriter out = resp.getWriter();
         out.println("<div align=\"center\">\n" +
