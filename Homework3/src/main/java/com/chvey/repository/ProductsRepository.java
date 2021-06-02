@@ -1,9 +1,7 @@
 package com.chvey.repository;
 
-import com.chvey.domain.Product;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ProductsRepository {

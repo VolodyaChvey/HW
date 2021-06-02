@@ -13,10 +13,15 @@ public class OrderService {
 
     public Order createOrder(User user, List<String> products) {
         Order order = new Order(user);
-        products.forEach(p -> order.getProducts().add(new Product(p, (Double) ProductsRepository.getProducts().get(p))));
+        products.forEach(p -> addPoductToOrder(p, order));
         order.setTotalPrice(order.getProducts().stream()
                 .mapToDouble(Product::getPrice)
                 .sum());
         return ordersRepository.save(order);
+    }
+
+    private void addPoductToOrder(String product, Order order) {
+        Product prod = new Product(product, (Double) ProductsRepository.getProducts().get(product));
+        order.getProducts().add(prod);
     }
 }

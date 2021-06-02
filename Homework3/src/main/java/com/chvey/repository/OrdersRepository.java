@@ -6,17 +6,16 @@ import java.util.*;
 
 public class OrdersRepository {
 
-    private List<Order> orders=new ArrayList<>();
+    private List<Order> orders = new ArrayList<>();
 
-
-
-    public Order save (Order order){
+    public Order save(Order order) {
         orders.add(order);
         return order;
     }
-    public Optional<Order> getOrderById(Long id){
+
+    public Optional<Order> getOrderById(Long id) {
         return orders.stream()
-                .filter(o -> o.getCustomer().getId()==id)
+                .filter(o -> o.getId() == id)
                 .findFirst();
     }
 }

@@ -22,12 +22,28 @@ public class RequestFilter implements Filter {
         String checkbox = req.getParameter("checkbox");
         HttpSession session = ((HttpServletRequest) servletRequest).getSession();
         String checkboxSession = (String) session.getAttribute("checkbox");
-        System.out.println(checkbox);
-        if (checkbox == null || checkboxSession == null || !checkbox.equals("true") || !checkboxSession.equals("true")) {
-            PrintWriter pw = servletResponse.getWriter();
-            pw.println("<h2>Oops!</h2>\n");
-        } else {
+        if ((checkbox != null && checkbox.equals("true"))
+                || (checkboxSession != null && checkboxSession.equals("true"))) {
             filterChain.doFilter(servletRequest, servletResponse);
+        } else {
+            PrintWriter pw = servletResponse.getWriter();
+            pw.println("    <style>\n" +
+                    "        .flex-container {\n" +
+                    "            display: flex;\n" +
+                    "            justify-content: space-around;\n" +
+                    "        }\n" +
+                    "    </style>\n" +
+                    "    <div class=\"flex-container\">\n" +
+                    "        <div align=\"left\">\n" +
+                    "            <h2>Oops!</h2>\n" +
+                    "            <p>You shouldn't be here</p>\n" +
+                    "            <p>Please, agree with the terms of service first.</p>\n" +
+                    "            <p>\n" +
+                    "                <a href=\"/Homework3/\">Start page</a>\n" +
+                    "            </p>\n" +
+                    "        </div>\n" +
+                    "    </div>");
+
         }
     }
 

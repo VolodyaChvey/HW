@@ -28,9 +28,9 @@ public class OrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        User user =(User)session.getAttribute("userName");
-        List<String> products = Arrays.asList(req.getParameterValues("products"));
-        //User user = userService.createOrGet(req.getParameter("userName"));
+        User user = (User) session.getAttribute("userName");
+        session.invalidate();
+        List<String> products = Arrays.asList(req.getParameter("products").split(","));
         Order order = orderService.createOrder(user, products);
         PrintWriter pw = resp.getWriter();
         pw.println("<body>\n" +
@@ -48,7 +48,7 @@ public class OrderServlet extends HttpServlet {
             pw.printf("<li>  %s %s $</li>", p.getName(), p.getPrice());
         }
         pw.println("            </ol>\n" +
-                "            <p>Total: $ " + order.getTotalPrice() + "</p>\n" +
+                "            <p>Total: $ " + String.format("%.2f", order.getTotalPrice()) + "</p>\n" +
                 "        </div>\n" +
                 "    </div>\n" +
                 "</body>");
