@@ -18,7 +18,7 @@ public class WelcomeServlet extends HttpServlet {
                 "                <input name=\"userName\" required placeholder=\"Enter your name\" style=\"width:150px\">\n" +
                 "            </p>\n" +
                 "            <p>\n" +
-                "                <input type=\"checkbox\"  name=\"checkbox\" value=\"true\">" +
+                "                <input type=\"checkbox\" required name=\"checkbox\" value=\"true\">" +
                 "                  I agree with the terms of service\n"+
                 "            </p>\n" +
                 "            <p>\n" +
