@@ -39,4 +39,9 @@
         <url-pattern>/servlet3</url-pattern>
     </servlet-mapping>
 
+    <error-page>
+        <error-code>404</error-code>
+        <location>/jsp/error.jsp</location>
+    </error-page>
+
 </web-app>
