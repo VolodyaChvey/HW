@@ -6,6 +6,8 @@ import com.chvey.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebFilter;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Map;
 
+@WebServlet(name = "ProductServlet", urlPatterns = {"/servlet2"})
 public class ProductServlet extends HttpServlet {
 
     private UserService userService;
@@ -33,7 +36,7 @@ public class ProductServlet extends HttpServlet {
         session.setAttribute("checkbox", checkbox);
         Map<String, Double> priceList = ProductsRepository.getProducts();
         req.setAttribute("products", priceList);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/Product.jsp");
+        RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/product.jsp");
         dispatcher.forward(req, resp);
     }
 }
