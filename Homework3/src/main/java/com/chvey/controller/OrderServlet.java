@@ -31,7 +31,6 @@ public class OrderServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
         User user = (User) session.getAttribute("userName");
-        session.invalidate();
         List<String> products = Arrays.asList(req.getParameter("products").split(","));
         Order order = orderService.createOrder(user, products);
         req.setAttribute("order", order);

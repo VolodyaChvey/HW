@@ -19,6 +19,7 @@
         <maven-war-plugin.version>2.3</maven-war-plugin.version>
         <maven-resources-plugin.version>2.4.2</maven-resources-plugin.version>
         <jstl.version>1.2</jstl.version>
+        <h2.version>1.4.196</h2.version>
     </properties>
 
     <dependencies>
@@ -42,7 +43,13 @@
             <version>${jstl.version}</version>
 
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2.version}</version>
 
+        </dependency>
 
     </dependencies>
 

@@ -13,7 +13,10 @@ public class ProductsRepository {
         priceList.put("product4",3.7);
         priceList.put("product5",5.2);
     }
+
+
     public static Map getProducts(){
         return priceList;
     }
+
 }

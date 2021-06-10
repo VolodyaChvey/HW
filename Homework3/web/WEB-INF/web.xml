@@ -13,4 +13,10 @@
         <location>/WEB-INF/jsp/error.jsp</location>
     </error-page>
 
+    <listener>
+        <listener-class>
+            com.chvey.Listener
+        </listener-class>
+    </listener>
+
 </web-app>
