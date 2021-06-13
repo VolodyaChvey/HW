@@ -7,8 +7,10 @@ import java.util.Properties;
 
 public class SqlHelper {
     private static final String DB_PROPS_PATH = "/db/db.properties";
+    private static String driverName;
+    private static String databaseURL;
 
-    public static Connection getConnection() {
+    private static void property(){
         Properties props = new Properties();
         InputStream inp = ClassLoader.class.getResourceAsStream(DB_PROPS_PATH);
         if (inp != null) {
@@ -19,17 +21,19 @@ public class SqlHelper {
                 e.printStackTrace();
             }
         }
-        String driverName = props.getProperty("db.driver");
-        String databaseURL = props.getProperty("db.url");
+        driverName = props.getProperty("db.driver");
+        databaseURL = props.getProperty("db.url");
+    }
+
+    public static Connection getConnection() {
+        property();
         Connection conn = null;
         try {
             Class.forName("org.h2.Driver");
             conn = DriverManager.getConnection("jdbc:h2:mem:test_memDB_CLOSE_DELAY=-1",
                     "sa", "");
-        } catch (ClassNotFoundException ex) {
+        } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return conn;
     }
@@ -41,10 +45,9 @@ public class SqlHelper {
                 "password VARCHAR(255));" +
 
                 "CREATE TABLE IF NOT EXISTS `Order`" +
-                "(id INT PRIMARY KEY AUTO_INCREMENT," +
+                "(id LONG PRIMARY KEY," +
                 "user_id INT," +
                 "total_price DOUBLE," +
-                "`date` VARCHAR(23), " +
                 "FOREIGN KEY (user_id) REFERENCES User (id));" +
 
                 "CREATE TABLE IF NOT EXISTS Good" +
@@ -53,10 +56,10 @@ public class SqlHelper {
                 "price DOUBLE NOT NULL);" +
 
                 "CREATE TABLE IF NOT EXISTS Order_Good" +
-                "(id INT PRIMARY KEY AUTO_INCREMENT," +
-                "order_id INT," +
+                "(id LONG PRIMARY KEY AUTO_INCREMENT," +
+                "order_id LONG," +
                 "good_id INT," +
-                "FOREIGN KEY (order_id) REFERENCES `Order` (id)," +
+                "FOREIGN KEY (order_id) REFERENCES `Order`(id)," +
                 "FOREIGN KEY (good_id) REFERENCES Good (id));";
         Connection conn = SqlHelper.getConnection();
         try (PreparedStatement ps = conn.prepareStatement(createTables)) {

@@ -1,20 +1,24 @@
 package com.chvey.domain;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class Order {
-    private int id;
+    private static AtomicInteger count = new AtomicInteger(0);
+    private long id;
     private int User_id;
     private double totalPrice;
-    private String date;
 
-    public Order(int id, int user_id, double totalPrice, String date) {
-        this.id = id;
+    public Order(int user_id, double totalPrice) {
+        this.id = count.incrementAndGet();
         User_id = user_id;
         this.totalPrice = totalPrice;
-        this.date = date;
     }
 
+    public int getUser_id() {
+        return User_id;
+    }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 

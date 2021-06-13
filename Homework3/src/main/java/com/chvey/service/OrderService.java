@@ -17,7 +17,7 @@ public class OrderService {
                 .map(p -> productsRepository.getProd(p))
                 .mapToDouble(Product::getPrice)
                 .sum();
-        Order order = ordersRepository.save(user.getId(), totalPrice);
+        Order order = ordersRepository.save(new Order(user.getId(), totalPrice));
         ordersRepository.setOrderGood(order.getId(), products);
         return order;
     }

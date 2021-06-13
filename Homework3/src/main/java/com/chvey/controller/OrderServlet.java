@@ -4,7 +4,6 @@ import com.chvey.domain.Order;
 import com.chvey.domain.User;
 import com.chvey.repository.OrdersRepository;
 import com.chvey.service.OrderService;
-import com.chvey.service.UserService;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
