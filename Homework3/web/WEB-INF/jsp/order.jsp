@@ -12,7 +12,7 @@
     <div class="flex-container">
         <div>
             <ol>
-                <c:forEach var="product" items="${order.getProducts()}">
+                <c:forEach var="product" items="${priceOrder}">
                     <li>${product.getName()}  ${product.getPrice()}  $</li>
                 </c:forEach>
             </ol>

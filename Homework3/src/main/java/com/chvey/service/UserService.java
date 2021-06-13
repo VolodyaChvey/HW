@@ -7,14 +7,12 @@ public class UserService {
 
     private UsersRepository usersRepository = new UsersRepository();
 
-
     public User createOrGet(String userName) {
         return usersRepository.getUserByName(userName)
                 .orElseGet(() -> createUser(userName));
     }
 
     private User createUser(String userName) {
-        User user = new User(userName);
-        return usersRepository.save(user);
+        return usersRepository.save(userName);
     }
 }

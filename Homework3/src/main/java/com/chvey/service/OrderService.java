@@ -9,19 +9,16 @@ import com.chvey.repository.ProductsRepository;
 import java.util.List;
 
 public class OrderService {
+    private ProductsRepository productsRepository = new ProductsRepository();
     private OrdersRepository ordersRepository = new OrdersRepository();
 
     public Order createOrder(User user, List<String> products) {
-        Order order = new Order(user);
-        products.forEach(p -> addProductToOrder(p, order));
-        order.setTotalPrice(order.getProducts().stream()
+        double totalPrice = products.stream()
+                .map(p -> productsRepository.getProd(p))
                 .mapToDouble(Product::getPrice)
-                .sum());
-        return ordersRepository.save(order);
-    }
-
-    private void addProductToOrder(String product, Order order) {
-        Product prod = new Product(product, (Double) ProductsRepository.getProducts().get(product));
-        order.getProducts().add(prod);
+                .sum();
+        Order order = ordersRepository.save(user.getId(), totalPrice);
+        ordersRepository.setOrderGood(order.getId(), products);
+        return order;
     }
 }

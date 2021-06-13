@@ -17,11 +17,12 @@ import java.util.Map;
 
 @WebServlet(name = "ProductServlet", urlPatterns = {"/servlet2"})
 public class ProductServlet extends HttpServlet {
-
+    private ProductsRepository productsRepository;
     private UserService userService;
 
     @Override
     public void init() throws ServletException {
+        productsRepository = new ProductsRepository();
         userService = new UserService();
     }
 
@@ -33,7 +34,7 @@ public class ProductServlet extends HttpServlet {
         User user = userService.createOrGet(userName);
         session.setAttribute("userName", user);
         session.setAttribute("checkbox", checkbox);
-        Map<String, Double> priceList = ProductsRepository.getProducts();
+        Map<String, Double> priceList = productsRepository.getProducts();
         req.setAttribute("products", priceList);
         RequestDispatcher dispatcher = req.getRequestDispatcher("WEB-INF/jsp/product.jsp");
         dispatcher.forward(req, resp);

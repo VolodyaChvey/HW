@@ -2,6 +2,7 @@ package com.chvey.controller;
 
 import com.chvey.domain.Order;
 import com.chvey.domain.User;
+import com.chvey.repository.OrdersRepository;
 import com.chvey.service.OrderService;
 import com.chvey.service.UserService;
 
@@ -18,13 +19,13 @@ import java.util.*;
 
 @WebServlet(name = "OrderServlet", urlPatterns = {"/servlet3"})
 public class OrderServlet extends HttpServlet {
-    private UserService userService;
     private OrderService orderService;
+    private OrdersRepository ordersRepository;
 
     @Override
     public void init() throws ServletException {
-        userService = new UserService();
         orderService = new OrderService();
+        ordersRepository = new OrdersRepository();
     }
 
     @Override
@@ -33,7 +34,8 @@ public class OrderServlet extends HttpServlet {
         User user = (User) session.getAttribute("userName");
         List<String> products = Arrays.asList(req.getParameter("products").split(","));
         Order order = orderService.createOrder(user, products);
-        req.setAttribute("order", order);
+        List priceOrder = ordersRepository.getOrderGood(order.getId());
+        req.setAttribute("priceOrder", priceOrder);
         req.setAttribute("userName", user);
         String totalPrice = String.format("%.2f", order.getTotalPrice());
         req.setAttribute("totalPrice", totalPrice);
