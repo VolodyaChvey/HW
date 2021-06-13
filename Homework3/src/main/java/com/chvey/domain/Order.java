@@ -3,7 +3,7 @@ package com.chvey.domain;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Order {
-    private static AtomicInteger count = new AtomicInteger(0);
+    private static volatile AtomicInteger count = new AtomicInteger(0);
     private long id;
     private int User_id;
     private double totalPrice;

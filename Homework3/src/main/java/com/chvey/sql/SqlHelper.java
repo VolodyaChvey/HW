@@ -40,7 +40,7 @@ public class SqlHelper {
 
     public static void initDB() {
         String createTables = "CREATE TABLE IF NOT EXISTS User" +
-                "(id INT PRIMARY KEY AUTO_INCREMENT," +
+                "(id INT PRIMARY KEY," +
                 "name VARCHAR(255) NOT NULL," +
                 "password VARCHAR(255));" +
 

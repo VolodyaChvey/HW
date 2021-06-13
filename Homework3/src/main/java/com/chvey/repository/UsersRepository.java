@@ -27,13 +27,14 @@ public class UsersRepository {
         return Optional.empty();
     }
 
-    public User save(String userName) {
-        try (PreparedStatement ps = conn.prepareStatement("INSERT INTO User (name) VALUES (?)")) {
-            ps.setString(1, userName);
+    public User save(User user) {
+        try (PreparedStatement ps = conn.prepareStatement("INSERT INTO User (id,name) VALUES (?,?)")) {
+            ps.setInt(1, user.getId());
+            ps.setString(2, user.getName());
             ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return getUserByName(userName).get();
+        return user;
     }
 }

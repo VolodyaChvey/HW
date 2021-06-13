@@ -13,6 +13,6 @@ public class UserService {
     }
 
     private User createUser(String userName) {
-        return usersRepository.save(userName);
+        return usersRepository.save(new User(userName));
     }
 }
