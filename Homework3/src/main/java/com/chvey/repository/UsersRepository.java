@@ -27,11 +27,15 @@ public class UsersRepository {
         return Optional.empty();
     }
 
-    public User save(User user) {
-        try (PreparedStatement ps = conn.prepareStatement("INSERT INTO User (id,name) VALUES (?,?)")) {
-            ps.setInt(1, user.getId());
-            ps.setString(2, user.getName());
-            ps.executeUpdate();
+    public User save(String userName) {
+        User user = new User(userName);
+        try (PreparedStatement ps = conn.prepareStatement("INSERT INTO User (name) VALUES (?)",PreparedStatement.RETURN_GENERATED_KEYS)) {
+            ps.setString(1, user.getName());
+            ps.execute();
+            ResultSet resultSet = ps.getGeneratedKeys();
+            while (resultSet.next()){
+                user.setId(resultSet.getInt(1));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -13,14 +13,20 @@ import java.util.*;
 public class OrdersRepository {
     Connection conn = SqlHelper.getConnection();
 
-    public Order save(Order order) {
+    public Order save(int userId, double totalPrice) {
+        Order order =new Order(userId,totalPrice);
+        String[] idColumn = {"id"};
         try (PreparedStatement ps = conn.prepareStatement(
-                "INSERT INTO `Order` (id,user_id,total_price) " +
-                        "VALUES (?,?,?)")) {
-            ps.setLong(1, order.getId());
-            ps.setInt(2, order.getUser_id());
-            ps.setDouble(3, order.getTotalPrice());
-            ps.executeUpdate();
+                "INSERT INTO `Order` (user_id,total_price) " +
+                        "VALUES (?,?)", PreparedStatement.RETURN_GENERATED_KEYS)) {
+            ps.setInt(1, userId);
+            ps.setDouble(2, totalPrice);
+            ps.execute();
+            ResultSet resultSet = ps.getGeneratedKeys();
+            while (resultSet.next()) {
+                long orderId = resultSet.getLong(1);
+                order.setId(orderId);
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

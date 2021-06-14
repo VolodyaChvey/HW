@@ -6,32 +6,13 @@ import java.sql.*;
 import java.util.Properties;
 
 public class SqlHelper {
-    private static final String DB_PROPS_PATH = "/db/db.properties";
-    private static String driverName;
-    private static String databaseURL;
-
-    private static void property(){
-        Properties props = new Properties();
-        InputStream inp = ClassLoader.class.getResourceAsStream(DB_PROPS_PATH);
-        if (inp != null) {
-            try {
-                props.load(inp);
-                inp.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        driverName = props.getProperty("db.driver");
-        databaseURL = props.getProperty("db.url");
-    }
 
     public static Connection getConnection() {
-        property();
         Connection conn = null;
         try {
-            Class.forName("org.h2.Driver");
-            conn = DriverManager.getConnection("jdbc:h2:mem:test_memDB_CLOSE_DELAY=-1",
-                    "sa", "");
+            Class.forName(Config.getDbDriver());
+            conn = DriverManager.getConnection(Config.getDbURL(),
+                    Config.getLogin(), Config.getPassword());
         } catch (ClassNotFoundException | SQLException ex) {
             ex.printStackTrace();
         }
@@ -40,12 +21,12 @@ public class SqlHelper {
 
     public static void initDB() {
         String createTables = "CREATE TABLE IF NOT EXISTS User" +
-                "(id INT PRIMARY KEY," +
+                "(id INT PRIMARY KEY AUTO_INCREMENT," +
                 "name VARCHAR(255) NOT NULL," +
                 "password VARCHAR(255));" +
 
                 "CREATE TABLE IF NOT EXISTS `Order`" +
-                "(id LONG PRIMARY KEY," +
+                "(id LONG PRIMARY KEY AUTO_INCREMENT," +
                 "user_id INT," +
                 "total_price DOUBLE," +
                 "FOREIGN KEY (user_id) REFERENCES User (id));" +

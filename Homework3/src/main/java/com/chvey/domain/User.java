@@ -1,9 +1,9 @@
 package com.chvey.domain;
 
-import java.util.concurrent.atomic.AtomicInteger;
+
 
 public class User {
-    private static volatile AtomicInteger count = new AtomicInteger(0);
+
     private int id;
     private String name;
 
@@ -13,8 +13,12 @@ public class User {
     }
 
     public User(String name) {
-        this.id = count.incrementAndGet();
+
         this.name = name;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getId() {
