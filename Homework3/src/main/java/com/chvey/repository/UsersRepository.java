@@ -2,13 +2,14 @@ package com.chvey.repository;
 
 import com.chvey.domain.User;
 import com.chvey.sql.SqlHelper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
-
+@Repository
 public class UsersRepository {
     Connection conn = SqlHelper.getConnection();
 

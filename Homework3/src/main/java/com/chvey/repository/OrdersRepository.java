@@ -3,13 +3,14 @@ package com.chvey.repository;
 import com.chvey.domain.Order;
 import com.chvey.domain.Product;
 import com.chvey.sql.SqlHelper;
+import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-
+@Repository
 public class OrdersRepository {
     Connection conn = SqlHelper.getConnection();
 

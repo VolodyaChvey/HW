@@ -5,12 +5,16 @@ import com.chvey.domain.Product;
 import com.chvey.domain.User;
 import com.chvey.repository.OrdersRepository;
 import com.chvey.repository.ProductsRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class OrderService {
-    private ProductsRepository productsRepository = new ProductsRepository();
-    private OrdersRepository ordersRepository = new OrdersRepository();
+    @Autowired
+    private ProductsRepository productsRepository ;
+    @Autowired
+    private OrdersRepository ordersRepository ;
 
     public Order createOrder(User user, List<String> products) {
         double totalPrice = products.stream()
