@@ -1,9 +1,11 @@
 package com.chvey.controller;
 
+import com.chvey.SpringContex;
 import com.chvey.domain.Order;
 import com.chvey.domain.User;
 import com.chvey.repository.OrdersRepository;
 import com.chvey.service.OrderService;
+import org.springframework.context.ApplicationContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -18,13 +20,14 @@ import java.util.*;
 
 @WebServlet(name = "OrderServlet", urlPatterns = {"/servlet3"})
 public class OrderServlet extends HttpServlet {
+    ApplicationContext context = SpringContex.getApplicationContext();
     private OrderService orderService;
     private OrdersRepository ordersRepository;
 
     @Override
     public void init() throws ServletException {
-        orderService = new OrderService();
-        ordersRepository = new OrdersRepository();
+        orderService = context.getBean("orderService", OrderService.class);
+        ordersRepository = context.getBean("ordersRepository", OrdersRepository.class);
     }
 
     @Override

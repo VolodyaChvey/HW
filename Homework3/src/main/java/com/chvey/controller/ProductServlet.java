@@ -1,8 +1,11 @@
 package com.chvey.controller;
 
+import com.chvey.SpringContex;
 import com.chvey.domain.User;
 import com.chvey.repository.ProductsRepository;
 import com.chvey.service.UserService;
+import com.chvey.sql.Config;
+import org.springframework.context.ApplicationContext;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -17,13 +20,14 @@ import java.util.Map;
 
 @WebServlet(name = "ProductServlet", urlPatterns = {"/servlet2"})
 public class ProductServlet extends HttpServlet {
+    ApplicationContext context = SpringContex.getApplicationContext();
     private ProductsRepository productsRepository;
     private UserService userService;
 
     @Override
     public void init() throws ServletException {
-        productsRepository = new ProductsRepository();
-        userService = new UserService();
+        productsRepository = context.getBean("productsRepository", ProductsRepository.class);
+        userService = context.getBean("userService", UserService.class);
     }
 
     @Override

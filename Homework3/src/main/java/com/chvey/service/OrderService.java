@@ -9,12 +9,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 @Service
 public class OrderService {
     @Autowired
-    private ProductsRepository productsRepository ;
+    private ProductsRepository productsRepository;
     @Autowired
-    private OrdersRepository ordersRepository ;
+    private OrdersRepository ordersRepository;
 
     public Order createOrder(User user, List<String> products) {
         double totalPrice = products.stream()

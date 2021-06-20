@@ -1,9 +1,6 @@
 package com.chvey.domain;
 
-
-
 public class User {
-
     private int id;
     private String name;
 

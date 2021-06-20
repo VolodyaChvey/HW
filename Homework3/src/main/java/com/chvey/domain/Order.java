@@ -1,7 +1,5 @@
 package com.chvey.domain;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 public class Order {
 
     private long id;

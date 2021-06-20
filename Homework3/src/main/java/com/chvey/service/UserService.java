@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserService {
-@Autowired
-    private UsersRepository usersRepository ;
+    @Autowired
+    private UsersRepository usersRepository;
 
     public User createOrGet(String userName) {
         return usersRepository.getUserByName(userName)

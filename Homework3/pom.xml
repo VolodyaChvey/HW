@@ -20,6 +20,7 @@
         <maven-resources-plugin.version>2.4.2</maven-resources-plugin.version>
         <jstl.version>1.2</jstl.version>
         <h2.version>1.4.196</h2.version>
+        <spring.version>5.1.2.RELEASE</spring.version>
     </properties>
 
     <dependencies>
@@ -63,7 +64,7 @@
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-framework-bom</artifactId>
-                <version>5.1.2.RELEASE</version>
+                <version>${spring.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
