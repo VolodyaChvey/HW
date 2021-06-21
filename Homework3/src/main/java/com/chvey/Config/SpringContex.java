@@ -1,5 +1,6 @@
-package com.chvey;
+package com.chvey.Config;
 
+import com.chvey.Config.AppConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 

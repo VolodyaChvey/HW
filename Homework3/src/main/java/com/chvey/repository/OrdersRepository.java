@@ -11,12 +11,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
 @Repository
 public class OrdersRepository {
- Connection conn = SqlHelper.getConnection();
+    private Connection conn = SqlHelper.getConnection();
 
     public Order save(int userId, double totalPrice) {
-        Order order =new Order(userId,totalPrice);
+        Order order = new Order(userId, totalPrice);
         String[] idColumn = {"id"};
         try (PreparedStatement ps = conn.prepareStatement(
                 "INSERT INTO `Order` (user_id,total_price) " +

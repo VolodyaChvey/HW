@@ -1,10 +1,9 @@
 package com.chvey.controller;
 
-import com.chvey.SpringContex;
+import com.chvey.Config.SpringContex;
 import com.chvey.domain.User;
 import com.chvey.repository.ProductsRepository;
 import com.chvey.service.UserService;
-import com.chvey.sql.Config;
 import org.springframework.context.ApplicationContext;
 
 import javax.servlet.RequestDispatcher;
