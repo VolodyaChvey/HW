@@ -10,7 +10,7 @@
     <h2>Welcome to Online Shop</h2>
     <div class="flex-container">
         <div>
-            <form action="/Homework3/servlet2" method="POST">
+            <form action="/online-shop/product" method="POST">
                 <p>
                     <input name="userName" placeholder="Enter your name" style="width:150px" required>
                 </p>

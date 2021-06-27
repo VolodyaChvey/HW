@@ -1,7 +1,7 @@
 package com.chvey.repository;
 
 import com.chvey.domain.Product;
-import com.chvey.sql.SqlHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -10,9 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+
 @Repository
 public class ProductsRepository {
-    Connection conn = SqlHelper.getConnection();
+    @Autowired
+    private Connection conn;
 
     public Map getProducts() {
         Map<String, Double> priceList = new HashMap<>();

@@ -1,7 +1,7 @@
 package com.chvey.repository;
 
 import com.chvey.domain.User;
-import com.chvey.sql.SqlHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -11,7 +11,8 @@ import java.sql.SQLException;
 import java.util.Optional;
 @Repository
 public class UsersRepository {
-    Connection conn = SqlHelper.getConnection();
+    @Autowired
+    private Connection conn ;
 
     public Optional<User> getUserByName(String userName) {
         try (PreparedStatement ps = conn.prepareStatement("SELECT id FROM User " +

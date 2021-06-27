@@ -28,7 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage("/login")
                 .permitAll()
                 .passwordParameter("password")
-                .usernameParameter("customer")
+                .usernameParameter("userName")
                 .defaultSuccessUrl("/product")
                 .and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
     }

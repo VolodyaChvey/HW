@@ -27,7 +27,7 @@
                <p>
                  <button id="btn" onclick="addList()">Add item</button>
                  <button id="submit" form="form" type="submit" name="products" >Submit</button>
-                 <form id="form" action="/Homework3/servlet3" method="POST">
+                 <form id="form" action="/online-shop/order" method="POST">
                  </form>
                </p>
             </div>

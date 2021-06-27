@@ -2,7 +2,7 @@ package com.chvey.repository;
 
 import com.chvey.domain.Order;
 import com.chvey.domain.Product;
-import com.chvey.sql.SqlHelper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -14,7 +14,9 @@ import java.util.List;
 
 @Repository
 public class OrdersRepository {
-    private Connection conn = SqlHelper.getConnection();
+    @Autowired
+
+    private Connection conn;
 
     public Order save(int userId, double totalPrice) {
         Order order = new Order(userId, totalPrice);

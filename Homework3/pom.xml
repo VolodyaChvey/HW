@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.chvey</groupId>
-    <artifactId>Homework3</artifactId>
+    <artifactId>online-shop</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>war</packaging>
 
@@ -56,19 +56,25 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+            <version>5.1.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
+            <version>5.1.2.RELEASE</version>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+            <version>5.1.2.RELEASE</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.springframework/spring-jdbc -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
+            <version>5.1.2.RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-web</artifactId>
@@ -83,7 +89,6 @@
 
 
     </dependencies>
-
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -93,14 +98,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-             https://mvnrepository.com/artifact/org.springframework.security/spring-security-bom
+            <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-bom -->
             <dependency>
                 <groupId>org.springframework.security</groupId>
                 <artifactId>spring-security-bom</artifactId>
-                <version>${spring.security.version}</version>
+                <version>5.1.1.RELEASE</version>
                 <type>pom</type>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -119,6 +123,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
+
                 <executions>
                     <execution>
                         <id>install</id>
@@ -147,7 +152,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>${maven-war-plugin.version}</version>
                 <configuration>
-                    <webXml>web/WEB-INF/web.xml</webXml>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
                 </configuration>
             </plugin>
             <plugin>
