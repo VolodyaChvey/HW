@@ -12,7 +12,7 @@
 <body>
     <div class="flex-container">
        <div>
-            <h2>Hello ${userName.name}!</h2>
+            <h2>Hello ${userName}!</h2>
             <label>
                  Make you order
             </label>

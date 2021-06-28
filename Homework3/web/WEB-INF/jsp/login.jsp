@@ -10,9 +10,12 @@
     <h2>Welcome to Online Shop</h2>
     <div class="flex-container">
         <div>
-            <form action="/online-shop/product" method="POST">
+            <form action="login" method="POST">
                 <p>
                     <input name="userName" placeholder="Enter your name" style="width:150px" required>
+                </p>
+                <p>
+                    <input type="password" name="password" placeholder="Enter your password" style"width:120px" required>
                 </p>
                 <P>
                     <input type="checkbox" name="checkbox" value="true" required checked>

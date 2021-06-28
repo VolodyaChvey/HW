@@ -23,7 +23,7 @@ public class AppConfiguration {
     public InternalResourceViewResolver getViewResolver() {
         InternalResourceViewResolver resolver = new InternalResourceViewResolver();
         resolver.setViewClass(org.springframework.web.servlet.view.JstlView.class);
-        resolver.setPrefix("/WEB-IN/jsp/");
+        resolver.setPrefix("/WEB-INF/jsp/");
         resolver.setSuffix(".jsp");
         return resolver;
     }

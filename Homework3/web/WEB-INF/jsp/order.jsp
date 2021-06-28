@@ -8,7 +8,7 @@
     </style>
 </head>
 <body>
-    <h2>Dear ${userName.name}, your order</h2>
+    <h2>Dear ${userName}, your order</h2>
     <div class="flex-container">
         <div>
             <ol>
