@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Online shop</title>
+    <link rel="stylesheet" data-th-href="@{/css/style.css}" media="all">
+</head>
+<body>
+<div class="flex-container">
+    <div>
+        <h2 th:text="'Hello '+ ${userName}+'!'"></h2>
+        <label>
+            Make you order
+        </label>
+        <ol id="ol"></ol>
+        <div>
+            <select id="sel" style="width:125px; "  >
+
+                    <option th:each="prod : ${products}"
+                            th:value ="${prod.key}"
+                            th:text="${prod.key} +' ' +'('+${prod.value}+')$'"
+                    />
+
+            </select>
+        </div>
+        <p>
+            <button id="btn" onclick="addList()">Add item</button>
+            <button id="submit" form="form" type="submit" name="products" >Submit</button>
+        <form id="form" action="/online-shop/order" method="POST">
+        </form>
+        </p>
+    </div>
+</div>
+</div>
+<script>
+            let listKey = [];
+            let listText = [];
+            let sel = document.getElementById("sel");
+            let ol = document.getElementById("ol");
+            let submit = document.getElementById("submit");
+            function addList() {
+                listKey.push(sel.value);
+                listText.push(sel.options[sel.selectedIndex].text.replace(/[\\(\\)]/g,' '));
+                while (ol.firstChild) {
+                ol.removeChild(ol.firstChild);
+                 }
+                for (var i in listText) {
+                var li = document.createElement("li");
+                li.textContent = listText[i]
+                ol.appendChild(li);
+                submit.setAttribute("value", listKey);
+                }
+            }
+    </script>
+</body>
+</html>

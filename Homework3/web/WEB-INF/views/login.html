@@ -1,0 +1,39 @@
+ <!DOCTYPE html>
+ <html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Online Shop</title>
+<style>
+     .flex-container {
+      display: flex;
+      justify-content: space-around;
+ }
+
+ h2 {
+     text-align: center;
+ }
+</style>
+</head>
+<body>
+<h2>Welcome to Online Shop</h2>
+<div class="flex-container">
+    <div>
+        <form action="login" method="POST">
+            <p>
+                <input name="userName" placeholder="Enter your name" style="width:150px" required>
+            </p>
+            <p>
+                <input type="password" name="password" placeholder="Enter your password" style"width:120px" required>
+            </p>
+            <P>
+                <input type="checkbox" name="checkbox" value="true" required checked>
+                I agree with the terms of service
+            </P>
+            <p>
+                <input type="submit" value="Enter" style="width:150px">
+            </p>
+        </form>
+    </div>
+</div>
+</body>
+</html>
