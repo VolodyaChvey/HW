@@ -17,7 +17,7 @@ public class WelcomController {
 
     @GetMapping("/")
     public String getWelcom() {
-        return "login";
+        return "Hello";
     }
 
     @RequestMapping("/login")
