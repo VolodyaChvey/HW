@@ -19,14 +19,6 @@ import java.sql.SQLException;
 @ComponentScan(basePackages = {"com.chvey"})
 @PropertySource("classpath:db/db.properties")
 public class AppConfiguration {
-   /* @Bean
-    public InternalResourceViewResolver getViewResolver() {
-        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-        resolver.setViewClass(org.springframework.web.servlet.view.JstlView.class);
-        resolver.setPrefix("/WEB-INF/jsp/");
-        resolver.setSuffix(".jsp");
-        return resolver;
-    }*/
 
     @Bean
     public DataSource dataSource() {
