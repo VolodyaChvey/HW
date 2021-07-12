@@ -1,6 +1,9 @@
 package com.chvey.Config;
 
 
+import com.chvey.domain.Order;
+import com.chvey.domain.Product;
+import com.chvey.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,15 +19,15 @@ import javax.sql.DataSource;
 import java.util.Properties;
 
 @Configuration
-@PropertySource("classpath:hibernate.propeties")
+@PropertySource("classpath:hibernate.properties")
 @EnableTransactionManagement
-public class hibernateConfig {
+public class HibernateConfig {
     @Autowired
     private Environment env;
     @Bean
     public LocalSessionFactoryBean getSessionFactory(){
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-        factoryBean.setAnnotatedClasses();
+        factoryBean.setAnnotatedClasses(User.class, Product.class, Order.class);
         factoryBean.setHibernateProperties(hibernateProperties());
         factoryBean.setDataSource(dataSource());
         return factoryBean;
@@ -51,8 +54,9 @@ public class hibernateConfig {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder
                 .setType(EmbeddedDatabaseType.H2)
-
                 .setScriptEncoding("UTF-8")
+                .addScript("scripts/createTables.sql")
+                .addScript("scripts/insertProducts.sql")
                 .continueOnError(true)
                 .ignoreFailedDrops(true)
                 .build();

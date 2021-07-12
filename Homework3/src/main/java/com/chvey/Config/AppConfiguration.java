@@ -20,7 +20,7 @@ import java.sql.SQLException;
 @PropertySource("classpath:db/db.properties")
 public class AppConfiguration {
 
-    @Bean
+  /*  @Bean
     public DataSource dataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder
@@ -41,6 +41,6 @@ public class AppConfiguration {
             e.printStackTrace();
             throw new RuntimeException(e.getMessage());
         }
-    }
+    }*/
 
 }

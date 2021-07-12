@@ -1,17 +1,42 @@
 package com.chvey.repository;
 
 import com.chvey.domain.User;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Objects;
 import java.util.Optional;
+
 @Repository
+@Transactional
 public class UsersRepository {
     @Autowired
+    LocalSessionFactoryBean factoryBean;
+
+    public Optional<User> getUserByName(String userName) {
+        Session session = Objects.requireNonNull(factoryBean.getObject()).openSession();
+       Query query = session.createQuery("FROM User  WHERE name=?", User.class);
+        query.setParameter(0, userName);
+
+        return Optional.ofNullable((User) query);
+    }
+    public User save(String userName){
+        User user = new User(userName);
+        Session session = Objects.requireNonNull(factoryBean.getObject()).openSession();
+        return (User)session.save(user);
+    }
+       /* return Optional.of((User) session.createQuery("FROM User WHERE name=?",User.class));
+    }
+   /* @Autowired
     private Connection conn ;
 
     public Optional<User> getUserByName(String userName) {
@@ -42,5 +67,6 @@ public class UsersRepository {
             e.printStackTrace();
         }
         return user;
-    }
+    }*/
+
 }
