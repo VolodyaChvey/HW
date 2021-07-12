@@ -2,6 +2,7 @@ package com.chvey.repository;
 
 import com.chvey.domain.Product;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.hibernate.transform.Transformers;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,9 @@ import java.util.Objects;
 @Repository
 public class ProductsRepository {
     @Autowired
-    LocalSessionFactoryBean factoryBean;
+    SessionFactory sessionFactor;
 
-    public Map getProducts(){
+   /* public Map getProducts(){
         Map<String, Double> priceList = new HashMap<>();
         Session session = Objects.requireNonNull(factoryBean.getObject()).openSession();
         String hql ="SELECT title,price FROM Good";
@@ -32,14 +33,23 @@ public class ProductsRepository {
             priceList.put((String)x.get(0),(Double)x.get(1));
         }
         return priceList;
+    }*/
+    public List<Product> getAll(){
+        Query query =sessionFactor.getCurrentSession().createQuery("from Good");
+        return query.list();
     }
-    public Product getProd(String name){
+    public Product getById(int id){
+        Query query= sessionFactor.getCurrentSession().createQuery("from Good g where g.id=:id");
+        query.setParameter("id",id);
+        return (Product)query.getSingleResult();
+    }
+   /* public Product getProd(String name){
         Session session = Objects.requireNonNull(factoryBean.getObject()).openSession();
         String hql = "FROM Good WHERE title= :name";
         Query query = session.createQuery(hql);
         query.setString("name",name);
         return (Product)query;
-    }
+    }*/
 
    /* @Autowired
     private Connection conn;

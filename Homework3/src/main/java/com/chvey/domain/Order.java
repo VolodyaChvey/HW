@@ -2,35 +2,48 @@ package com.chvey.domain;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
-@Table(name = "Order")
+@Table(name = "Orders")
 public class Order implements Serializable {
     @Id
-    @GeneratedValue
-    @ManyToMany
-    @JoinTable(name = "Order_Good",
-            joinColumns = @JoinColumn(name = "orser_id"),
-            inverseJoinColumns = @JoinColumn(name = "good_id"))
-    private long id;
-    @Column(nullable = false)
-    @ManyToOne
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(unique = true, nullable = false)
+    private Long id;
+
+    @ManyToOne(optional = false,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private int user_id;
+    private User user;
+
     @Column(name = "total_price", nullable = false)
     private double totalPrice;
+
+    @ManyToMany
+    @JoinTable(name = "Order_Good",
+            joinColumns = @JoinColumn(name = "order_id"),
+            inverseJoinColumns = @JoinColumn(name = "good_id"))
+   private List<Product> products;
+
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 
     public Order() {
     }
 
-    public Order(int user_id, double totalPrice) {
+    public Order(User user, double totalPrice) {
 
-        this.user_id = user_id;
+        this.user = user;
         this.totalPrice = totalPrice;
     }
 
-    public void setUser_id(int user_id) {
-        this.user_id = user_id;
+    public void setUser_id(User user) {
+        this.user = user;
     }
 
     public void setTotalPrice(double totalPrice) {
@@ -41,8 +54,8 @@ public class Order implements Serializable {
         this.id = id;
     }
 
-    public int getUser_id() {
-        return user_id;
+    public User getUser() {
+        return user;
     }
 
     public long getId() {

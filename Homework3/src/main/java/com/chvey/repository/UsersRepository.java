@@ -3,6 +3,7 @@ package com.chvey.repository;
 import com.chvey.domain.User;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
@@ -20,18 +21,18 @@ import java.util.Optional;
 @Transactional
 public class UsersRepository {
     @Autowired
-    LocalSessionFactoryBean factoryBean;
+    SessionFactory sessionFactory;
 
     public Optional<User> getUserByName(String userName) {
-        Session session = Objects.requireNonNull(factoryBean.getObject()).openSession();
-       Query query = session.createQuery("FROM User  WHERE name=?", User.class);
-        query.setParameter(0, userName);
+        Session session = sessionFactory.getCurrentSession();
+       Query query = session.createQuery("FROM User  WHERE name=:name", User.class);
+        query.setParameter("name", userName);
 
         return Optional.ofNullable((User) query);
     }
     public User save(String userName){
         User user = new User(userName);
-        Session session = Objects.requireNonNull(factoryBean.getObject()).openSession();
+        Session session = sessionFactory.getCurrentSession();
         return (User)session.save(user);
     }
        /* return Optional.of((User) session.createQuery("FROM User WHERE name=?",User.class));

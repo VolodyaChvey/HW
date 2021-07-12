@@ -2,6 +2,7 @@ package com.chvey.repository;
 
 import com.chvey.domain.Order;
 import com.chvey.domain.Product;
+import com.chvey.domain.User;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +21,8 @@ import java.util.Objects;
 public class OrdersRepository {
     @Autowired
     LocalSessionFactoryBean factoryBean;
-    public  Order save(int userId,double totalPrice){
-        Order order = new Order(userId, totalPrice);
+    public  Order save(User user, double totalPrice){
+        Order order = new Order(user, totalPrice);
         Session session = Objects.requireNonNull(factoryBean.getObject()).openSession();
         return (Order)session.save(order);
     }

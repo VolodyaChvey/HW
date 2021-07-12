@@ -7,15 +7,16 @@ import javax.persistence.*;
 public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="id")
-    @OneToMany(mappedBy = "user_id")
-    private int id;
+    @Column(unique = true,nullable = false)
+    private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Column
     private String password;
 
-    public User(int id, String name) {
+    public User(Long id, String name) {
         this.id = id;
         this.name = name;
     }
@@ -39,11 +40,11 @@ public class User  {
         this.name = name;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 

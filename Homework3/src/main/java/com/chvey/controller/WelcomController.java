@@ -23,7 +23,7 @@ public class WelcomController {
     @RequestMapping("/login")
     public String login(Principal principal, ModelMap model) {
         if (principal != null) {
-            model.addAttribute("products", productsRepository.getProducts());
+            model.addAttribute("products", productsRepository.getAll());
             return "product";
         } else {
             return "login";

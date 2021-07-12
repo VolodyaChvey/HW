@@ -8,9 +8,10 @@ import java.io.Serializable;
 public class Product implements Serializable {
     @Id
     @GeneratedValue
-    @ManyToMany(mappedBy = "order_id")
-    private long id;
-    @Column(name = "title", nullable = false)
+    @Column(unique = true, nullable = false)
+    private Long id;
+
+    @Column(name = "title", nullable = false, unique = true)
     private String name;
     @Column(nullable = false)
     private double price;

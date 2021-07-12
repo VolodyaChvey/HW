@@ -4,11 +4,13 @@ package com.chvey.Config;
 import com.chvey.domain.Order;
 import com.chvey.domain.Product;
 import com.chvey.domain.User;
+import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -49,16 +51,23 @@ public class HibernateConfig {
     return properties;
     }
 
-    @Bean
+  /*  @Bean
     public DataSource dataSource() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         return builder
                 .setType(EmbeddedDatabaseType.H2)
                 .setScriptEncoding("UTF-8")
-                .addScript("scripts/createTables.sql")
-                .addScript("scripts/insertProducts.sql")
                 .continueOnError(true)
                 .ignoreFailedDrops(true)
                 .build();
-    }
+    }*/
+  @Bean
+    public DataSource dataSource(){
+      BasicDataSource dataSource =new BasicDataSource();
+      dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
+      dataSource.setUrl(env.getProperty("jdbc.url"));
+      dataSource.setUsername(env.getProperty("jdbc.user"));
+      dataSource.setPassword(env.getProperty("jdbc.pass"));
+      return dataSource;
+  }
 }
