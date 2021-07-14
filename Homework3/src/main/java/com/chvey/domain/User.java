@@ -10,7 +10,7 @@ public class User  {
     @Column(unique = true,nullable = false)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(unique = true,nullable = false)
     private String name;
 
     @Column
@@ -50,5 +50,14 @@ public class User  {
 
     public String getName() {
         return name;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                '}';
     }
 }

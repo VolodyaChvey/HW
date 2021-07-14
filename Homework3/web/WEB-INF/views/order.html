@@ -12,7 +12,7 @@
         <ol>
 
                 <li th:each="product : ${priceOrder}"
-                th:text="${product.name}+' '+${product.price}+' $'"/>
+                th:text="${product.getName()}+' '+${product.getPrice()}+' $'"/>
 
         </ol>
         <p th:text="'Total: $ '+ ${totalPrice}"></p>

@@ -6,13 +6,13 @@ import java.util.List;
 
 @Entity
 @Table(name = "Orders")
-public class Order implements Serializable {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(unique = true, nullable = false)
     private Long id;
 
-    @ManyToOne(optional = false,cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(optional = false,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
@@ -36,10 +36,10 @@ public class Order implements Serializable {
     public Order() {
     }
 
-    public Order(User user, double totalPrice) {
-
+    public Order(User user, double totalPrice, List<Product> products) {
         this.user = user;
         this.totalPrice = totalPrice;
+        this.products = products;
     }
 
     public void setUser_id(User user) {
@@ -64,6 +64,16 @@ public class Order implements Serializable {
 
     public double getTotalPrice() {
         return totalPrice;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", user=" + user +
+                ", totalPrice=" + totalPrice +
+                ", products=" + products +
+                '}';
     }
 }
 

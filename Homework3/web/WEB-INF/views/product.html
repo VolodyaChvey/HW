@@ -17,8 +17,8 @@
             <select id="sel" style="width:125px; "  >
 
                     <option th:each="prod : ${products}"
-                            th:value ="${prod.key}"
-                            th:text="${prod.key} +' ' +'('+${prod.value}+')$'"
+                            th:value ="${prod.getName()}"
+                            th:text="${prod.getName()} +' ' +'('+${prod.getPrice()}+')$'"
                     />
 
             </select>

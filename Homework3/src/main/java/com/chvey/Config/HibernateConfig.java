@@ -50,17 +50,6 @@ public class HibernateConfig {
     properties.setProperty("hibernate.hbm2ddl.import_files_sql_extractor",env.getProperty("hibernate.hbm2ddl.import_files_sql_extractor"));
     return properties;
     }
-
-  /*  @Bean
-    public DataSource dataSource() {
-        EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        return builder
-                .setType(EmbeddedDatabaseType.H2)
-                .setScriptEncoding("UTF-8")
-                .continueOnError(true)
-                .ignoreFailedDrops(true)
-                .build();
-    }*/
   @Bean
     public DataSource dataSource(){
       BasicDataSource dataSource =new BasicDataSource();
