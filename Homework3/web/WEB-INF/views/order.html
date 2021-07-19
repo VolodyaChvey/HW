@@ -6,16 +6,16 @@
     <link rel="stylesheet" data-th-href="@{/css/style.css}" media="all">
 </head>
 <body>
-<h2 th:text="'Dear '+ ${userName}+', your order'"></h2>
+<h2 th:text="'Dear '+ ${order.getUserDTO().getName()}+', your order'"></h2>
 <div class="flex-container">
     <div>
         <ol>
 
-                <li th:each="product : ${priceOrder}"
+                <li th:each="product : ${order.getProductsDTO()}"
                 th:text="${product.getName()}+' '+${product.getPrice()}+' $'"/>
 
         </ol>
-        <p th:text="'Total: $ '+ ${totalPrice}"></p>
+        <p th:text="'Total: $ '+ ${order.getTotalPriceDTO()}"></p>
     </div>
 </div>
 </body>

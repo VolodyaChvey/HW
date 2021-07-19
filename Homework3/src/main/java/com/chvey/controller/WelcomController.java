@@ -1,10 +1,8 @@
 package com.chvey.controller;
 
-
 import com.chvey.repository.ProductsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -12,8 +10,6 @@ import java.security.Principal;
 
 @Controller
 public class WelcomController {
-    @Autowired
-    private ProductsRepository productsRepository;
 
     @GetMapping("/")
     public String getWelcom() {
@@ -21,10 +17,9 @@ public class WelcomController {
     }
 
     @RequestMapping("/login")
-    public String login(Principal principal, ModelMap model) {
+    public String login(Principal principal) {
         if (principal != null) {
-            model.addAttribute("products", productsRepository.getAll());
-            return "product";
+            return "products";
         } else {
             return "login";
         }

@@ -8,7 +8,7 @@
 <body>
 <div class="flex-container">
     <div>
-        <h2 th:text="'Hello '+ ${userName}+'!'"></h2>
+        <h2 th:text="'Hello '+ ${productsDTO.getUserName()}+'!'"></h2>
         <label>
             Make you order
         </label>
@@ -16,7 +16,7 @@
         <div>
             <select id="sel" style="width:125px; "  >
 
-                    <option th:each="prod : ${products}"
+                    <option th:each="prod : ${productsDTO.getPriceList()}"
                             th:value ="${prod.getName()}"
                             th:text="${prod.getName()} +' ' +'('+${prod.getPrice()}+')$'"
                     />
@@ -32,6 +32,15 @@
     </div>
 </div>
 </div>
+<script>
+     async function allProducts(){
+            let responce = await fetch("http://localhost:8099/online-shop/products");
+            console.log(responce);
+            let data = await responce.json();
+            console.log(data);
+        }
+     allProducts()
+</script>
 <script>
             let listKey = [];
             let listText = [];

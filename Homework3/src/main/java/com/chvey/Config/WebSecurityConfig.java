@@ -29,7 +29,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .passwordParameter("password")
                 .usernameParameter("userName")
-                .defaultSuccessUrl("/product", false).and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
+                .defaultSuccessUrl("/products", false).and().logout().logoutUrl("/logout").logoutSuccessUrl("/login");
     }
 
     @Override
