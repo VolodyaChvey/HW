@@ -19,7 +19,7 @@ public class OrderService {
                 .mapToDouble(Product::getPrice)
                 .sum();
         Long orderId = ordersRepository.save(new Order(user, totalPrice, products));
-        System.out.println(products);
+
         return ordersRepository.getOrderById(orderId);
     }
 }

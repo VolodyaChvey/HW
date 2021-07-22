@@ -12,7 +12,7 @@ public class Order {
     @Column(unique = true, nullable = false)
     private Long id;
 
-    @ManyToOne(optional = false,cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 

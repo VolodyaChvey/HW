@@ -35,7 +35,7 @@ public class OrderController {
                 .collect(Collectors.toList());
         Order order = orderService.createOrder(user, listProducts);
         String totalPrice = String.format("%.2f", order.getTotalPrice());
-        model.addAttribute("priceOrder", listProducts);
+        model.addAttribute("priceOrder", order.getProducts());
         model.addAttribute("userName", user.getName());
         model.addAttribute("totalPrice", totalPrice);
         return "order";
