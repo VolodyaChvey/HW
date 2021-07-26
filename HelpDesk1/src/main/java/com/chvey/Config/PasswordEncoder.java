@@ -1,11 +1,14 @@
-package com.chvey.Config;
+/*package com.chvey.Config;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.stereotype.Component;
 import sun.misc.BASE64Encoder;
 
-@Component
+
+/*
 public class PasswordEncoder implements org.springframework.security.crypto.password.PasswordEncoder {
-    @Override
+
     public String encode(CharSequence rawPassword) {
         return new BASE64Encoder().encode(((String) rawPassword).getBytes());
     }
@@ -15,4 +18,4 @@ public class PasswordEncoder implements org.springframework.security.crypto.pass
         BASE64Encoder encoder = new BASE64Encoder();
         return encoder.encode(((String) rawPassword).getBytes()).equals(encodedPassword);
     }
-}
+}*/

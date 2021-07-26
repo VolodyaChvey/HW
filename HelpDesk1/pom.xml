@@ -9,14 +9,10 @@
   <version>1.0-SNAPSHOT</version>
   <packaging>war</packaging>
 
-  <name>HelpDesk Maven Webapp</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
-
   <properties>
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
-    <servlet.version>3.1.0</servlet.version>
+    <servlet.version>4.0.1</servlet.version>
     <junit>4.12</junit>
     <tomcat7-maven-plugin.version>2.2</tomcat7-maven-plugin.version>
     <maven-compiler-plugin.version>2.3.2</maven-compiler-plugin.version>
@@ -41,6 +37,12 @@
       <artifactId>junit</artifactId>
       <version>${junit}</version>
       <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>com.fasterxml.jackson.core</groupId>
+      <artifactId>jackson-databind</artifactId>
+      <version>2.9.3</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/com.h2database/h2 -->
@@ -119,64 +121,98 @@
 
 
   </dependencies>
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-framework-bom</artifactId>
+        <version>${spring.version}</version>
+        <type>pom</type>
+        <scope>import</scope>
+      </dependency>
+      <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-bom -->
+      <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-bom</artifactId>
+        <version>5.1.1.RELEASE</version>
+        <type>pom</type>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <build>
-    <finalName>HelpDesk</finalName>
-    <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
-      <plugins>
-        <plugin>
-          <groupId>org.eclipse.jetty</groupId>
-          <artifactId>jetty-maven-plugin</artifactId>
-          <version>9.4.10.v20180503</version>
-          <configuration>
-            <httpConnector>
-              <port>7777</port>
-            </httpConnector>
-          </configuration>
-        </plugin>
-        <!-- Maven Tomcat Plugin -->
-        <plugin>
-          <groupId>org.apache.tomcat.maven</groupId>
-          <artifactId>tomcat7-maven-plugin</artifactId>
-          <version>${tomcat7-maven-plugin.version}</version>
-          <configuration>
-            <path>/${project.artifactId}</path>
-            <port>8099</port>
-            <addContextWarDependencies>true</addContextWarDependencies>
-            <addWarDependenciesInClassloader>true</addWarDependenciesInClassloader>
-            <warSourceDirectory>${project.build.directory}/${project.build.finalName}/</warSourceDirectory>
-          </configuration>
-        </plugin>
-        <plugin>
-          <artifactId>maven-clean-plugin</artifactId>
-          <version>3.1.0</version>
-        </plugin>
-        <!-- see http://maven.apache.org/ref/current/maven-core/default-bindings.html#Plugin_bindings_for_war_packaging -->
-        <plugin>
-          <artifactId>maven-resources-plugin</artifactId>
-          <version>3.0.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-compiler-plugin</artifactId>
-          <version>3.8.0</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.22.1</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-war-plugin</artifactId>
-          <version>3.2.2</version>
-        </plugin>
-        <plugin>
-          <artifactId>maven-install-plugin</artifactId>
-          <version>2.5.2</version>
-        </plugin>
-<!--        <plugin>-->
-<!--          <artifactId>maven-deploy-plugin</artifactId>-->
-<!--          <version>2.8.2</version>-->
-<!--        </plugin>-->
-      </plugins>
-    </pluginManagement>
+    <directory>${project.basedir}/target</directory>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>${maven-compiler-plugin.version}</version>
+        <configuration>
+          <source>${maven.compiler.source}</source>
+          <target>${maven.compiler.source}</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-dependency-plugin</artifactId>
+
+        <executions>
+          <execution>
+            <id>install</id>
+            <phase>install</phase>
+            <goals>
+              <goal>sources</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- Maven Tomcat Plugin -->
+      <plugin>
+        <groupId>org.apache.tomcat.maven</groupId>
+        <artifactId>tomcat7-maven-plugin</artifactId>
+        <version>${tomcat7-maven-plugin.version}</version>
+        <configuration>
+          <path>/${project.artifactId}</path>
+          <port>8099</port>
+          <addContextWarDependencies>true</addContextWarDependencies>
+          <addWarDependenciesInClassloader>true</addWarDependenciesInClassloader>
+          <warSourceDirectory>${project.build.directory}/${project.build.finalName}/</warSourceDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-war-plugin</artifactId>
+        <version>${maven-war-plugin.version}</version>
+        <configuration>
+          <failOnMissingWebXml>false</failOnMissingWebXml>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <version>${maven-resources-plugin.version}</version>
+        <executions>
+          <execution>
+            <id>default-copy-resources</id>
+            <phase>process-resources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <overwrite>true</overwrite>
+              <outputDirectory>
+                ${project.build.directory}/${project.artifactId}-${project.version}/WEB-INF/
+              </outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/web/WEB-INF</directory>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
+
 </project>
