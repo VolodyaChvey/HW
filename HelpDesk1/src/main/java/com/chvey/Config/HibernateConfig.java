@@ -1,8 +1,5 @@
 package com.chvey.Config;
 
-
-import com.chvey.domain.Order;
-import com.chvey.domain.Product;
 import com.chvey.domain.User;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +24,7 @@ public class HibernateConfig {
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-        factoryBean.setAnnotatedClasses(User.class, Product.class, Order.class);
+        factoryBean.setAnnotatedClasses(User.class);
         factoryBean.setHibernateProperties(hibernateProperties());
         factoryBean.setDataSource(dataSource());
         return factoryBean;
