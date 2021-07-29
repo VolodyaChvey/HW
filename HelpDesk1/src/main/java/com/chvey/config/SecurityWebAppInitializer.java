@@ -1,4 +1,4 @@
-package com.chvey.Config;
+package com.chvey.config;
 
 import org.springframework.security.web.context.AbstractSecurityWebApplicationInitializer;
 

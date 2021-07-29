@@ -1,4 +1,4 @@
-package com.chvey.controller;
+package com.chvey.cotroller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -7,18 +7,21 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.security.Principal;
 
 @Controller
-public class WelcomController {
+public class LoginController {
 
     @GetMapping("/")
     public String getWelcom() {
-        return "/login";
+        System.out.println("hello");
+        return "login";
     }
 
     @RequestMapping("/login")
     public String login(Principal principal) {
+        System.out.println("login");
         if (principal != null) {
-            return "products";
+            return "hello";
         } else {
+            System.out.println("hi");
             return "login";
         }
     }

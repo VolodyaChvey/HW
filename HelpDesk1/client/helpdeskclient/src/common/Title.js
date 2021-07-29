@@ -8,7 +8,7 @@ class Title extends React.Component {
 
     render(){
         return <div>
-            <h2 className=''>{this.props.title}</h2>
+            <h3 className='title'>{this.props.title}</h3>
         </div>
     }
 

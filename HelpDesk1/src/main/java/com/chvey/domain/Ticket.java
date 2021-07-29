@@ -5,6 +5,8 @@ import com.chvey.domain.enums.Urgency;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "TICKET")
@@ -12,34 +14,76 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private String name;
+
     @Column
     private String description;
-    @Column
-    private LocalDate createOn;
-    @Column
+
+    @Column(name = "CREATED_ON",nullable = false)
+    private LocalDate createdOn;
+
+    @Column(name = "DESIRED_RESOLUTION_DATE",nullable = false)
     private LocalDate desiredResolutionDate;
+
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private State state;
+
     @Enumerated(EnumType.STRING)
-    @Column
+    @Column(nullable = false)
     private Urgency urgency;
+
     @ManyToOne
     @JoinColumn(name = "ASSIGNEE_ID")
     private User assignee;
+
     @ManyToOne
     @JoinColumn(name = "OWNER_ID", nullable = false)
     private User owner;
+
     @ManyToOne
     @JoinColumn(name = "APPROVER_ID")
     private User approver;
+
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private Category category;
 
+    @Transient
+    private List<Comment> comments;
+
+    @Transient
+    private List<History> histories;
+
+    @Transient
+    private List<Attachment> attachments;
     public Ticket() {
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public List<History> getHistories() {
+        return histories;
+    }
+
+    public void setHistories(List<History> histories) {
+        this.histories = histories;
+    }
+
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
     }
 
     public Long getId() {
@@ -66,12 +110,12 @@ public class Ticket {
         this.description = description;
     }
 
-    public LocalDate getCreateOn() {
-        return createOn;
+    public LocalDate getCreatedOn() {
+        return createdOn;
     }
 
-    public void setCreateOn(LocalDate createOn) {
-        this.createOn = createOn;
+    public void setCreatedOn(LocalDate createdOn) {
+        this.createdOn = createdOn;
     }
 
     public LocalDate getDesiredResolutionDate() {
@@ -128,5 +172,39 @@ public class Ticket {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Ticket ticket = (Ticket) o;
+        return id.equals(ticket.id) &&
+                name.equals(ticket.name) &&
+                description.equals(ticket.description) &&
+                createdOn.equals(ticket.createdOn) &&
+                desiredResolutionDate.equals(ticket.desiredResolutionDate) &&
+                state == ticket.state &&
+                urgency == ticket.urgency &&
+                category.equals(ticket.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description, createdOn, desiredResolutionDate, state, urgency, category);
+    }
+
+    @Override
+    public String toString() {
+        return "Ticket{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", createdOn=" + createdOn +
+                ", desiredResolutionDate=" + desiredResolutionDate +
+                ", state=" + state +
+                ", urgency=" + urgency +
+                ", category=" + category +
+                '}';
     }
 }

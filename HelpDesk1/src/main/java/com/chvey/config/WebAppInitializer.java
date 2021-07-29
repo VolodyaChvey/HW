@@ -1,11 +1,11 @@
-package com.chvey.Config;
+package com.chvey.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-public class WebAppInitialzer extends AbstractAnnotationConfigDispatcherServletInitializer {
+public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{WebConfig.class,WebSecurityConfig.class};
+        return new Class[]{AppConfiguration.class, WebSecurityConfig.class, ThymeleafConfig.class};
     }
 
     @Override

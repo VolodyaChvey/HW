@@ -1,24 +1,21 @@
-package com.chvey.Config;
+package com.chvey.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import javax.sql.DataSource;
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity
+
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-    @Autowired
-    private DataSource dataSource;
+    /*  @Autowired
+      private DataSource dataSource;*/
     @Autowired
     private UserDetailsService userDetailsService;
     @Autowired
@@ -30,21 +27,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .cors()
                 .and()
-                .httpBasic()
-                .and()
-                .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/api/tickets").hasAnyAuthority("EMPLOYEE", "MANAGER")
-                .antMatchers(HttpMethod.PATCH, "/api/tickets/{ticketId}").hasAnyAuthority("EMPLOYEE", "MANAGER")
-                .antMatchers("/api/tickets/{tickedId}/feedbacks").hasAnyAuthority("EMPLOYEE", "MANAGER")
-                .anyRequest()
-                .authenticated()
+                //  .httpBasic()
+                // .and()
+               .authorizeRequests()
+              .antMatchers("/")
+               .permitAll()
+                // .antMatchers(HttpMethod.POST, "/api/tickets").hasAnyAuthority("EMPLOYEE", "MANAGER")
+                // .antMatchers(HttpMethod.PATCH, "/api/tickets/{ticketId}").hasAnyAuthority("EMPLOYEE", "MANAGER")
+                // .antMatchers("/api/tickets/{tickedId}/feedbacks").hasAnyAuthority("EMPLOYEE", "MANAGER")
 
+                // .anyRequest()
+                // .authenticated()
+              .and()
+        //.formLogin()
+        // .loginPage("/login")
+        // .passwordParameter("password")
+        // .usernameParameter("userName")
+        // .defaultSuccessUrl("/hello", false)
+        // .and()
+        // .logout().logoutUrl("/logout").logoutSuccessUrl("/login")
         ;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        // auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+        auth.inMemoryAuthentication()
+                .withUser("vasya")
+                .password("{noop}password")
+                .roles("USER");
     }
 
 }

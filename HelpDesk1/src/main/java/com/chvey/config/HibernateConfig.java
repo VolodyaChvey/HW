@@ -1,6 +1,5 @@
-package com.chvey.Config;
+package com.chvey.config;
 
-import com.chvey.domain.User;
 import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -20,11 +19,18 @@ import java.util.Properties;
 public class HibernateConfig {
     @Autowired
     private Environment env;
-
+   /* @Bean
+    public LocalSessionFactoryBean  sessionFactory() {
+        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
+        sessionFactory.setDataSource(dataSource());
+        sessionFactory.setPackagesToScan(new String[]{"com.epam.ticketStore.entity"});
+        sessionFactory.setHibernateProperties(hibernateProperties());
+        return sessionFactory;
+    }*/
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();
-        factoryBean.setAnnotatedClasses(User.class);
+        factoryBean.setPackagesToScan("com.chvey.domain");
         factoryBean.setHibernateProperties(hibernateProperties());
         factoryBean.setDataSource(dataSource());
         return factoryBean;

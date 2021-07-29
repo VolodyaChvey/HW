@@ -8,7 +8,7 @@ class LableInput extends React.Component {
 
     render() {
         const {lable, name, type = 'text', placeholder, onChange } = this.props
-        return <div>
+        return <div className='labelInput'>
             <span>{lable}</span>
             <input name={name} type={type} placeholder={placeholder} onChange={onChange} />
         </div>

@@ -2,24 +2,37 @@ package com.chvey.domain;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(nullable = false)
     private LocalDate date;
+
     @Column(nullable = false)
     private String text;
+
     @ManyToOne
     @JoinColumn(name = "TICKET_ID", nullable = false)
     private Ticket ticket;
+
     @ManyToOne
     @JoinColumn(name = "USER_ID", nullable = false)
     private User user;
 
     public Comment() {
+    }
+
+    public Comment(Long id, LocalDate date, String text, Ticket ticket, User user) {
+        this.id = id;
+        this.date = date;
+        this.text = text;
+        this.ticket = ticket;
+        this.user = user;
     }
 
     public Long getId() {
@@ -60,5 +73,29 @@ public class Comment {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return id.equals(comment.id) &&
+                date.equals(comment.date) &&
+                text.equals(comment.text);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, text);
+    }
+
+    @Override
+    public String toString() {
+        return "Comment{" +
+                "id=" + id +
+                ", date=" + date +
+                ", text='" + text + '\'' +
+                '}';
     }
 }

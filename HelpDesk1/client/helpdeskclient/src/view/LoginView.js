@@ -11,7 +11,7 @@ class LoginView extends React.Component {
     }
     render() {
         const { onChange, onAuth } = this.props
-        return <div>
+        return <div className='loginView'>
             <Title title='Login to the Help Desk'></Title>
             <form action='' method='GET'>
             <LableInput lable='login' name='login' type='email' placeholder='Email'></LableInput>
