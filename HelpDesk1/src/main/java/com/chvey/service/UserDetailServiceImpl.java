@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Objects.nonNull;
+
 @Service
 @Transactional
 public class UserDetailServiceImpl implements UserDetailsService {
@@ -32,7 +33,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
                     .build();
 
         } else {
-            throw new UsernameNotFoundException(email);
+            throw new UsernameNotFoundException(email + "not found");
         }
     }
 

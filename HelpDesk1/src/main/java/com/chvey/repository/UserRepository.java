@@ -14,7 +14,7 @@ public class UserRepository {
 
     public User findUserByEmail(String email) {
         return (User) sessionFactory.getCurrentSession()
-                .createQuery("from User where id=(select id from User where email=:email")
+                .createQuery("from User where email=:email")
                 .setParameter("email", email)
                 .getSingleResult();
     }
