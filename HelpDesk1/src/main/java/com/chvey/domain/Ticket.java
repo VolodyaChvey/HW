@@ -27,11 +27,11 @@ public class Ticket {
     @Column(name = "DESIRED_RESOLUTION_DATE",nullable = false)
     private LocalDate desiredResolutionDate;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private State state;
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(EnumType.ORDINAL)
     @Column(nullable = false)
     private Urgency urgency;
 
