@@ -19,13 +19,15 @@ insert into category (NAME) values ('People Management');
 insert into category (NAME) values ('Security & Access');
 insert into category (NAME) values ('Workplaces & Facilities');
 
-insert into ticket(NAME, DESCRIPTION, CREATED_ON, DESIRED_RESOLUTION_DATE, STATE, URGENCY, OWNER_ID, CATEGORY_ID) values
+insert into ticket(NAME, DESCRIPTION, CREATED_ON, DESIRED_RESOLUTION_DATE, STATE_ID, URGENCY_ID, OWNER_ID, CATEGORY_ID) values
 ('ticket1', 'description1', '2020-10-10', '2022-10-15', '2', '1', '1', '1');
-insert into ticket(NAME, DESCRIPTION, CREATED_ON, DESIRED_RESOLUTION_DATE, STATE, URGENCY, OWNER_ID, CATEGORY_ID) values
+insert into ticket(NAME, DESCRIPTION, CREATED_ON, DESIRED_RESOLUTION_DATE, STATE_ID, URGENCY_ID, OWNER_ID, CATEGORY_ID) values
 ('ticket2', 'description2', '2020-12-11', '2022-12-25', '1', '1', '1', '2');
-insert into ticket(NAME, DESCRIPTION, CREATED_ON, DESIRED_RESOLUTION_DATE, STATE, URGENCY, OWNER_ID, CATEGORY_ID) values
+insert into ticket(NAME, DESCRIPTION, CREATED_ON, DESIRED_RESOLUTION_DATE, STATE_ID, URGENCY_ID, OWNER_ID, CATEGORY_ID) values
 ('ticket3', 'description3', '2020-12-31', '2022-01-05', '2', '2', '2', '2');
-insert into ticket(NAME, DESCRIPTION, CREATED_ON, DESIRED_RESOLUTION_DATE, STATE, URGENCY, OWNER_ID, CATEGORY_ID) values
+insert into ticket(NAME, DESCRIPTION, CREATED_ON, DESIRED_RESOLUTION_DATE, STATE_ID, URGENCY_ID, OWNER_ID, CATEGORY_ID) values
 ('ticket4', 'description4', '2020-06-30', '2022-10-15', '3', '3', '3', '4');
-insert into ticket(NAME, DESCRIPTION, CREATED_ON, DESIRED_RESOLUTION_DATE, STATE, URGENCY, OWNER_ID, CATEGORY_ID) values
-('ticket5', 'description5', '2020-10-10', '2022-10-10', '2', '4', '4', '6');
+insert into ticket(NAME, DESCRIPTION, CREATED_ON, DESIRED_RESOLUTION_DATE, STATE_ID, URGENCY_ID, OWNER_ID, CATEGORY_ID) values
+('ticket5', 'description5', '2020-10-10', '2022-10-10', '2', '3', '4', '3');
+insert into ticket(NAME, DESCRIPTION, CREATED_ON, DESIRED_RESOLUTION_DATE, STATE_ID, URGENCY_ID, OWNER_ID, CATEGORY_ID, APPROVER_ID) values
+('ticket6', 'description6', '2020-09-05', '2022-01-26', '2', '2', '1', '3', '3');

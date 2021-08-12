@@ -1,6 +1,6 @@
 import React from 'react'
 
-class LableInput extends React.Component {
+class LabelInput extends React.Component {
     constructor(props) {
         super(props)
         this.state = {}
@@ -22,4 +22,4 @@ class LableInput extends React.Component {
         )}
 
 }
-export default LableInput
+export default LabelInput

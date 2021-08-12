@@ -1,7 +1,7 @@
 import React from 'react';
 import Title from '../common/Title.js'
 import Button from '../common/Button.js'
-import LableInput from '../common/LableInput.js'
+import LabelInput from '../common/LabelInput.js'
 
 class LoginView extends React.Component {
     constructor(props) {
@@ -21,10 +21,10 @@ class LoginView extends React.Component {
                     </div>               
                 <form className=''>
                     <br></br>
-                    <LableInput lable='User Name:' name='login' type='email'
-                        placeholder='Email' onChange={onHandleChange}></LableInput>
-                    <LableInput lable='Password:' name='password' type='password'
-                        placeholder='Enter password' onChange={onHandleChange}></LableInput>
+                    <LabelInput lable='User Name:' name='login' type='email'
+                        placeholder='Email' onChange={onHandleChange}></LabelInput>
+                    <LabelInput lable='Password:' name='password' type='password'
+                        placeholder='Enter password' onChange={onHandleChange}></LabelInput>
                         <div className='row'>
                             <div className='col-8'></div>
                             <div className='col-4 mr-1'>

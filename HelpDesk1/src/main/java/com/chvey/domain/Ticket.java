@@ -24,15 +24,15 @@ public class Ticket {
     @Column(name = "CREATED_ON",nullable = false)
     private LocalDate createdOn;
 
-    @Column(name = "DESIRED_RESOLUTION_DATE",nullable = false)
+    @Column(name = "DESIRED_RESOLUTION_DATE")
     private LocalDate desiredResolutionDate;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false)
+    @Column(nullable = false, name="STATE_ID")
     private State state;
 
     @Enumerated(EnumType.ORDINAL)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "URGENCY_ID")
     private Urgency urgency;
 
     @ManyToOne

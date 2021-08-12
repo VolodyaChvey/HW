@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 
@@ -16,8 +17,11 @@ import java.util.List;
 public class TicketService {
     @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
+    private UserService userService;
 
-    public List<Ticket> getTicketsByUserId(User user) {
+    public List<Ticket> getTicketsByUserId(String email) {
+        User user = userService.getUserByEmail(email);
         if (user.getRole() == Role.EMPLOYEE) {
             return ticketRepository.findTicketsByUserId(user.getId());
         } else if (user.getRole() == Role.MANAGER) {
@@ -30,5 +34,26 @@ public class TicketService {
             tickets.addAll(ticketRepository.findTicketsByStateApproved());
             return tickets;
         }
+    }
+
+    public List<Ticket> getMyTickets(String email){
+        User user= userService.getUserByEmail(email);
+        if(user.getRole()==Role.EMPLOYEE){
+            return ticketRepository.findTicketsByUserId(user.getId());
+        }else if (user.getRole()==Role.MANAGER){
+            List<Ticket> tickets = ticketRepository.findTicketsByUserId(user.getId());
+
+            return ticketRepository.test(user.getId());
+        }
+        return ticketRepository.findTicketsByAssigneeId(user.getId());
+    }
+    public Ticket getSaveTicket(String email,Ticket ticket){
+        User user = userService.getUserByEmail(email);
+        ticket.setOwner(user);
+        ticket.setCreatedOn(LocalDate.now());
+
+        ticket.setId(ticketRepository.saveTicket(ticket));
+
+        return ticket;
     }
 }

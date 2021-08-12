@@ -2,7 +2,7 @@ package com.chvey.domain.enums;
 
 public enum Urgency {
     CRITICAL,
-    HIGHT,
+    HIGH,
     AVERAGE,
     LOW
 }

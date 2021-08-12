@@ -1,24 +1,22 @@
 package com.chvey.dto;
 
-import com.chvey.domain.enums.Role;
-
 import java.util.Objects;
 
 public class UserDto {
-    private long id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
-    private Role role;
+    private String role;
 
     public UserDto() {
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
 
         this.id = id;
     }
@@ -47,11 +45,11 @@ public class UserDto {
         this.email = email;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

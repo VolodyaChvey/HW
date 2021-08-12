@@ -1,14 +1,12 @@
 package com.chvey.cotroller;
 
 import com.chvey.converters.TicketConverter;
-import com.chvey.domain.User;
+import com.chvey.dto.TicketDto;
 import com.chvey.service.TicketService;
 import com.chvey.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 
@@ -28,9 +26,20 @@ public class TicketController {
 
     @GetMapping(value = "/all")
     public ResponseEntity getTicketsAll(Principal principal) {
-        User user = userService.getUserByEmail(principal.getName());
-
-        return ResponseEntity.ok(ticketService.getTicketsByUserId(user)
+        return ResponseEntity.ok(ticketService.getTicketsByUserId(principal.getName())
                 .stream().map(ticketConverter::toDto).toArray());
+    }
+    @GetMapping(value="/my")
+    public ResponseEntity getTicketsMy(Principal principal){
+        return ResponseEntity.ok(ticketService.getMyTickets(principal.getName())
+                .stream().map(ticketConverter::toDto).toArray());
+    }
+
+
+    @PostMapping()
+    public ResponseEntity toSaveTicket(Principal principal, @RequestBody TicketDto ticketDto) {
+        TicketDto cl=ticketConverter.toDto(ticketService.getSaveTicket(principal.getName(), ticketConverter.toEntity(ticketDto)));
+        System.out.println(cl);
+        return ResponseEntity.ok(cl);
     }
 }

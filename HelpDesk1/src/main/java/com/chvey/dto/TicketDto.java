@@ -1,24 +1,17 @@
 package com.chvey.dto;
 
-import com.chvey.domain.Category;
-import com.chvey.domain.User;
-import com.chvey.domain.enums.State;
-import com.chvey.domain.enums.Urgency;
-
-import java.time.LocalDate;
-
 public class TicketDto {
     private Long id;
     private String name;
     private String description;
-    private LocalDate createdOn;
-    private LocalDate desiredResolutionDate;
-    private State state;
-    private Urgency urgency;
-    private User assignee;
-    private User owner;
-    private User approver;
-    private Category category;
+    private String createdOn;
+    private String desiredResolutionDate;
+    private String state;
+    private String urgency;
+    private UserDto assignee;
+    private UserDto owner;
+    private UserDto approver;
+    private Long category;
 
     public TicketDto() {
     }
@@ -47,67 +40,84 @@ public class TicketDto {
         this.description = description;
     }
 
-    public LocalDate getCreatedOn() {
+    public String getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(LocalDate createdOn) {
+    public void setCreatedOn(String createdOn) {
         this.createdOn = createdOn;
     }
 
-    public LocalDate getDesiredResolutionDate() {
+    public String getDesiredResolutionDate() {
         return desiredResolutionDate;
     }
 
-    public void setDesiredResolutionDate(LocalDate desiredResolutionDate) {
+    public void setDesiredResolutionDate(String desiredResolutionDate) {
         this.desiredResolutionDate = desiredResolutionDate;
     }
 
-    public State getState() {
+    public String getState() {
         return state;
     }
 
-    public void setState(State state) {
+    public void setState(String state) {
         this.state = state;
     }
 
-    public Urgency getUrgency() {
+    public String getUrgency() {
         return urgency;
     }
 
-    public void setUrgency(Urgency urgency) {
+    public void setUrgency(String urgency) {
         this.urgency = urgency;
     }
 
-    public User getAssignee() {
+    public UserDto getAssignee() {
         return assignee;
     }
 
-    public void setAssignee(User assignee) {
+    public void setAssignee(UserDto assignee) {
         this.assignee = assignee;
     }
 
-    public User getOwner() {
+    public UserDto getOwner() {
         return owner;
     }
 
-    public void setOwner(User owner) {
+    public void setOwner(UserDto owner) {
         this.owner = owner;
     }
 
-    public User getApprover() {
+    public UserDto getApprover() {
         return approver;
     }
 
-    public void setApprover(User approver) {
+    public void setApprover(UserDto approver) {
         this.approver = approver;
     }
 
-    public Category getCategory() {
+    public Long getCategory() {
         return category;
     }
 
-    public void setCategory(Category category) {
+    public void setCategory(Long category) {
         this.category = category;
+    }
+
+    @Override
+    public String toString() {
+        return "TicketDto{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", createdOn=" + createdOn +
+                ", desiredResolutionDate=" + desiredResolutionDate +
+                ", state=" + state +
+                ", urgency=" + urgency +
+                ", assignee=" + assignee +
+                ", owner=" + owner +
+                ", approver=" + approver +
+                ", category=" + category +
+                '}';
     }
 }
