@@ -19,14 +19,7 @@ import java.util.Properties;
 public class HibernateConfig {
     @Autowired
     private Environment env;
-   /* @Bean
-    public LocalSessionFactoryBean  sessionFactory() {
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan(new String[]{"com.epam.ticketStore.entity"});
-        sessionFactory.setHibernateProperties(hibernateProperties());
-        return sessionFactory;
-    }*/
+
     @Bean
     public LocalSessionFactoryBean getSessionFactory() {
         LocalSessionFactoryBean factoryBean = new LocalSessionFactoryBean();

@@ -28,7 +28,7 @@ export default class TicketNew extends React.Component {
   }
   onDraft(){
     this.onSave("draft")
-   
+
   }
   onNew(){
   this.onSave('new')
@@ -41,7 +41,7 @@ export default class TicketNew extends React.Component {
       case "1": u="critical"; break
       case "2": u="high"; break
       case "3": u="average"; break
-      case "4": u="low"; break 
+      case "4": u="low"; break
     }
     this.setState({urgency: u})
     return u
@@ -54,7 +54,7 @@ export default class TicketNew extends React.Component {
         {
           desiredResolutionDate:this.state.desiredResolutionDate,
           name: this.state.name,
-          description: this.state.discription,      
+          description: this.state.discription,
           state: status,
           category:this.state.category,
           comment: this.state.comment,
@@ -63,7 +63,7 @@ export default class TicketNew extends React.Component {
         JSON.parse(localStorage.AuthHeader)
       )
       .then((responce) => {
-       
+
      window.location.href='/tickets'
       })
       .catch((error) => {

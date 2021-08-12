@@ -5,12 +5,15 @@ import Table from "../common/Table";
 export default class TicketsView extends React.Component {
   constructor(props) {
     super(props);
-    
+    this.state={
+    classMyBtn:this.props.btnMyTClass,
+    classAllBtn:this.props.btnAllTClass
+    }
   }
   
   render() {
-    console.log(this.props.btnAllTClass)
-    console.log(this.props.btnMyTClass)
+ console.log(this.state.classMyBtn)
+ console.log(this.state.classAllBtn)
     return (
       <div>
         <div class="container ">
@@ -29,7 +32,7 @@ export default class TicketsView extends React.Component {
           <div className="row mt-5">
             <div className="col-6 ">
               <Button lable="All Tickets" className={this.props.btnAllTClass}
-               id='btnAllT' onClick={this.props.nClickBtnAllT}></Button>
+               id='btnAllT' onClick={this.props.onClickBtnAllT}></Button>
             </div>
             <div className="col-6">
               <Button lable="My Tickets" className={this.props.btnMyTClass}

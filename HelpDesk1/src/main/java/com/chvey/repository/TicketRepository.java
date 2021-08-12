@@ -60,7 +60,7 @@ public class TicketRepository {
         return (Long)sessionFactory.getCurrentSession()
                 .save(ticket);
     }
-    public List<Ticket> test (int userId){
+    public List<Ticket> findMyTicketsManager (int userId){
         return sessionFactory.getCurrentSession()
                 .createQuery("from Ticket where owner_id=:ownerId " +
                         "or (approver_id=:approverId and state_id=:Approved)" +
@@ -68,6 +68,21 @@ public class TicketRepository {
                 .setParameter("ownerId",userId)
                 .setParameter("approverId",userId)
                 .setParameter("Approved",State.APPROVED.ordinal())
+                .getResultList();
+    }
+    public List<Ticket> findAllTicketsManager (int userId){
+        return sessionFactory.getCurrentSession()
+                .createQuery("from Ticket where owner_id=:ownewId " +
+                        "or (from Ticket where state_id = 1) " +
+                        "or (from Ticket where approver_id=:approverId and state_id in(:Approved,:Declined,:Cancelled,:in_Progress,:Done) " +
+                        "ORDER BY urgency_id, desired_resolution_date")
+                .setParameter("ownerId",userId)
+                .setParameter("approverId", userId)
+                .setParameter("Approved", State.APPROVED.ordinal())
+                .setParameter("Declined", State.DECLINED.ordinal())
+                .setParameter("Cancelled", State.DECLINED.ordinal())
+                .setParameter("in_Progress", State.IN_PROGRESS.ordinal())
+                .setParameter("Done", State.DONE.ordinal())
                 .getResultList();
     }
 

@@ -41,9 +41,7 @@ public class TicketService {
         if(user.getRole()==Role.EMPLOYEE){
             return ticketRepository.findTicketsByUserId(user.getId());
         }else if (user.getRole()==Role.MANAGER){
-            List<Ticket> tickets = ticketRepository.findTicketsByUserId(user.getId());
-
-            return ticketRepository.test(user.getId());
+            return ticketRepository.findMyTicketsManager(user.getId());
         }
         return ticketRepository.findTicketsByAssigneeId(user.getId());
     }

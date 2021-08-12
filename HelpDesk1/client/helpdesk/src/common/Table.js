@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default class Table extends React.Component {
   constructor(props) {
@@ -11,7 +11,8 @@ export default class Table extends React.Component {
           <thead>
             <tr className="table-active">
               <th>ID
-                <i className='fas fa-sort'></i>
+              <i className="fas fa-caret-up"></i>
+              <i className="fas fa-caret-down"></i>
               </th>
               <th>Name</th>
               <th>Desired Date</th>
@@ -23,7 +24,9 @@ export default class Table extends React.Component {
           <tbody>
             {this.props.tickets.map((t) => (
               <tr>
-                <th>{t.id}</th>
+                <th>{t.id}
+                <i className="fas fa-caret-up"></i>
+                <i className="fas fa-caret-down"></i></th>
                 <th>{t.name}</th>
                 <th>
                   {t.desiredResolutionDate &&

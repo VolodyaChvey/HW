@@ -1,19 +1,19 @@
 import React from "react";
 
 class Button extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      class: this.props.className,
-    };
-  }
+    constructor(props) {
+        super(props)
+        this.state = {
+           
+        }
+    }
 
   render() {
     return (
       <div className="d-grid gap-2 ">
         <button
           type={this.props.type}
-          className={this.state.class}
+          className={this.props.className}
           value={this.props.value}
           onClick={this.props.onClick}
         >
@@ -24,3 +24,4 @@ class Button extends React.Component {
   }
 }
 export default Button;
+
