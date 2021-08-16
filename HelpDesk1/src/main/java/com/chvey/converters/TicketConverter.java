@@ -62,8 +62,8 @@ public class TicketConverter {
 
     public static void main(String[] args) {
 
-        int nn = 1;
-        Urgency ld ;
-       // System.out.println(ld);
+        String nn = "1";
+      Urgency ld ;
+        System.out.println();
     }
 }

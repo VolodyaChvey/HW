@@ -7,8 +7,9 @@ export default class LableTwo extends React.Component{
 
       render(){
           return(
-              <div>
-                  <h4 style={}>{this.props.leble1}we</h4>
+              <div className="d-grid gap-2 ">
+                  <span className='text-right'>{this.props.lable}</span>
+                  <span>{this.props.meaning}</span>
               </div>
           )
       }

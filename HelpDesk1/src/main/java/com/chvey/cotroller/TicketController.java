@@ -38,8 +38,14 @@ public class TicketController {
 
     @PostMapping()
     public ResponseEntity toSaveTicket(Principal principal, @RequestBody TicketDto ticketDto) {
-        TicketDto cl=ticketConverter.toDto(ticketService.getSaveTicket(principal.getName(), ticketConverter.toEntity(ticketDto)));
-        System.out.println(cl);
-        return ResponseEntity.ok(cl);
+        return ResponseEntity.ok(ticketConverter.toDto(ticketService.getSaveTicket(principal.getName(), ticketConverter.toEntity(ticketDto))));
+    }
+    @GetMapping(value = "/{id}")
+    public ResponseEntity getTicketById(@PathVariable Long id){
+        return ResponseEntity.ok(ticketConverter.toDto(ticketService.getTicketById(id)));
+    }
+    @PutMapping(value = "/{id}")
+    public void updateTicket(@RequestBody TicketDto ticketDto){
+        ticketService.updateTicket(ticketConverter.toEntity(ticketDto));
     }
 }

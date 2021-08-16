@@ -12,8 +12,7 @@ export default class TicketsView extends React.Component {
   }
   
   render() {
- console.log(this.state.classMyBtn)
- console.log(this.state.classAllBtn)
+
     return (
       <div>
         <div class="container ">
@@ -46,7 +45,7 @@ export default class TicketsView extends React.Component {
             <div className="col-8 "></div>
           </div>
         </div>
-        <Table tickets={this.props.tickets}></Table>
+        <Table tickets={this.props.tickets} toHistory={this.props.toHistory}></Table>
       </div>
     );
   }

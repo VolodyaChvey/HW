@@ -3,25 +3,24 @@ import Button from "../common/Button";
 import LabelTextarea from "../common/LabelTextarea";
 import LabelInputTicket from "../common/LabelInputTicket";
 
-import Title from "../common/Title";
-
-export default class TicketNewView extends React.Component {
+export default class EditTicketView extends React.Component {
   constructor(props) {
     super(props);
   }
+
   render() {
     return (
       <div className="container">
-        <div className="row">
-          <div className="col-2 mt-4">
+        <div className="row my-4">
+          <div className="col-2 mt-1">
             <Button
-              lable="Ticket List"
+              lable="Ticket Overview"
               className="btn-success"
-              onClick={this.props.toTicketList}
+              onClick={this.props.toTicketOverview}
             ></Button>
           </div>
           <div className="col-4">
-            <Title title="Create new Ticket"></Title>
+            <h2 style={{textAlign:'center'}}>Edit Ticket ({this.props.id})</h2>
           </div>
           <div className="col-6"></div>
         </div>
@@ -55,8 +54,8 @@ export default class TicketNewView extends React.Component {
           onChange={this.props.onHandleChange}
         ></LabelInputTicket>
         <LabelTextarea
-          lable="Discription"
-          name="discription"
+          lable="Description"
+          name="description"
           onChange={this.props.onHandleChange}
         ></LabelTextarea>
         <div className="row my-3">
@@ -89,7 +88,7 @@ export default class TicketNewView extends React.Component {
           <div className="col-4 d-grid gap-2">
             <input
               type="date"
-              name='desiredResolutionDate'
+              name="desiredResolutionDate"
               onChange={this.props.onHandleChange}
               min={new Date().toISOString().substr(0, 10)}
             ></input>
@@ -107,22 +106,28 @@ export default class TicketNewView extends React.Component {
           <div className="col-5"></div>
         </div>
 
-        <LabelTextarea lable="Comment"
-          name='comment'
-          onChange={this.props.onHandleChange}></LabelTextarea>
+        <LabelTextarea
+          lable="Comment"
+          name="comment"
+          onChange={this.props.onHandleChange}
+        ></LabelTextarea>
 
         <div className="row mt-5">
           <div className="col-8"></div>
           <div className="col-2">
-            <Button lable="Save as Draft" 
-            value='draft'
-            onClick={this.props.onSave}></Button>
+            <Button
+              lable="Save as Draft"
+              value="draft"
+              onClick={this.props.onUpdate}
+            ></Button>
           </div>
           <div className="col-2">
-            <Button lable="Submit" 
-            value='new'
-            onClick={this.props.onSave}
-            className="btn-success"></Button>
+            <Button
+              lable="Submit"
+              value="new"
+              onClick={this.props.onUpdate}
+              className="btn-success"
+            ></Button>
           </div>
         </div>
       </div>

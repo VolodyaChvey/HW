@@ -5,79 +5,57 @@ import axios from "axios";
 export default class TicketNew extends React.Component {
   constructor(props) {
     super(props);
-    this.state={
+    this.state = {
+      state: null,
       category: null,
-      name:null,
-      urgency:null,
-      desiredResolutionDate:null,
-      discription:null,
-      comment:null
-    }
+      name: null,
+      urgency: null,
+      desiredResolutionDate: null,
+      discription: null,
+      comment: null,
+    };
     this.toTicketList = this.toTicketList.bind(this);
     this.onSave = this.onSave.bind(this);
-    this.onHandleChange=this.onHandleChange.bind(this);
-    this.onDraft=this.onDraft.bind(this)
-    this.onNew=this.onNew.bind(this)
-    this.onUrgency=this.onUrgency.bind(this)
+    this.onHandleChange = this.onHandleChange.bind(this);
   }
-  onHandleChange(e){
-    this.setState({[e.target.name]:e.target.value})
+  onHandleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
   toTicketList() {
     window.location.href = "/tickets";
   }
-  onDraft(){
-    this.onSave("draft")
 
-  }
-  onNew(){
-  this.onSave('new')
-  }
-
-  onUrgency(){
- var val=this.state.urgency;
-  var u;
-   switch(val){
-      case "1": u="critical"; break
-      case "2": u="high"; break
-      case "3": u="average"; break
-      case "4": u="low"; break
-    }
-    this.setState({urgency: u})
-    return u
-  }
-
-  onSave(status) {
+  onSave(e) {
+    var status = e.target.value;
+    this.setState({ state: status });
     axios
       .post(
         "http://localhost:8099/HelpDesk/tickets",
         {
-          desiredResolutionDate:this.state.desiredResolutionDate,
+          desiredResolutionDate: this.state.desiredResolutionDate,
           name: this.state.name,
           description: this.state.discription,
           state: status,
-          category:this.state.category,
+          category: this.state.category,
           comment: this.state.comment,
-          urgency:this.onUrgency()
+          urgency: this.state.urgency,
         },
         JSON.parse(localStorage.AuthHeader)
       )
       .then((responce) => {
-
-     window.location.href='/tickets'
+         window.location.href = "/tickets";
       })
-      .catch((error) => {
-
-      });
+      .catch((error) => {});
   }
   render() {
     return (
-      <TicketNewView
-        toTicketList={this.toTicketList}
-        onDraft={this.onDraft}
-        onNew={this.onNew}
-        onHandleChange={this.onHandleChange}
-      ></TicketNewView>
+      <div>
+        <TicketNewView
+          toTicketList={this.toTicketList}
+          onSave={this.onSave}
+          onHandleChange={this.onHandleChange}
+        ></TicketNewView>
+      </div>
     );
   }
 }

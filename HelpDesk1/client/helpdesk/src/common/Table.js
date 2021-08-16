@@ -1,10 +1,15 @@
 import React from 'react'
+import Button from './Button';
 
 export default class Table extends React.Component {
   constructor(props) {
     super(props);
+    
   }
+
   render() {
+   // <Button className="btn btn-link" value={t.id} 
+    //onClick={this.props.toHistory} lable={t.name}></Button>
     return (
       <div className="container">
         <table className="table table-bordered table-responsive table-hover">
@@ -22,12 +27,14 @@ export default class Table extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {this.props.tickets.map((t) => (
+            {this.props.tickets.map((t, i) => (
               <tr>
                 <th>{t.id}
                 <i className="fas fa-caret-up"></i>
                 <i className="fas fa-caret-down"></i></th>
-                <th>{t.name}</th>
+                <th>
+                 <a href={"/tickets/" + t.id}>{t.name}</a>
+                </th>
                 <th>
                   {t.desiredResolutionDate &&
                     new Date(t.desiredResolutionDate).toLocaleDateString('en-GB')}

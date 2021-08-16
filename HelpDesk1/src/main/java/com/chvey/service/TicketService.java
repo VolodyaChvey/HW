@@ -25,10 +25,8 @@ public class TicketService {
         if (user.getRole() == Role.EMPLOYEE) {
             return ticketRepository.findTicketsByUserId(user.getId());
         } else if (user.getRole() == Role.MANAGER) {
-            List<Ticket> tickets = ticketRepository.findTicketsByUserId(user.getId());
-            tickets.addAll(ticketRepository.findTicketsByApproverId(user.getId()));
-            tickets.addAll(ticketRepository.findTicketsByStateNew());
-            return tickets;
+
+            return ticketRepository.findAllTicketsManager(user.getId());
         } else {
             List<Ticket> tickets = ticketRepository.findTicketsByAssigneeId(user.getId());
             tickets.addAll(ticketRepository.findTicketsByStateApproved());
@@ -36,22 +34,28 @@ public class TicketService {
         }
     }
 
-    public List<Ticket> getMyTickets(String email){
-        User user= userService.getUserByEmail(email);
-        if(user.getRole()==Role.EMPLOYEE){
+    public List<Ticket> getMyTickets(String email) {
+        User user = userService.getUserByEmail(email);
+        if (user.getRole() == Role.EMPLOYEE) {
             return ticketRepository.findTicketsByUserId(user.getId());
-        }else if (user.getRole()==Role.MANAGER){
+        } else if (user.getRole() == Role.MANAGER) {
             return ticketRepository.findMyTicketsManager(user.getId());
         }
         return ticketRepository.findTicketsByAssigneeId(user.getId());
     }
-    public Ticket getSaveTicket(String email,Ticket ticket){
+
+    public Ticket getSaveTicket(String email, Ticket ticket) {
         User user = userService.getUserByEmail(email);
         ticket.setOwner(user);
         ticket.setCreatedOn(LocalDate.now());
-
         ticket.setId(ticketRepository.saveTicket(ticket));
-
         return ticket;
+    }
+
+    public Ticket getTicketById(Long id) {
+        return ticketRepository.findTicketById(id);
+    }
+    public void updateTicket(Ticket ticket){
+        ticketRepository.updateTicket(ticket);
     }
 }
