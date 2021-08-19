@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import TicketsView from '../view/TicketView';
+import history from '../history';
 
 
 export default class TicketsContainer extends React.Component{
@@ -15,16 +16,18 @@ export default class TicketsContainer extends React.Component{
       this.toTicketNew=this.toTicketNew.bind(this)
       this.onClickBtnAllT=this.onClickBtnAllT.bind(this)
       this.onClickBtnMyT=this.onClickBtnMyT.bind(this)
-      this.toHistory=this.toHistory.bind(this)
+      this.goToOverview=this.goToOverview.bind(this)
 
     }
 toTicketNew(){
-  window.location.href='ticket/new'
+    history.push('/create')
  
 }
-toHistory(e){
-    var con=e.target.value
-    console.log(con)
+goToOverview(e){
+    history.push({
+        pathname:"/overview",
+        state:e.target.value
+    })
 }
 
 componentDidMount(){
@@ -59,7 +62,7 @@ render(){
     onClickBtnAllT={this.onClickBtnAllT}
     onClickBtnMyT={this.onClickBtnMyT}
     toTicketNew={this.toTicketNew}
-    toHistory={this.toHistory}></TicketsView>
+    goToOverview={this.goToOverview}></TicketsView>
 }
 
 }

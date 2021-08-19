@@ -1,7 +1,7 @@
 package com.chvey.domain;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -11,7 +11,7 @@ public class Comment {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column(nullable = false)
     private String text;
@@ -27,7 +27,7 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Long id, LocalDate date, String text, Ticket ticket, User user) {
+    public Comment(Long id, LocalDateTime date, String text, Ticket ticket, User user) {
         this.id = id;
         this.date = date;
         this.text = text;
@@ -41,14 +41,6 @@ public class Comment {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public String getText() {
@@ -75,19 +67,12 @@ public class Comment {
         this.user = user;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Comment comment = (Comment) o;
-        return id.equals(comment.id) &&
-                date.equals(comment.date) &&
-                text.equals(comment.text);
+    public LocalDateTime getDate() {
+        return date;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, date, text);
+    public void setDate(LocalDateTime date) {
+        this.date = date;
     }
 
     @Override
@@ -96,6 +81,25 @@ public class Comment {
                 "id=" + id +
                 ", date=" + date +
                 ", text='" + text + '\'' +
+                ", ticket=" + ticket +
+                ", user=" + user +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Comment comment = (Comment) o;
+        return id.equals(comment.id) &&
+                date.equals(comment.date) &&
+                text.equals(comment.text) &&
+                ticket.equals(comment.ticket) &&
+                user.equals(comment.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, date, text, ticket, user);
     }
 }

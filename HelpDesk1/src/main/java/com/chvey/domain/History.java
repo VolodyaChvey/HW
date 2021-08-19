@@ -1,7 +1,7 @@
 package com.chvey.domain;
 
 import javax.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
@@ -11,7 +11,7 @@ public class History {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDate date;
+    private LocalDateTime date;
 
     @Column(nullable = false)
     private String action;
@@ -30,7 +30,7 @@ public class History {
     public History() {
     }
 
-    public History(Long id, LocalDate date, String action, String description, Ticket ticket, User user) {
+    public History(Long id, LocalDateTime date, String action, String description, Ticket ticket, User user) {
         this.id = id;
         this.date = date;
         this.action = action;
@@ -45,14 +45,6 @@ public class History {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
     }
 
     public String getAction() {
@@ -87,6 +79,26 @@ public class History {
         this.user = user;
     }
 
+    public LocalDateTime getDate() {
+        return date;
+    }
+
+    public void setDate(LocalDateTime date) {
+        this.date = date;
+    }
+
+    @Override
+    public String toString() {
+        return "History{" +
+                "id=" + id +
+                ", date=" + date +
+                ", action='" + action + '\'' +
+                ", description='" + description + '\'' +
+                ", ticket=" + ticket +
+                ", user=" + user +
+                '}';
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -103,17 +115,5 @@ public class History {
     @Override
     public int hashCode() {
         return Objects.hash(id, date, action, description, ticket, user);
-    }
-
-    @Override
-    public String toString() {
-        return "History{" +
-                "id=" + id +
-                ", date=" + date +
-                ", action='" + action + '\'' +
-                ", description='" + description + '\'' +
-                ", ticket=" + ticket +
-                ", user=" + user +
-                '}';
     }
 }

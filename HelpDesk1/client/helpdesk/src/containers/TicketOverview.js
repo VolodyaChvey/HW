@@ -1,47 +1,88 @@
-import React from "react"
-import TicketOverviewView from "../view/TicketOverviewView"
-import axios from "axios"
+import React from "react";
+import TicketOverviewView from "../view/TicketOverviewView";
+import axios from "axios";
+import history from "../history";
 
-export default class TicketOverview extends React.Component{
-    constructor(props){
-        super(props)
-        this.state={
-            id:6,
-            ticket:null,
-            btnActiv: true
+export default class TicketOverview extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      id: this.props.location.state,
+      ticket: {},
+      history: [],
+      comments: [],
+      btnActiv: true,
+    };
+    this.onClickBtn = this.onClickBtn.bind(this);
+    this.toEdit = this.toEdit.bind(this);
+    this.goToTickets = this.goToTickets.bind(this);
+    this.onAddComment = this.onAddComment.bind(this);
+  }
+  componentDidMount() {
+    axios
+      .get(
+        "http://localhost:8099/HelpDesk/tickets/" + this.state.id,
+        JSON.parse(localStorage.AuthHeader)
+      )
+      .then((resp) => {
+        this.setState({ticket: resp.data });
+      });
+      axios
+      .get(
+        "http://localhost:8099/HelpDesk/tickets/" + this.state.id +"/history",
+        JSON.parse(localStorage.AuthHeader)
+      )
+      .then((resp) => {
+        this.setState({history: resp.data });
+      });
+      axios
+      .get(
+        "http://localhost:8099/HelpDesk/tickets/" + this.state.id +"/comments",
+        JSON.parse(localStorage.AuthHeader)
+      )
+      .then((resp) => {
+        this.setState({comments: resp.data });
+      });
+  }
+  toEdit() {
+    history.push({
+      pathname: "/edit",
+      state: this.state.id,
+    });
+  }
+  goToTickets() {
+    history.push("/tickets");
+  }
+
+  onClickBtn(e) {
+    e.target.value === "history"
+      ? this.setState({ btnActiv: true })
+      : this.setState({ btnActiv: false });
+  }
+  onAddComment(){
+
+  }
+
+  render() {
+    var btnClassPrimary = "btn-primary";
+    var btnClassDefault = "btn-default";
+    return (
+      <TicketOverviewView
+        history={this.state.history ? this.state.history : []}
+        comments={this.state.comments ? this.state.comments : []}
+        ticket={this.state.ticket ? this.state.ticket : {}}
+        addComment={this.onAddComment}
+        onClickBtn={this.onClickBtn}
+        ActiveHistory={this.state.btnActiv}
+        classBtnHistory={
+          this.state.btnActiv ? btnClassPrimary : btnClassDefault
         }
-        this.onClickBtn=this.onClickBtn.bind(this);
-        this.toEdit=this.toEdit.bind(this);
-    }
-    componentDidMount(){
-        axios.get('http://localhost:8099/HelpDesk/tickets/' + this.state.id, JSON.parse(localStorage.AuthHeader))
-        .then((resp)=>{
-            this.setState({ticket:resp.data})
-            console.log(this.state.ticket)
+        classBtnComments={
+          this.state.btnActiv ? btnClassDefault : btnClassPrimary
         }
-    
-        )
-    }
-    toEdit(){
-        window.location.href='/ticket-edit'
-    }
-
-    onClickBtn(e){
-        (e.target.value==='history')?this.setState({btnActiv: true}):this.setState({btnActiv: false})
-    }
-
-    render(){
-        var btnClassPrimary='btn-primary';
-        var btnClassDefault='btn-default';
-        return(
-            <TicketOverviewView
-                ticket={this.state.ticket?this.state.ticket:{}}
-                onClickBtn={this.onClickBtn}
-                ActiveHistory={this.state.btnActiv}
-                classBtnHistory={this.state.btnActiv?btnClassPrimary:btnClassDefault}
-                classBtnComments={this.state.btnActiv?btnClassDefault:btnClassPrimary}
-                toEdit={this.toEdit}
-            ></TicketOverviewView>
-        )
-    }
+        toEdit={this.toEdit}
+        goToTickets={this.goToTickets}
+      ></TicketOverviewView>
+    );
+  }
 }

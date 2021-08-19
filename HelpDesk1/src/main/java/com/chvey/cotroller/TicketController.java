@@ -3,7 +3,6 @@ package com.chvey.cotroller;
 import com.chvey.converters.TicketConverter;
 import com.chvey.dto.TicketDto;
 import com.chvey.service.TicketService;
-import com.chvey.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,13 +12,13 @@ import java.security.Principal;
 @RestController
 @RequestMapping("/tickets")
 public class TicketController {
-    private UserService userService;
+
     private TicketService ticketService;
     private TicketConverter ticketConverter;
 
     @Autowired
-    public TicketController(UserService userService, TicketService ticketService, TicketConverter ticketConverter) {
-        this.userService = userService;
+    public TicketController(TicketService ticketService, TicketConverter ticketConverter) {
+
         this.ticketService = ticketService;
         this.ticketConverter = ticketConverter;
     }
@@ -46,6 +45,6 @@ public class TicketController {
     }
     @PutMapping(value = "/{id}")
     public void updateTicket(@RequestBody TicketDto ticketDto){
-        ticketService.updateTicket(ticketConverter.toEntity(ticketDto));
+        ticketService.editTicket(ticketConverter.toEntity(ticketDto));
     }
 }

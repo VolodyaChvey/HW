@@ -13,10 +13,11 @@ export default class EditTicketView extends React.Component {
       <div className="container">
         <div className="row my-4">
           <div className="col-2 mt-1">
-            <Button
+          <Button
               lable="Ticket Overview"
               className="btn-success"
-              onClick={this.props.toTicketOverview}
+              onClick={this.props.goToOverview}
+              value={this.props.id}
             ></Button>
           </div>
           <div className="col-4">

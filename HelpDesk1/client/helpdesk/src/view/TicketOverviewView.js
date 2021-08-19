@@ -25,7 +25,7 @@ export default class TicketOverviewView extends React.Component {
   render() {
   //  t.desiredResolutionDate &&
    //                 new Date(t.desiredResolutionDate).toLocaleDateString('en-GB')
-    console.log(this.props.ticket.id);
+    
     return (
       <div className="container">
         <div className="row mt-5">
@@ -35,8 +35,12 @@ export default class TicketOverviewView extends React.Component {
         </div>
 
         <div className="row">
-          <div className="col-2 ">
-            <Button lable="Ticket List" className="btn-success my-2"></Button>
+        <div className="col-2 ">
+            <Button
+              lable="Ticket List"
+              className="btn-success my-2"
+              onClick={this.props.goToTickets}
+            ></Button>
           </div>
 
           <div className="col-8">
@@ -176,9 +180,14 @@ export default class TicketOverviewView extends React.Component {
           </div>
         </div>
         {this.props.ActiveHistory ? (
-          <TableHistory></TableHistory>
+          <TableHistory
+             history={this.props.history}
+          ></TableHistory>
         ) : (
-          <TableComments></TableComments>
+          <TableComments
+              comments={this.props.comments}
+              addComment={this.props.addComment}
+          ></TableComments>
         )}
       </div>
     );

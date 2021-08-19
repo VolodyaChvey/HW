@@ -8,7 +8,7 @@ export default class TableHistory extends React.Component {
   render() {
     return (
       <div className="conteiner">
-        <h4 color='info'>Show All</h4>
+        <h4 color="info">Show All</h4>
         <table className="table table-bordered table-responsive table-hover">
           <thead>
             <tr className="table-active">
@@ -19,12 +19,22 @@ export default class TableHistory extends React.Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <th>{}</th>
-              <th></th>
-              <th>{}</th>
-              <th>{}</th>
-            </tr>
+            {this.props.history.map((h,i) => (
+              <tr>
+                <th>{new Date(h.date).toLocaleString("en-US",{
+                  year:"numeric",
+                  month:"short",
+                  day:"numeric",
+                  hour:"2-digit",
+                  minute:"2-digit",
+                  second:'2-digit',
+                  hour12:false})}</th>
+                <th>{h.userDto.firstName +" "+  h.userDto.lastName} </th>
+                <th>{h.action}</th>
+                <th>{h.description}</th>
+              </tr>
+            ))}
+           
           </tbody>
         </table>
       </div>

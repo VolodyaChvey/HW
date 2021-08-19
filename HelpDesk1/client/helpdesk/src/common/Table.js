@@ -1,23 +1,23 @@
-import React from 'react'
-import Button from './Button';
+import React from "react";
+import Button from "./Button";
 
 export default class Table extends React.Component {
   constructor(props) {
     super(props);
-    
   }
 
   render() {
-   // <Button className="btn btn-link" value={t.id} 
+    // <Button className="btn btn-link" value={t.id}
     //onClick={this.props.toHistory} lable={t.name}></Button>
     return (
       <div className="container">
         <table className="table table-bordered table-responsive table-hover">
           <thead>
             <tr className="table-active">
-              <th>ID
-              <i className="fas fa-caret-up"></i>
-              <i className="fas fa-caret-down"></i>
+              <th>
+                ID
+                <i className="fas fa-caret-up"></i>
+                <i className="fas fa-caret-down"></i>
               </th>
               <th>Name</th>
               <th>Desired Date</th>
@@ -29,15 +29,22 @@ export default class Table extends React.Component {
           <tbody>
             {this.props.tickets.map((t, i) => (
               <tr>
-                <th>{t.id}
-                <i className="fas fa-caret-up"></i>
-                <i className="fas fa-caret-down"></i></th>
                 <th>
-                 <a href={"/tickets/" + t.id}>{t.name}</a>
+                  {t.id}
+                  <i className="fas fa-caret-up"></i>
+                  <i className="fas fa-caret-down"></i>
+                </th>
+                <th>
+                  <Button
+                    className="btn btn-link"
+                    value={t.id}
+                    onClick={this.props.goToOverview}
+                    lable={t.name}
+                  ></Button>
                 </th>
                 <th>
                   {t.desiredResolutionDate &&
-                    new Date(t.desiredResolutionDate).toLocaleDateString('en-GB')}
+                    new Date(t.desiredResolutionDate).toLocaleDateString("en-GB")}
                 </th>
                 <th>{t.urgency}</th>
                 <th>{t.state}</th>

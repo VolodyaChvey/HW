@@ -19,6 +19,8 @@ public class TicketService {
     private TicketRepository ticketRepository;
     @Autowired
     private UserService userService;
+    @Autowired
+    private HistoryService historyService;
 
     public List<Ticket> getTicketsByUserId(String email) {
         User user = userService.getUserByEmail(email);
@@ -49,13 +51,15 @@ public class TicketService {
         ticket.setOwner(user);
         ticket.setCreatedOn(LocalDate.now());
         ticket.setId(ticketRepository.saveTicket(ticket));
+        historyService.createTicketHistory(ticket,user);
         return ticket;
     }
 
     public Ticket getTicketById(Long id) {
         return ticketRepository.findTicketById(id);
     }
-    public void updateTicket(Ticket ticket){
+    public void editTicket(Ticket ticket){
+        historyService.editTicketHistory(ticket, ticket.getOwner());
         ticketRepository.updateTicket(ticket);
     }
 }

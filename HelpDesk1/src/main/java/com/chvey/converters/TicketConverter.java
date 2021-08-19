@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static java.util.Objects.nonNull;
 
@@ -61,9 +62,9 @@ public class TicketConverter {
     }
 
     public static void main(String[] args) {
+    LocalDateTime ld= LocalDateTime.now();
+        String nn = "";
 
-        String nn = "1";
-      Urgency ld ;
-        System.out.println();
+        System.out.println(ld);
     }
 }
