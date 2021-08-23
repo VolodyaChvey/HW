@@ -19,10 +19,9 @@ export default class EditTicket extends React.Component {
     for (var key in data) {
       this.setState({ [key]: data[key] });
     }
-    console.log(this.state);
   }
   onHandleChange(e) {
-    console.log(e.target.name);
+    
     this.setState({ [e.target.name]: e.target.value });
   }
   goToOverview(e) {
@@ -62,6 +61,19 @@ export default class EditTicket extends React.Component {
         JSON.parse(localStorage.AuthHeader)
       )
       .then((responce) => {
+        if(this.state.text){
+          axios
+          .post(
+            "http://localhost:8099/HelpDesk/tickets/"+ this.state.id +"/comments",
+            {
+              text: this.state.text,
+              ticketId: this.state.id
+            },
+            JSON.parse(localStorage.AuthHeader)
+          )
+          .then((responce) => {
+          })
+        }
         window.location.href = "/tickets";
       })
       .catch((error) => {});

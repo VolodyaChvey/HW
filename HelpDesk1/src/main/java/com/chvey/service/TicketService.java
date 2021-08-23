@@ -27,12 +27,9 @@ public class TicketService {
         if (user.getRole() == Role.EMPLOYEE) {
             return ticketRepository.findTicketsByUserId(user.getId());
         } else if (user.getRole() == Role.MANAGER) {
-
             return ticketRepository.findAllTicketsManager(user.getId());
         } else {
-            List<Ticket> tickets = ticketRepository.findTicketsByAssigneeId(user.getId());
-            tickets.addAll(ticketRepository.findTicketsByStateApproved());
-            return tickets;
+            return ticketRepository.findTicketsByAssigneeId(user.getId());
         }
     }
 
@@ -58,8 +55,10 @@ public class TicketService {
     public Ticket getTicketById(Long id) {
         return ticketRepository.findTicketById(id);
     }
-    public void editTicket(Ticket ticket){
-        historyService.editTicketHistory(ticket, ticket.getOwner());
+    public void editTicket(String email, Ticket ticket){
+       User user = userService.getUserByEmail(email);
+       // ticketRepository.findTicketById(ticket.getId());
+        historyService.editTicketHistory(ticket, user);
         ticketRepository.updateTicket(ticket);
     }
 }

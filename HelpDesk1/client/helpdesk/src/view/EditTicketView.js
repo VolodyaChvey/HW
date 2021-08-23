@@ -109,7 +109,7 @@ export default class EditTicketView extends React.Component {
 
         <LabelTextarea
           lable="Comment"
-          name="comment"
+          name="text"
           onChange={this.props.onHandleChange}
         ></LabelTextarea>
 

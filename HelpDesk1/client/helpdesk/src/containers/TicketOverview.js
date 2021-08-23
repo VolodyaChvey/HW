@@ -17,6 +17,7 @@ export default class TicketOverview extends React.Component {
     this.toEdit = this.toEdit.bind(this);
     this.goToTickets = this.goToTickets.bind(this);
     this.onAddComment = this.onAddComment.bind(this);
+    this.onHandleChange = this.onHandleChange.bind(this);
   }
   componentDidMount() {
     axios
@@ -60,7 +61,23 @@ export default class TicketOverview extends React.Component {
       : this.setState({ btnActiv: false });
   }
   onAddComment(){
-
+    axios
+    .post(
+      "http://localhost:8099/HelpDesk/tickets/"+ this.state.id +"/comments",
+      {
+        text: this.state.text,
+        ticketId: this.state.id
+      },
+      JSON.parse(localStorage.AuthHeader)
+    )
+    .then((responce) => {
+      this.setState({comments:[...this.state.comments,responce.data]})
+    
+    })
+    
+  }
+  onHandleChange(e) {
+    this.setState({ [e.target.name]: e.target.value });
   }
 
   render() {
@@ -73,6 +90,7 @@ export default class TicketOverview extends React.Component {
         ticket={this.state.ticket ? this.state.ticket : {}}
         addComment={this.onAddComment}
         onClickBtn={this.onClickBtn}
+        onHandleChange={this.onHandleChange}
         ActiveHistory={this.state.btnActiv}
         classBtnHistory={
           this.state.btnActiv ? btnClassPrimary : btnClassDefault

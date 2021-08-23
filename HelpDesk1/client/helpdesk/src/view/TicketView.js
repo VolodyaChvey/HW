@@ -45,7 +45,11 @@ export default class TicketsView extends React.Component {
             <div className="col-8 "></div>
           </div>
         </div>
-        <Table tickets={this.props.tickets} goToOverview={this.props.goToOverview}></Table>
+        <Table tickets={this.props.tickets}
+          action={this.props.action}
+         goToOverview={this.props.goToOverview}
+         onChangeState={this.props.onChangeState}
+         onChangeAction={this.props.onChangeAction}></Table>
       </div>
     );
   }

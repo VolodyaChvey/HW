@@ -44,7 +44,7 @@ public class TicketController {
         return ResponseEntity.ok(ticketConverter.toDto(ticketService.getTicketById(id)));
     }
     @PutMapping(value = "/{id}")
-    public void updateTicket(@RequestBody TicketDto ticketDto){
-        ticketService.editTicket(ticketConverter.toEntity(ticketDto));
+    public void updateTicket(Principal principal,@RequestBody TicketDto ticketDto){
+        ticketService.editTicket(principal.getName(), ticketConverter.toEntity(ticketDto));
     }
 }

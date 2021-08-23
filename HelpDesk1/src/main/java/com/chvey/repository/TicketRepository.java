@@ -62,10 +62,12 @@ public class TicketRepository {
 
     public List<Ticket> findTicketsByAssigneeId(int userId) {
         return sessionFactory.getCurrentSession()
-                .createQuery("from Ticket where assignee_id=:assigneeId and state_id in(:in_Progress,:Done")
+                .createQuery("from Ticket where assignee_id=:assigneeId and state_id in(:in_Progress,:Done) " +
+                        "or (state_id=:Approved)")
                 .setParameter("assigneeId", userId)
                 .setParameter("in_Progress", State.IN_PROGRESS.ordinal())
                 .setParameter("Done", State.DONE.ordinal())
+                .setParameter("Approved",State.APPROVED.ordinal())
                 .getResultList();
     }
 

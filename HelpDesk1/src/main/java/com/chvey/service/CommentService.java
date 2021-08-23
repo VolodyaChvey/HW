@@ -21,9 +21,11 @@ public class CommentService {
     public List<Comment> getCommentsByTicketId(Long id) {
         return commentRepository.findCommentsByTicketId(id);
     }
-    public Long saveComment(Comment comment,String email){
+    public Comment saveComment(Comment comment,String email){
         User user = userService.getUserByEmail(email);
+        comment.setUser(user);
         comment.setDate(LocalDateTime.now());
-        return commentRepository.saveComment(comment);
+        comment.setId(commentRepository.saveComment(comment));
+        return comment;
     }
 }

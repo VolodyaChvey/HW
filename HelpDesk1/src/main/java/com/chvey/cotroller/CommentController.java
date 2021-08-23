@@ -1,13 +1,13 @@
 package com.chvey.cotroller;
 
 import com.chvey.converters.CommentConverter;
+import com.chvey.dto.CommentDto;
 import com.chvey.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @RestController
 @RequestMapping("/tickets")
@@ -27,4 +27,9 @@ public class CommentController {
                 .stream().map(commentConverter::toDto).toArray());
     }
 
+    @PostMapping(value = "/{ticketId}/comments")
+    public ResponseEntity saveComment(@RequestBody CommentDto commentDto, Principal principal) {
+        return ResponseEntity.ok(commentConverter.toDto(
+                commentService.saveComment(commentConverter.toEntity(commentDto), principal.getName())));
+    }
 }

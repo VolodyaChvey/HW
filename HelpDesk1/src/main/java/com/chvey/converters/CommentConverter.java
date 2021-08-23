@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
+import static java.util.Objects.nonNull;
+
 @Component
 public class CommentConverter {
     @Autowired
@@ -15,7 +17,7 @@ public class CommentConverter {
     @Autowired
     private TicketService ticketService;
 
-    public CommentDto toDto(Comment comment){
+    public CommentDto toDto(Comment comment) {
         CommentDto commentDto = new CommentDto();
         commentDto.setId(comment.getId());
         commentDto.setDate(comment.getDate().toString());
@@ -24,13 +26,14 @@ public class CommentConverter {
         commentDto.setUserDto(userConverter.toDto(comment.getUser()));
         return commentDto;
     }
-    public Comment toEntity(CommentDto commentDto){
+
+    public Comment toEntity(CommentDto commentDto) {
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
         comment.setText(commentDto.getText());
-        comment.setUser(userConverter.toEntity(commentDto.getUserDto()));
+        comment.setUser(nonNull(commentDto.getUserDto()) ? userConverter.toEntity(commentDto.getUserDto()) : null);
         comment.setTicket(ticketService.getTicketById(commentDto.getTicketId()));
-        comment.setDate(LocalDateTime.parse(commentDto.getDate()));
+        comment.setDate(nonNull(commentDto.getDate()) ? LocalDateTime.parse(commentDto.getDate()) : null);
         return comment;
     }
 }

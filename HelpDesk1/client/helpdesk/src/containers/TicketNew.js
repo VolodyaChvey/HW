@@ -43,7 +43,20 @@ export default class TicketNew extends React.Component {
         JSON.parse(localStorage.AuthHeader)
       )
       .then((responce) => {
-         window.location.href = "/tickets";
+        if(this.state.text){
+          axios
+          .post(
+            "http://localhost:8099/HelpDesk/tickets/"+ responce.data.id +"/comments",
+            {
+              text: this.state.text,
+              ticketId: responce.data.id
+            },
+            JSON.parse(localStorage.AuthHeader)
+          )
+          .then((responce) => {
+          })
+        }
+        window.location.href = "/tickets";
       })
       .catch((error) => {});
   }

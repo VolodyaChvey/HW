@@ -108,7 +108,7 @@ export default class TicketNewView extends React.Component {
         </div>
 
         <LabelTextarea lable="Comment"
-          name='comment'
+          name='text'
           onChange={this.props.onHandleChange}></LabelTextarea>
 
         <div className="row mt-5">

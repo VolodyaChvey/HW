@@ -187,6 +187,7 @@ export default class TicketOverviewView extends React.Component {
           <TableComments
               comments={this.props.comments}
               addComment={this.props.addComment}
+              onHandleChange={this.props.onHandleChange}
           ></TableComments>
         )}
       </div>

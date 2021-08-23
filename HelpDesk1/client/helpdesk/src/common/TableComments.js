@@ -7,7 +7,7 @@ export default class TableComments extends React.Component {
   }
 
   render() {
-    console.log(this.props.comments)
+
     return (
       <div className="container">
         <h4 color="info">Show All</h4>
@@ -42,7 +42,7 @@ export default class TableComments extends React.Component {
 
         <div className="row">
           <div className="col-6 d-grid gap-2">
-            <textarea maxLength="500" name="text" onChange></textarea>
+            <textarea maxLength="500" name="text" onChange={this.props.onHandleChange}></textarea>
           </div>
 
           <div className="col-2 mt-4">

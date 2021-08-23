@@ -1,4 +1,5 @@
 import React from "react";
+import Action from "../common/Action";
 import Button from "./Button";
 
 export default class Table extends React.Component {
@@ -48,7 +49,12 @@ export default class Table extends React.Component {
                 </th>
                 <th>{t.urgency}</th>
                 <th>{t.state}</th>
-                <th></th>
+                <th>
+                <Action name={t.id}
+                  onChangeState={this.props.onChangeState}
+                  changeAction={this.props.onChangeAction(t)}
+                ></Action>
+                </th>
               </tr>
             ))}
           </tbody>
