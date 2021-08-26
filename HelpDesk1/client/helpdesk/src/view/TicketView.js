@@ -20,11 +20,11 @@ export default class TicketsView extends React.Component {
           <div className="row">
             <div className="col-8"></div>
             <div className="col-4">
-              <Button
+              {(this.props.user.role==="MANAGER"||this.props.user.role==="EMPLOYEE")&&<Button
                 lable="Create New Ticket"
                 className="btn-success btn-lg"
                 onClick={this.props.toTicketNew}
-              ></Button>
+              ></Button>}
             </div>
           </div>
           <div className="m-3"></div>
@@ -49,7 +49,8 @@ export default class TicketsView extends React.Component {
           action={this.props.action}
          goToOverview={this.props.goToOverview}
          onChangeState={this.props.onChangeState}
-         onChangeAction={this.props.onChangeAction}></Table>
+         onChangeAction={this.props.onChangeAction}
+         onSortIdUp={this.props.onSortIdUp}></Table>
       </div>
     );
   }

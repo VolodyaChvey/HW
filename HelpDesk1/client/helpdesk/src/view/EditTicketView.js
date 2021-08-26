@@ -9,6 +9,7 @@ export default class EditTicketView extends React.Component {
   }
 
   render() {
+    console.log(this.props)
     return (
       <div className="container">
         <div className="row my-4">
@@ -52,12 +53,14 @@ export default class EditTicketView extends React.Component {
         <LabelInputTicket
           label="Name"
           name="name"
+          placeholder={this.props.name}
           onChange={this.props.onHandleChange}
         ></LabelInputTicket>
         <LabelTextarea
           lable="Description"
           name="description"
           onChange={this.props.onHandleChange}
+          value={this.props.description}
         ></LabelTextarea>
         <div className="row my-3">
           <div className="col-3"></div>

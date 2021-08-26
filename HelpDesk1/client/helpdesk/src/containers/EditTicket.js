@@ -41,23 +41,12 @@ export default class EditTicket extends React.Component {
       });
   }
   onUpdate(e) {
-    var status = e.target.value;
-    console.log(this.state);
+    var ticket=this.state;
+    ticket.state=e.target.value;
     axios
       .put(
         "http://localhost:8099/HelpDesk/tickets/" + this.state.id,
-        {
-          id: this.state.id,
-          desiredResolutionDate: this.state.desiredResolutionDate,
-          name: this.state.name,
-          description: this.state.description,
-          state: status,
-          createdOn: this.state.createdOn,
-          owner: this.state.owner,
-          category: this.state.category,
-          comment: this.state.comment,
-          urgency: this.state.urgency,
-        },
+        ticket,
         JSON.parse(localStorage.AuthHeader)
       )
       .then((responce) => {
@@ -84,6 +73,8 @@ export default class EditTicket extends React.Component {
       <div>
         <EditTicketView
            id={this.state.id}
+           description={this.state.description}
+           name={this.state.name}
            onHandleChange={this.onHandleChange}
            onUpdate={this.onUpdate}
            goToOverview={this.goToOverview}

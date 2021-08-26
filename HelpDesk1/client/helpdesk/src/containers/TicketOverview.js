@@ -12,6 +12,7 @@ export default class TicketOverview extends React.Component {
       history: [],
       comments: [],
       btnActiv: true,
+      user:JSON.parse(localStorage.User)
     };
     this.onClickBtn = this.onClickBtn.bind(this);
     this.toEdit = this.toEdit.bind(this);
@@ -85,6 +86,7 @@ export default class TicketOverview extends React.Component {
     var btnClassDefault = "btn-default";
     return (
       <TicketOverviewView
+        user={this.state.user}
         history={this.state.history ? this.state.history : []}
         comments={this.state.comments ? this.state.comments : []}
         ticket={this.state.ticket ? this.state.ticket : {}}

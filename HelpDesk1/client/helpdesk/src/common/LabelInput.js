@@ -15,7 +15,7 @@ class LabelInput extends React.Component {
             </div>
             <div className='col-lg-8 mb-3 '>
                  <input name={name} type={type} placeholder={placeholder} onChange={onChange}
-                    className='w-100' />
+                    className='w-100'  />
             </div>
             
         </div>

@@ -25,7 +25,7 @@ public class HistoryService {
         return historyRepository.findHistoriesByTicketId(id);
     }
 
-    public Long createTicketHistory(Ticket ticket, User user){
+    public Long createTicketHistory(Ticket ticket, User user) {
         History history = new History();
         history.setDate(LocalDateTime.now());
         history.setTicket(ticket);
@@ -34,24 +34,38 @@ public class HistoryService {
         history.setAction("Ticket is created");
         return historyRepository.saveHistory(history);
     }
-    public Long editTicketHistory(Ticket ticket,User user){
+
+    public void editTicketHistory(Ticket ticket, User user) {
         History history = new History();
         history.setDate(LocalDateTime.now());
         history.setTicket(ticket);
         history.setUser(user);
         history.setDescription("Ticket is edited");
         history.setAction("Ticket is edited");
-        //statusChangedTicketHistory(ticket,user,ticketRepository.findTicketById(ticket.getId()).getState());
-        return historyRepository.saveHistory(history);
+        historyRepository.saveHistory(history);
+        if (ticket.getState() == State.NEW) {
+            statusChangedTicketEdit(ticket, user);
+        }
     }
-    public Long statusChangedTicketHistory(Ticket ticket,User user,State oldState){
+
+    public Long statusChangedTicketHistory(Ticket ticket, User user, State stateNew) {
         History history = new History();
         history.setDate(LocalDateTime.now());
         history.setTicket(ticket);
         history.setUser(user);
         history.setDescription(String.format("Ticket istatus is changed from '%s' to '%s'",
-                oldState.name(),ticket.getState().name()));
-        history.setAction("Ticket istatus is changed");
+                ticket.getState().name(), stateNew.name()));
+        history.setAction("Ticket status is changed");
+        return historyRepository.saveHistory(history);
+    }
+
+    private Long statusChangedTicketEdit(Ticket ticket, User user) {
+        History history = new History();
+        history.setDate(LocalDateTime.now());
+        history.setTicket(ticket);
+        history.setUser(user);
+        history.setDescription("Ticket istatus is changed from 'DRAFT' to 'NEW'");
+        history.setAction("Ticket status is changed");
         return historyRepository.saveHistory(history);
     }
 }

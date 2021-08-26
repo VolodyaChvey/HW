@@ -28,8 +28,9 @@ public class TicketController {
         return ResponseEntity.ok(ticketService.getTicketsByUserId(principal.getName())
                 .stream().map(ticketConverter::toDto).toArray());
     }
-    @GetMapping(value="/my")
-    public ResponseEntity getTicketsMy(Principal principal){
+
+    @GetMapping(value = "/my")
+    public ResponseEntity getTicketsMy(Principal principal) {
         return ResponseEntity.ok(ticketService.getMyTickets(principal.getName())
                 .stream().map(ticketConverter::toDto).toArray());
     }
@@ -39,12 +40,18 @@ public class TicketController {
     public ResponseEntity toSaveTicket(Principal principal, @RequestBody TicketDto ticketDto) {
         return ResponseEntity.ok(ticketConverter.toDto(ticketService.getSaveTicket(principal.getName(), ticketConverter.toEntity(ticketDto))));
     }
+
     @GetMapping(value = "/{id}")
-    public ResponseEntity getTicketById(@PathVariable Long id){
+    public ResponseEntity getTicketById(@PathVariable Long id) {
         return ResponseEntity.ok(ticketConverter.toDto(ticketService.getTicketById(id)));
     }
+
     @PutMapping(value = "/{id}")
-    public void updateTicket(Principal principal,@RequestBody TicketDto ticketDto){
+    public void updateTicket(Principal principal, @RequestBody TicketDto ticketDto) {
         ticketService.editTicket(principal.getName(), ticketConverter.toEntity(ticketDto));
+    }
+    @PutMapping(value = "/{id}/{status}")
+    public void changeTicket(Principal principal,@PathVariable Long id,@PathVariable String status) {
+        ticketService.changeTicketState(id,status,principal.getName());
     }
 }

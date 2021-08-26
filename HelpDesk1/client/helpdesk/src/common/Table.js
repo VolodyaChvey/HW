@@ -8,33 +8,44 @@ export default class Table extends React.Component {
   }
 
   render() {
-    // <Button className="btn btn-link" value={t.id}
-    //onClick={this.props.toHistory} lable={t.name}></Button>
+    
     return (
       <div className="container">
         <table className="table table-bordered table-responsive table-hover">
           <thead>
             <tr className="table-active">
               <th>
-                ID
+                ID &nbsp;
+                <i id="1" className="fas fa-caret-up" onClick={this.props.onSortIdUp}></i>
+                <i className="fas fa-caret-down"></i>
+              </th>
+              <th>
+                Name &nbsp;
                 <i className="fas fa-caret-up"></i>
                 <i className="fas fa-caret-down"></i>
               </th>
-              <th>Name</th>
-              <th>Desired Date</th>
-              <th>Urgency</th>
-              <th>Status</th>
+              <th>
+                Desired Date &nbsp;
+                <i className="fas fa-caret-up"></i>
+                <i className="fas fa-caret-down"></i>
+              </th>
+              <th>
+                Urgency &nbsp;
+                <i className="fas fa-caret-up"></i>
+                <i className="fas fa-caret-down"></i>
+              </th>
+              <th>
+                Status &nbsp;
+                <i className="fas fa-sort"></i>
+                <i className="fas fa-caret-down"></i>
+              </th>
               <th>Action</th>
             </tr>
           </thead>
           <tbody>
             {this.props.tickets.map((t, i) => (
               <tr>
-                <th>
-                  {t.id}
-                  <i className="fas fa-caret-up"></i>
-                  <i className="fas fa-caret-down"></i>
-                </th>
+                <th>{t.id}</th>
                 <th>
                   <Button
                     className="btn btn-link"
@@ -45,15 +56,18 @@ export default class Table extends React.Component {
                 </th>
                 <th>
                   {t.desiredResolutionDate &&
-                    new Date(t.desiredResolutionDate).toLocaleDateString("en-GB")}
+                    new Date(t.desiredResolutionDate).toLocaleDateString(
+                      "en-GB"
+                    )}
                 </th>
                 <th>{t.urgency}</th>
                 <th>{t.state}</th>
                 <th>
-                <Action name={t.id}
-                  onChangeState={this.props.onChangeState}
-                  changeAction={this.props.onChangeAction(t)}
-                ></Action>
+                  <Action
+                    name={t.id}
+                    onChangeState={this.props.onChangeState}
+                    changeAction={this.props.onChangeAction(t)}
+                  ></Action>
                 </th>
               </tr>
             ))}

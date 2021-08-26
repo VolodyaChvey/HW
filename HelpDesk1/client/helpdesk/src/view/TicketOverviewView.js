@@ -50,11 +50,12 @@ export default class TicketOverviewView extends React.Component {
           </div>
 
           <div className="col-2">
-            <Button
+            {(this.props.ticket.state==="DRAFT"&&(this.props.user.role==="MANAGER"||this.props.user.role==="EMPLOYEE"))
+            &&<Button
               lable="Edit"
               className="btn-success my-4"
               onClick={this.props.toEdit}
-            ></Button>
+            ></Button>}
           </div>
         </div>
 

@@ -20,6 +20,7 @@ export default class LabelTextarea extends React.Component {
             maxLength="500"
             name={this.props.name}
             onChange={this.props.onChange}
+            value={this.props.value}
           ></textarea>
         </div>
         <div className="col-2"></div>

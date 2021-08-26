@@ -1,6 +1,7 @@
 import React from "react";
 import TicketNewView from "../view/TicketNewView";
 import axios from "axios";
+import history from "../history";
 
 export default class TicketNew extends React.Component {
   constructor(props) {
@@ -26,20 +27,12 @@ export default class TicketNew extends React.Component {
   }
 
   onSave(e) {
-    var status = e.target.value;
-    this.setState({ state: status });
+    var ticket=this.state;
+    ticket.state=e.target.value;
     axios
       .post(
         "http://localhost:8099/HelpDesk/tickets",
-        {
-          desiredResolutionDate: this.state.desiredResolutionDate,
-          name: this.state.name,
-          description: this.state.discription,
-          state: status,
-          category: this.state.category,
-          comment: this.state.comment,
-          urgency: this.state.urgency,
-        },
+        ticket,
         JSON.parse(localStorage.AuthHeader)
       )
       .then((responce) => {
@@ -53,10 +46,9 @@ export default class TicketNew extends React.Component {
             },
             JSON.parse(localStorage.AuthHeader)
           )
-          .then((responce) => {
-          })
+          .then((responce) => {})
         }
-        window.location.href = "/tickets";
+       history.push("/tickets");
       })
       .catch((error) => {});
   }

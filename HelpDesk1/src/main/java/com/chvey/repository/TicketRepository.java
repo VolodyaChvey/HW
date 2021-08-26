@@ -1,6 +1,7 @@
 package com.chvey.repository;
 
 import com.chvey.domain.Ticket;
+import com.chvey.domain.User;
 import com.chvey.domain.enums.State;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,7 @@ public class TicketRepository {
                 .setParameter("assigneeId", userId)
                 .setParameter("in_Progress", State.IN_PROGRESS.ordinal())
                 .setParameter("Done", State.DONE.ordinal())
-                .setParameter("Approved",State.APPROVED.ordinal())
+                .setParameter("Approved", State.APPROVED.ordinal())
                 .getResultList();
     }
 
@@ -102,5 +103,28 @@ public class TicketRepository {
                 .setParameter("Done", State.DONE.ordinal())
                 .getResultList();
     }
+
+    public void updateStateTicket(Long id, State state) {
+        sessionFactory.getCurrentSession()
+                .createQuery("update Ticket SET state_id=:state where id=:id")
+                .setParameter("state",state.ordinal())
+                .setParameter("id",id)
+                .executeUpdate();
+    }
+    public void addApproverTicket(Long id, User user){
+        sessionFactory.getCurrentSession()
+                .createQuery("update Ticket set approver_id=:approverId where id=:id")
+                .setParameter("approverId",user.getId())
+                .setParameter("id",id)
+                .executeUpdate();
+    }
+    public void addAssigneeticket(Long id, User user){
+        sessionFactory.getCurrentSession()
+                .createQuery("update Ticket set assignee_id=:assigneeId where id=:id")
+                .setParameter("assigneeId",user.getId())
+                .setParameter("id",id)
+                .executeUpdate();
+    }
+
 
 }

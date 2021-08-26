@@ -16,7 +16,8 @@ public class HistoryRepository {
 
     public List<History> findHistoriesByTicketId(Long id){
         return sessionFactory.getCurrentSession()
-                .createQuery("from History where ticket_id=:id")
+                .createQuery("from History where ticket_id=:id " +
+                        "order by date desc")
                 .setParameter("id",id)
                 .getResultList();
     }
