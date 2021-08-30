@@ -8,10 +8,10 @@ export default class TicketsContainer extends React.Component {
     super(props);
     this.state = {
       tickets: [],
-      ticketsPrint:[],
+      ticketsPrint: [],
       btnActive: true,
       action: [],
-      user:JSON.parse(localStorage.User),
+      user: JSON.parse(localStorage.User),
     };
 
     this.toTicketNew = this.toTicketNew.bind(this);
@@ -22,7 +22,7 @@ export default class TicketsContainer extends React.Component {
     this.onChangeState = this.onChangeState.bind(this);
     this.onAction = this.onAction.bind(this);
     this.onMyTickets = this.onMyTickets.bind(this);
-    this.onSortIdUp = this.onSortIdUp.bind(this);
+    this.onSort = this.onSort.bind(this);
   }
 
   toTicketNew() {
@@ -44,13 +44,13 @@ export default class TicketsContainer extends React.Component {
       )
       .then((resp) => {
         this.setState({ tickets: resp.data });
-        this.setState({ticketsPrint:this.state.tickets})
+        this.setState({ ticketsPrint: this.state.tickets });
       });
   }
 
   onClickBtnAllT() {
     this.setState({ btnActive: true });
-    this.setState({ticketsPrint:this.state.tickets})
+    this.setState({ ticketsPrint: this.state.tickets });
   }
 
   onClickBtnMyT() {
@@ -108,30 +108,27 @@ export default class TicketsContainer extends React.Component {
         result = "DONE";
         break;
     }
-    
+
     return result;
   }
 
   onChangeState(e) {
     var status = this.onAction(e.target.value);
     var ticketId = e.target.name;
-    var ticket = this.state.tickets.filter(t=>t.id==ticketId)[0];
+    var ticket = this.state.tickets.filter((t) => t.id == ticketId)[0];
     ticket.state = status;
-    var newTickets = this.state.tickets.filter(t=>t.id!=ticketId);
-    this.setState({tickets:[...newTickets,ticket]})
-   
+    var newTickets = this.state.tickets.filter((t) => t.id != ticketId);
+    this.setState({ tickets: [...newTickets, ticket] });
+
     axios
       .put(
         "http://localhost:8099/HelpDesk/tickets/" + ticketId + "/" + status,
         null,
         JSON.parse(localStorage.AuthHeader)
       )
-      .then((responce) => {
-      
-      })
+      .then((responce) => {})
       .catch((error) => {});
   }
-
 
   onMyTickets() {
     var result = [];
@@ -142,16 +139,19 @@ export default class TicketsContainer extends React.Component {
       case "MANAGER":
         result = this.state.tickets.filter(
           (t) =>
-            t.owner.id === this.state.user.id
-            ||(t.approver?(t.approver.id === this.state.user.id && t.state === "APPROVED"):false)
+            t.owner.id === this.state.user.id ||
+            (t.approver
+              ? t.approver.id === this.state.user.id && t.state === "APPROVED"
+              : false)
         );
         break;
       case "ENGINEER":
         result = this.state.tickets.filter((t) =>
-         (t.assignee?(t.assignee.id === this.state.user.id):false));
+          t.assignee ? t.assignee.id === this.state.user.id : false
+        );
         break;
     }
-   
+
     return result;
   }
 
@@ -170,14 +170,54 @@ export default class TicketsContainer extends React.Component {
         goToOverview={this.goToOverview}
         onChangeState={this.onChangeState}
         onChangeAction={this.onChangeAction ? this.onChangeAction : []}
-        onSortIdUp={this.onSortIdUp}
+        onSort={this.onSort}
       ></TicketsView>
     );
   }
 
-  onSortIdUp(e){
-    console.log(e.target.id)
-    this.state.tickets.sort((a,b) => a.id - b.id)
-    this.setState({tickets:this.state.tickets})
+  onSort(e) {
+    console.log(e.target.id);
+    switch (e.target.id) {
+      case "idUp":
+        this.state.tickets.sort((a, b) => a.id - b.id);
+        this.setState({ tickets: this.state.tickets });
+        break;
+      case "idDown":
+        this.state.tickets.sort((a, b) => b.id - a.id);
+        this.setState({ tickets: this.state.tickets });
+        break;
+        case "nameUp":
+        this.state.tickets.sort((a, b) => a.id - b.id);
+        this.setState({ tickets: this.state.tickets });
+        break;
+      case "nameDown":
+        this.state.tickets.sort((a, b) => b.id - a.id);
+        this.setState({ tickets: this.state.tickets });
+        break;
+        case "dateUp":
+        this.state.tickets.sort((a, b) => a.id - b.id);
+        this.setState({ tickets: this.state.tickets });
+        break;
+      case "dateDown":
+        this.state.tickets.sort((a, b) => b.id - a.id);
+        this.setState({ tickets: this.state.tickets });
+        break;
+        case "UrgencyUp":
+        this.state.tickets.sort((a, b) => a.id - b.id);
+        this.setState({ tickets: this.state.tickets });
+        break;
+      case "UrgencyDown":
+        this.state.tickets.sort((a, b) => b.id - a.id);
+        this.setState({ tickets: this.state.tickets });
+        break;
+        case "StatusUp":
+        this.state.tickets.sort((a, b) => a.id - b.id);
+        this.setState({ tickets: this.state.tickets });
+        break;
+      case "StatusDown":
+        this.state.tickets.sort((a, b) => b.id - a.id);
+        this.setState({ tickets: this.state.tickets });
+        break;
+    }
   }
 }

@@ -1,5 +1,6 @@
 package com.chvey.service;
 
+import com.chvey.domain.Attachment;
 import com.chvey.domain.History;
 import com.chvey.domain.Ticket;
 import com.chvey.domain.User;
@@ -59,14 +60,33 @@ public class HistoryService {
         return historyRepository.saveHistory(history);
     }
 
-    private Long statusChangedTicketEdit(Ticket ticket, User user) {
+    private void statusChangedTicketEdit(Ticket ticket, User user) {
         History history = new History();
         history.setDate(LocalDateTime.now());
         history.setTicket(ticket);
         history.setUser(user);
         history.setDescription("Ticket istatus is changed from 'DRAFT' to 'NEW'");
         history.setAction("Ticket status is changed");
-        return historyRepository.saveHistory(history);
+        historyRepository.saveHistory(history);
+    }
+
+    public void addAttachment(Attachment attachment){
+        History history= new History();
+        history.setDate(LocalDateTime.now());
+        history.setTicket(attachment.getTicket());
+        history.setUser(attachment.getTicket().getOwner());
+        history.setAction("File is attached");
+        history.setDescription(String.format("File is attached: %s",attachment.getName()));
+        historyRepository.saveHistory(history);
+    }
+    public void removeAttachment(Attachment attachment){
+        History history= new History();
+        history.setDate(LocalDateTime.now());
+        history.setTicket(attachment.getTicket());
+        history.setUser(attachment.getTicket().getOwner());
+        history.setAction("File is removed");
+        history.setDescription(String.format("File is removed: %s",attachment.getName()));
+        historyRepository.saveHistory(history);
     }
 }
 

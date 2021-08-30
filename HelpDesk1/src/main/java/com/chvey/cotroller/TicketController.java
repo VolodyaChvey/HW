@@ -4,8 +4,10 @@ import com.chvey.converters.TicketConverter;
 import com.chvey.dto.TicketDto;
 import com.chvey.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.security.Principal;
 
@@ -50,8 +52,17 @@ public class TicketController {
     public void updateTicket(Principal principal, @RequestBody TicketDto ticketDto) {
         ticketService.editTicket(principal.getName(), ticketConverter.toEntity(ticketDto));
     }
+
     @PutMapping(value = "/{id}/{status}")
-    public void changeTicket(Principal principal,@PathVariable Long id,@PathVariable String status) {
-        ticketService.changeTicketState(id,status,principal.getName());
+    public void changeTicket(Principal principal, @PathVariable Long id, @PathVariable String status) {
+        ticketService.changeTicketState(id, status, principal.getName());
+    }
+
+    @PostMapping(value = "/draft")
+    public ResponseEntity createDraft(@RequestParam(value = "files", required = false) CommonsMultipartFile[] files,
+                                      @RequestParam(value = "ticketDto") TicketDto ticketDto, Principal principal) {
+        System.out.println(files + ticketDto.toString() + principal.getName());
+   // ticketService.createTicket(ticketConverter.fromJson(ticketDto), files, principal.getName(), State.DRAFT);
+        return new ResponseEntity(HttpStatus.OK);
     }
 }

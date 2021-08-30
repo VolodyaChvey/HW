@@ -24,6 +24,11 @@
   </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>commons-fileupload</groupId>
+      <artifactId>commons-fileupload</artifactId>
+      <version>1.4</version> <!-- makesure you put a correct version here -->
+    </dependency>
 
     <dependency>
       <groupId>javax.servlet</groupId>

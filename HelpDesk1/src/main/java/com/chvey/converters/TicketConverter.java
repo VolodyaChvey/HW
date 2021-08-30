@@ -5,11 +5,12 @@ import com.chvey.domain.enums.State;
 import com.chvey.domain.enums.Urgency;
 import com.chvey.dto.TicketDto;
 import com.chvey.service.CategoryService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static java.util.Objects.nonNull;
 
@@ -19,6 +20,8 @@ public class TicketConverter {
     private CategoryService categoryService;
     @Autowired
     private UserConverter userConverter;
+    @Autowired
+    private ObjectMapper objectMapper;
 
     public TicketDto toDto(Ticket ticket) {
         TicketDto ticketDto = new TicketDto();
@@ -40,6 +43,7 @@ public class TicketConverter {
     }
 
     public Ticket toEntity(TicketDto ticketDto) {
+       // System.out.println(ticketDto);
         Ticket ticket = new Ticket();
         ticket.setId(ticketDto.getId());
         ticket.setName(ticketDto.getName());
@@ -61,10 +65,20 @@ public class TicketConverter {
         return ticket;
     }
 
-    public static void main(String[] args) {
-    LocalDateTime ld= LocalDateTime.now();
-        String nn = "";
+    public TicketDto fromJson(String ticketJson) {
+        System.out.println(ticketJson);
+        TicketDto ticketDto = new TicketDto();
+        if (!ticketJson.isEmpty()) {
+            try {
+                System.out.println(objectMapper.readValue(ticketJson, TicketDto.class).getName());
+                ticketDto = objectMapper.readValue(ticketJson, TicketDto.class);
+            } catch (IOException e) {
+                System.out.println("Exception");
 
-        System.out.println(ld);
+            }
+        }
+        System.out.println(ticketDto);
+        return ticketDto;
     }
+
 }

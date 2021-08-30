@@ -1,13 +1,16 @@
 package com.chvey.service;
 
+import com.chvey.converters.TicketConverter;
 import com.chvey.domain.Ticket;
 import com.chvey.domain.User;
 import com.chvey.domain.enums.Role;
 import com.chvey.domain.enums.State;
+import com.chvey.dto.TicketDto;
 import com.chvey.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -22,6 +25,19 @@ public class TicketService {
     private UserService userService;
     @Autowired
     private HistoryService historyService;
+    @Autowired
+    private TicketConverter ticketConverter;
+
+    public Ticket createTicket(TicketDto ticketDto, CommonsMultipartFile[] files, String email, State state) {
+        User user = userService.getUserByEmail(email);
+        Ticket ticket = ticketConverter.toEntity(ticketDto);
+        ticket.setOwner(user);
+        ticket.setCreatedOn(LocalDate.now());
+        ticket.setState(state);
+        ticket.setId(ticketRepository.saveTicket(ticket));
+        historyService.createTicketHistory(ticket,user);
+        return ticket;
+    }
 
     public List<Ticket> getTicketsByUserId(String email) {
         User user = userService.getUserByEmail(email);
@@ -67,13 +83,13 @@ public class TicketService {
         User user = userService.getUserByEmail(email);
         State stateNew = State.valueOf(status.toUpperCase());
         Ticket ticket = ticketRepository.findTicketById(id);
-        if(checkStateNew(user,ticket,stateNew)){
-            historyService.statusChangedTicketHistory(ticket,user,stateNew);
+        if (checkStateNew(user, ticket, stateNew)) {
+            historyService.statusChangedTicketHistory(ticket, user, stateNew);
             ticketRepository.updateStateTicket(ticket.getId(), stateNew);
-            if(stateNew==State.APPROVED){
+            if (stateNew == State.APPROVED) {
                 ticketRepository.addApproverTicket(ticket.getId(), user);
             }
-            if(stateNew==State.IN_PROGRESS){
+            if (stateNew == State.IN_PROGRESS) {
                 ticketRepository.addAssigneeticket(ticket.getId(), user);
             }
         }

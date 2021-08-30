@@ -14,22 +14,52 @@ export default class TicketNew extends React.Component {
       desiredResolutionDate: null,
       discription: null,
       comment: null,
+      attachments:[],
     };
     this.toTicketList = this.toTicketList.bind(this);
     this.onSave = this.onSave.bind(this);
     this.onHandleChange = this.onHandleChange.bind(this);
+    this.onHandleChangeAttachment = this.onHandleChangeAttachment.bind(this);
   }
   onHandleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
   toTicketList() {
-    window.location.href = "/tickets";
+   history.push("/tickets");
+  }
+  onHandleChangeAttachment(e){
+    let files = e.target.files
+    for (let i = 0; i < files.length; i++) {
+        let reader = new FileReader();
+        reader.onloadend = () => {
+            this.setState({
+                attachments: [...this.state.attachments, {
+                    name: files[i].name,
+                    blob: new Blob([reader.result],{type:files[i].type}),
+                }]
+            });
+        }
+        reader.readAsBinaryString(files[i]);
+    }
   }
 
   onSave(e) {
     var ticket=this.state;
     ticket.state=e.target.value;
-    axios
+   /* if(ticket.state==="draft"){
+      var formData= new FormData();
+      formData.append("ticketDto",ticket);
+      for(let i of this.state.attachments){
+        formData.append("files",i.blob,i.name)
+      }
+      axios
+        .post("http://localhost:8099/HelpDesk/tickets"+"/draft",
+        formData, JSON.parse(localStorage.AuthHeader))
+        .then((resp)=>{})
+        .catch((error)=>{})
+
+    }*/
+   axios
       .post(
         "http://localhost:8099/HelpDesk/tickets",
         ticket,
@@ -59,6 +89,7 @@ export default class TicketNew extends React.Component {
           toTicketList={this.toTicketList}
           onSave={this.onSave}
           onHandleChange={this.onHandleChange}
+          onHandleChangeAttachment={this.onHandleChangeAttachment}
         ></TicketNewView>
       </div>
     );

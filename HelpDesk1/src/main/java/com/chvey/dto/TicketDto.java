@@ -1,16 +1,29 @@
 package com.chvey.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TicketDto {
+    @JsonProperty("id")
     private Long id;
+    @JsonProperty("name")
     private String name;
+    @JsonProperty("description")
     private String description;
+    @JsonProperty("createdOn")
     private String createdOn;
+    @JsonProperty("desiredResolutionDate")
     private String desiredResolutionDate;
+    @JsonProperty("state")
     private String state;
+    @JsonProperty("urgency")
     private String urgency;
+    @JsonProperty("assignee")
     private UserDto assignee;
+    @JsonProperty("owner")
     private UserDto owner;
+    @JsonProperty("approver")
     private UserDto approver;
+    @JsonProperty("category")
     private Long category;
 
     public TicketDto() {

@@ -46,11 +46,11 @@ export default class TicketsView extends React.Component {
           </div>
         </div>
         <Table tickets={this.props.tickets}
-          action={this.props.action}
+         action={this.props.action}
          goToOverview={this.props.goToOverview}
          onChangeState={this.props.onChangeState}
          onChangeAction={this.props.onChangeAction}
-         onSortIdUp={this.props.onSortIdUp}></Table>
+         onSort={this.props.onSort}></Table>
       </div>
     );
   }

@@ -89,7 +89,7 @@ export default class TicketNewView extends React.Component {
           <div className="col-4 d-grid gap-2">
             <input
               type="date"
-              name='desiredResolutionDate'
+              name="desiredResolutionDate"
               onChange={this.props.onHandleChange}
               min={new Date().toISOString().substr(0, 10)}
             ></input>
@@ -102,27 +102,43 @@ export default class TicketNewView extends React.Component {
             <h6 className="text-center">Add attachments</h6>
           </div>
           <div className="col-2 ">
-            <Button lable="Browse"></Button>
+            <label  class="btn btn-outline-secondary">Browse
+              <input
+                type="file"
+                multiple
+                id="input"
+                accept="application/pdf,application/msword,image/png,image/jpeg,image/pjpeg,
+                application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                hidden
+                onChange={this.props.onHandleChangeAttachment}
+              ></input>
+            </label>
           </div>
           <div className="col-5"></div>
         </div>
 
-        <LabelTextarea lable="Comment"
-          name='text'
-          onChange={this.props.onHandleChange}></LabelTextarea>
+        <LabelTextarea
+          lable="Comment"
+          name="text"
+          onChange={this.props.onHandleChange}
+        ></LabelTextarea>
 
         <div className="row mt-5">
           <div className="col-8"></div>
           <div className="col-2">
-            <Button lable="Save as Draft" 
-            value='draft'
-            onClick={this.props.onSave}></Button>
+            <Button
+              lable="Save as Draft"
+              value="draft"
+              onClick={this.props.onSave}
+            ></Button>
           </div>
           <div className="col-2">
-            <Button lable="Submit" 
-            value='new'
-            onClick={this.props.onSave}
-            className="btn-success"></Button>
+            <Button
+              lable="Submit"
+              value="new"
+              onClick={this.props.onSave}
+              className="btn-success"
+            ></Button>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import Action from "../common/Action";
 import Button from "./Button";
+import '../css/table_cell.css'
 
 export default class Table extends React.Component {
   constructor(props) {
@@ -15,29 +16,40 @@ export default class Table extends React.Component {
           <thead>
             <tr className="table-active">
               <th>
+                
                 ID &nbsp;
-                <i id="1" className="fas fa-caret-up" onClick={this.props.onSortIdUp}></i>
-                <i className="fas fa-caret-down"></i>
+                <div className='cell_colider'>
+                <i id="idUp" className="fas fa-caret-up" onClick={this.props.onSort}/> <br/>
+                <i id="idDown" className="fas fa-caret-down" onClick={this.props.onSort}></i>
+                </div>
               </th>
               <th>
                 Name &nbsp;
-                <i className="fas fa-caret-up"></i>
-                <i className="fas fa-caret-down"></i>
+                <div className='cell_colider'>
+                <i  id="nameUp" className="fas fa-caret-up" onClick={this.props.onSort}></i> <br/>
+                <i  id="nameDown" className="fas fa-caret-down" onClick={this.props.onSort}></i>
+                </div>
               </th>
               <th>
                 Desired Date &nbsp;
-                <i className="fas fa-caret-up"></i>
-                <i className="fas fa-caret-down"></i>
+                <div className='cell_colider'>
+                <i  id="dateUp" className="fas fa-caret-up" onClick={this.props.onSort}></i> <br/>
+                <i  id="dateDown" className="fas fa-caret-down" onClick={this.props.onSort}></i>
+                </div>
               </th>
               <th>
                 Urgency &nbsp;
-                <i className="fas fa-caret-up"></i>
-                <i className="fas fa-caret-down"></i>
+                <div className='cell_colider'>
+                <i  id="UrgencyUp" className="fas fa-caret-up" onClick={this.props.onSort}></i> <br/>
+                <i  id="UrgencyDown" className="fas fa-caret-down" onClick={this.props.onSort}></i>
+                </div>
               </th>
               <th>
                 Status &nbsp;
-                <i className="fas fa-sort"></i>
-                <i className="fas fa-caret-down"></i>
+                <div className='cell_colider'>
+                <i  id="StatusUp" className="fas fa-caret-up" onClick={this.props.onSort}></i> <br/>
+                <i  id="StatusDown" className="fas fa-caret-down" onClick={this.props.onSort}></i>
+                </div>
               </th>
               <th>Action</th>
             </tr>

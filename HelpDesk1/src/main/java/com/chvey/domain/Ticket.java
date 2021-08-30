@@ -2,6 +2,7 @@ package com.chvey.domain;
 
 import com.chvey.domain.enums.State;
 import com.chvey.domain.enums.Urgency;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -50,13 +51,13 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name = "CATEGORY_ID", nullable = false)
     private Category category;
-
+@JsonIgnore
     @Transient
     private List<Comment> comments;
-
+@JsonIgnore
     @Transient
     private List<History> histories;
-
+@JsonIgnore
     @Transient
     private List<Attachment> attachments;
     public Ticket() {
