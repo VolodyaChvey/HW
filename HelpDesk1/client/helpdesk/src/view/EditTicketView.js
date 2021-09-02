@@ -9,7 +9,6 @@ export default class EditTicketView extends React.Component {
   }
 
   render() {
-    console.log(this.props)
     return (
       <div className="container">
         <div className="row my-4">
@@ -105,7 +104,17 @@ export default class EditTicketView extends React.Component {
             <h6 className="text-center">Add attachments</h6>
           </div>
           <div className="col-2 ">
-            <Button lable="Browse"></Button>
+          <label  class="btn btn-outline-secondary">Browse
+              <input
+                type="file"
+                multiple
+                id="input"
+                accept="application/pdf,application/msword,image/png,image/jpeg,image/pjpeg,
+                application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+                hidden
+                onChange={this.props.onHandleChangeAttachment}
+              ></input>
+            </label>
           </div>
           <div className="col-5"></div>
         </div>

@@ -186,7 +186,7 @@ export default class TicketsContainer extends React.Component {
         this.state.tickets.sort((a, b) => b.id - a.id);
         this.setState({ tickets: this.state.tickets });
         break;
-        case "nameUp":
+      case "nameUp":
         this.state.tickets.sort((a, b) => a.id - b.id);
         this.setState({ tickets: this.state.tickets });
         break;
@@ -194,7 +194,7 @@ export default class TicketsContainer extends React.Component {
         this.state.tickets.sort((a, b) => b.id - a.id);
         this.setState({ tickets: this.state.tickets });
         break;
-        case "dateUp":
+      case "dateUp":
         this.state.tickets.sort((a, b) => a.id - b.id);
         this.setState({ tickets: this.state.tickets });
         break;
@@ -202,7 +202,7 @@ export default class TicketsContainer extends React.Component {
         this.state.tickets.sort((a, b) => b.id - a.id);
         this.setState({ tickets: this.state.tickets });
         break;
-        case "UrgencyUp":
+      case "UrgencyUp":
         this.state.tickets.sort((a, b) => a.id - b.id);
         this.setState({ tickets: this.state.tickets });
         break;
@@ -210,7 +210,7 @@ export default class TicketsContainer extends React.Component {
         this.state.tickets.sort((a, b) => b.id - a.id);
         this.setState({ tickets: this.state.tickets });
         break;
-        case "StatusUp":
+      case "StatusUp":
         this.state.tickets.sort((a, b) => a.id - b.id);
         this.setState({ tickets: this.state.tickets });
         break;

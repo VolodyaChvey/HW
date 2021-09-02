@@ -1,30 +1,23 @@
 package com.chvey.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 
 public class TicketDto {
-    @JsonProperty("id")
     private Long id;
-    @JsonProperty("name")
     private String name;
-    @JsonProperty("description")
     private String description;
-    @JsonProperty("createdOn")
     private String createdOn;
-    @JsonProperty("desiredResolutionDate")
     private String desiredResolutionDate;
-    @JsonProperty("state")
     private String state;
-    @JsonProperty("urgency")
     private String urgency;
-    @JsonProperty("assignee")
     private UserDto assignee;
-    @JsonProperty("owner")
     private UserDto owner;
-    @JsonProperty("approver")
     private UserDto approver;
-    @JsonProperty("category")
     private Long category;
+    private String comment;
+   // private List<AttachmentDto> attachments;
+    private List<CommentDto> comments;
+    private List<HistoryDto> histories;
 
     public TicketDto() {
     }
@@ -117,20 +110,37 @@ public class TicketDto {
         this.category = category;
     }
 
-    @Override
-    public String toString() {
-        return "TicketDto{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", createdOn=" + createdOn +
-                ", desiredResolutionDate=" + desiredResolutionDate +
-                ", state=" + state +
-                ", urgency=" + urgency +
-                ", assignee=" + assignee +
-                ", owner=" + owner +
-                ", approver=" + approver +
-                ", category=" + category +
-                '}';
+    public String getComment() {
+        return comment;
     }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+  /*  public List<AttachmentDto> getAttachments() {
+        return attachments;
+    }
+
+    public void setAttachments(List<AttachmentDto> attachments) {
+        this.attachments = attachments;
+    }*/
+
+    public List<CommentDto> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<CommentDto> comments) {
+        this.comments = comments;
+    }
+
+    public List<HistoryDto> getHistories() {
+        return histories;
+    }
+
+    public void setHistories(List<HistoryDto> histories) {
+        this.histories = histories;
+    }
+
+
 }

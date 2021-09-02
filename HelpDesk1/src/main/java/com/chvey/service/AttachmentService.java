@@ -7,12 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
+import java.util.List;
+
 @Service
 public class AttachmentService {
     @Autowired
     private AttachmentRepository attachmentRepository;
     @Autowired
     private HistoryService historyService;
+    @Autowired
+    private TicketService ticketService;
 
     public void save(CommonsMultipartFile[] files, Ticket ticket) {
         for (CommonsMultipartFile aFile : files) {
@@ -32,5 +36,25 @@ public class AttachmentService {
             attachmentRepository.save(attachment);
             historyService.addAttachment(attachment);
         }
+    }
+
+    public void saveByTicketId(CommonsMultipartFile[] files, Long ticketId) {
+        Ticket ticket = ticketService.getTicketById(ticketId);
+        for (CommonsMultipartFile aFile : files) {
+            Attachment attachment = new Attachment();
+            attachment.setName(aFile.getOriginalFilename());
+            attachment.setBlob(aFile.getBytes());
+            attachment.setTicket(ticket);
+            attachmentRepository.save(attachment);
+            historyService.addAttachment(attachment);
+        }
+    }
+
+    public Attachment getAttachmentById(Long id) {
+        return attachmentRepository.findAttachmentById(id);
+    }
+
+    public List<Attachment> getAttachmentsByTicketId(Long id) {
+        return attachmentRepository.findAttachmentsByTicketId(id);
     }
 }

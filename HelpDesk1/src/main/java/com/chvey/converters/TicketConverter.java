@@ -43,7 +43,6 @@ public class TicketConverter {
     }
 
     public Ticket toEntity(TicketDto ticketDto) {
-       // System.out.println(ticketDto);
         Ticket ticket = new Ticket();
         ticket.setId(ticketDto.getId());
         ticket.setName(ticketDto.getName());
@@ -66,19 +65,14 @@ public class TicketConverter {
     }
 
     public TicketDto fromJson(String ticketJson) {
-        System.out.println(ticketJson);
         TicketDto ticketDto = new TicketDto();
         if (!ticketJson.isEmpty()) {
             try {
-                System.out.println(objectMapper.readValue(ticketJson, TicketDto.class).getName());
                 ticketDto = objectMapper.readValue(ticketJson, TicketDto.class);
             } catch (IOException e) {
                 System.out.println("Exception");
-
             }
         }
-        System.out.println(ticketDto);
         return ticketDto;
     }
-
 }

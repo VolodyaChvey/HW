@@ -23,8 +23,6 @@ export default class TicketOverviewView extends React.Component {
   }
 
   render() {
-  //  t.desiredResolutionDate &&
-   //                 new Date(t.desiredResolutionDate).toLocaleDateString('en-GB')
     
     return (
       <div className="container">
@@ -143,8 +141,18 @@ export default class TicketOverviewView extends React.Component {
         <div className="row">
           <div className="col-3"> Attachments: </div>
           <div className="col-1"></div>
-          <div className="col-2"> {}</div>
-          <div className="col-6"> </div>
+          <div className="col-8"> {this.props.attachments.map((a,i)=>(
+            <div className="row">
+              <div className="col">
+              {a.name} 
+              </div>
+              <div className='col'>
+                
+              <Button lable='Download' name={a.id} onClick={this.props.onDownLoad}></Button>
+              </div>
+            </div>
+          ))}</div>
+          <div className="col"> </div>
         </div>
 
         <div className="row">

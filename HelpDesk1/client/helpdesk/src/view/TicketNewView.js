@@ -55,8 +55,8 @@ export default class TicketNewView extends React.Component {
           onChange={this.props.onHandleChange}
         ></LabelInputTicket>
         <LabelTextarea
-          lable="Discription"
-          name="discription"
+          lable="Description"
+          name="description"
           onChange={this.props.onHandleChange}
         ></LabelTextarea>
         <div className="row my-3">

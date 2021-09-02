@@ -28,4 +28,10 @@ public class AttachmentRepository {
                 .setParameter("ticketId",ticketId)
                 .getResultList();
     }
+    public Attachment findAttachmentById(Long id){
+        return (Attachment) sessionFactory.getCurrentSession()
+                .createQuery("from Attachment where id=:id")
+                .setParameter("id",id)
+                .getSingleResult();
+    }
 }

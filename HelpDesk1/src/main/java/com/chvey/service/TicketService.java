@@ -5,7 +5,6 @@ import com.chvey.domain.Ticket;
 import com.chvey.domain.User;
 import com.chvey.domain.enums.Role;
 import com.chvey.domain.enums.State;
-import com.chvey.dto.TicketDto;
 import com.chvey.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,15 +26,17 @@ public class TicketService {
     private HistoryService historyService;
     @Autowired
     private TicketConverter ticketConverter;
+    @Autowired
+    private AttachmentService attachmentService;
 
-    public Ticket createTicket(TicketDto ticketDto, CommonsMultipartFile[] files, String email, State state) {
+
+    public Ticket createTicket(Ticket ticket, CommonsMultipartFile[] files, String email){
         User user = userService.getUserByEmail(email);
-        Ticket ticket = ticketConverter.toEntity(ticketDto);
         ticket.setOwner(user);
         ticket.setCreatedOn(LocalDate.now());
-        ticket.setState(state);
         ticket.setId(ticketRepository.saveTicket(ticket));
-        historyService.createTicketHistory(ticket,user);
+        historyService.createTicketHistory(ticket, user);
+        attachmentService.save(files,ticket);
         return ticket;
     }
 

@@ -12,7 +12,7 @@ export default class TicketNew extends React.Component {
       name: null,
       urgency: null,
       desiredResolutionDate: null,
-      discription: null,
+      description: null,
       comment: null,
       attachments:[],
     };
@@ -44,25 +44,23 @@ export default class TicketNew extends React.Component {
   }
 
   onSave(e) {
-    var ticket=this.state;
+    var ticket={};
     ticket.state=e.target.value;
-   /* if(ticket.state==="draft"){
-      var formData= new FormData();
-      formData.append("ticketDto",ticket);
-      for(let i of this.state.attachments){
-        formData.append("files",i.blob,i.name)
-      }
-      axios
-        .post("http://localhost:8099/HelpDesk/tickets"+"/draft",
-        formData, JSON.parse(localStorage.AuthHeader))
-        .then((resp)=>{})
-        .catch((error)=>{})
-
-    }*/
+    ticket.category=this.state.category;
+    ticket.name=this.state.name;
+    ticket.urgency=this.state.urgency;
+    ticket.desiredResolutionDate=this.state.desiredResolutionDate;
+    ticket.description=this.state.description;
+    ticket.comment=this.state.comment;
+    var formData= new FormData();
+    formData.append("ticketDto",JSON.stringify(ticket));
+    for(let i of this.state.attachments){
+      formData.append("files",i.blob,i.name)
+    }
    axios
       .post(
         "http://localhost:8099/HelpDesk/tickets",
-        ticket,
+        formData,
         JSON.parse(localStorage.AuthHeader)
       )
       .then((responce) => {

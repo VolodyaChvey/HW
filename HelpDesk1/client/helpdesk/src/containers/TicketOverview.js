@@ -11,6 +11,7 @@ export default class TicketOverview extends React.Component {
       ticket: {},
       history: [],
       comments: [],
+      attachments:[],
       btnActiv: true,
       user:JSON.parse(localStorage.User)
     };
@@ -19,6 +20,7 @@ export default class TicketOverview extends React.Component {
     this.goToTickets = this.goToTickets.bind(this);
     this.onAddComment = this.onAddComment.bind(this);
     this.onHandleChange = this.onHandleChange.bind(this);
+    this.onDownLoad = this.onDownLoad.bind(this);
   }
   componentDidMount() {
     axios
@@ -44,6 +46,18 @@ export default class TicketOverview extends React.Component {
       )
       .then((resp) => {
         this.setState({comments: resp.data });
+      });
+      axios
+      .get(
+        "http://localhost:8099/HelpDesk/tickets/" + this.state.id +"/attachments",
+        JSON.parse(localStorage.AuthHeader)
+      )
+      .then((resp) => {
+        this.setState({attachments: resp.data})
+        console.log(resp.data)
+        let writer = new FileReader
+        writer.readAsText(resp.data.blob)
+        window.URL.createObjectURL(writer)
       });
   }
   toEdit() {
@@ -80,6 +94,17 @@ export default class TicketOverview extends React.Component {
   onHandleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+  onDownLoad(e){
+    var id=e.target.name
+    axios
+    .get(
+      "http://localhost:8099/HelpDesk/attachments/" + id,
+      JSON.parse(localStorage.AuthHeader)
+    )
+    .then((resp) => {
+      console.log(resp.data)
+    });
+  }
 
   render() {
     var btnClassPrimary = "btn-primary";
@@ -89,10 +114,12 @@ export default class TicketOverview extends React.Component {
         user={this.state.user}
         history={this.state.history ? this.state.history : []}
         comments={this.state.comments ? this.state.comments : []}
+        attachments={this.state.attachments ? this.state.attachments : []}
         ticket={this.state.ticket ? this.state.ticket : {}}
         addComment={this.onAddComment}
         onClickBtn={this.onClickBtn}
         onHandleChange={this.onHandleChange}
+        onDownLoad={this.onDownLoad}
         ActiveHistory={this.state.btnActiv}
         classBtnHistory={
           this.state.btnActiv ? btnClassPrimary : btnClassDefault

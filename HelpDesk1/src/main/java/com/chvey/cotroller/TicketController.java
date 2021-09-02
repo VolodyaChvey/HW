@@ -38,9 +38,15 @@ public class TicketController {
     }
 
 
+    /* @PostMapping()
+     public ResponseEntity toSaveTicket(Principal principal, @RequestBody TicketDto ticketDto) {
+         return ResponseEntity.ok(ticketConverter.toDto(ticketService.getSaveTicket(principal.getName(), ticketConverter.toEntity(ticketDto))));
+     }*/
     @PostMapping()
-    public ResponseEntity toSaveTicket(Principal principal, @RequestBody TicketDto ticketDto) {
-        return ResponseEntity.ok(ticketConverter.toDto(ticketService.getSaveTicket(principal.getName(), ticketConverter.toEntity(ticketDto))));
+    public ResponseEntity createTicket(@RequestParam(value = "files", required = false) CommonsMultipartFile[] files,
+                                       @RequestParam(value = "ticketDto") String ticketDto, Principal principal) {
+        return ResponseEntity.ok(ticketConverter.toDto(ticketService.createTicket
+                (ticketConverter.toEntity(ticketConverter.fromJson(ticketDto)), files, principal.getName())));
     }
 
     @GetMapping(value = "/{id}")
@@ -49,8 +55,9 @@ public class TicketController {
     }
 
     @PutMapping(value = "/{id}")
-    public void updateTicket(Principal principal, @RequestBody TicketDto ticketDto) {
+    public ResponseEntity updateTicket(@RequestBody TicketDto ticketDto, Principal principal) {
         ticketService.editTicket(principal.getName(), ticketConverter.toEntity(ticketDto));
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PutMapping(value = "/{id}/{status}")
@@ -62,7 +69,7 @@ public class TicketController {
     public ResponseEntity createDraft(@RequestParam(value = "files", required = false) CommonsMultipartFile[] files,
                                       @RequestParam(value = "ticketDto") TicketDto ticketDto, Principal principal) {
         System.out.println(files + ticketDto.toString() + principal.getName());
-   // ticketService.createTicket(ticketConverter.fromJson(ticketDto), files, principal.getName(), State.DRAFT);
+        // ticketService.createTicket(ticketConverter.fromJson(ticketDto), files, principal.getName(), State.DRAFT);
         return new ResponseEntity(HttpStatus.OK);
     }
 }
