@@ -100,7 +100,7 @@ export default class EditTicket extends React.Component {
           ],
         });
       };
-      reader.readAsBinaryString(files[i]);
+      reader.readAsArrayBuffer(files[i]);
     }
   }
 

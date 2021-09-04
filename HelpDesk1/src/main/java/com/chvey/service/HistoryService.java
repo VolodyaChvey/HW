@@ -21,6 +21,8 @@ public class HistoryService {
     private HistoryRepository historyRepository;
     @Autowired
     private TicketRepository ticketRepository;
+    @Autowired
+    private MailService mailService;
 
     public List<History> getHistoriesByTicketId(Long id) {
         return historyRepository.findHistoriesByTicketId(id);
@@ -33,6 +35,7 @@ public class HistoryService {
         history.setUser(user);
         history.setDescription("Ticket is created");
         history.setAction("Ticket is created");
+       // mailService.send();
         return historyRepository.saveHistory(history);
     }
 

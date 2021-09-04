@@ -2,6 +2,7 @@ import React from "react";
 import TicketNewView from "../view/TicketNewView";
 import axios from "axios";
 import history from "../history";
+import { saveAs } from "file-saver";
 
 export default class TicketNew extends React.Component {
   constructor(props) {
@@ -21,13 +22,17 @@ export default class TicketNew extends React.Component {
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onHandleChangeAttachment = this.onHandleChangeAttachment.bind(this);
   }
+  
   onHandleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+
   toTicketList() {
    history.push("/tickets");
-  }
+  } 
+
   onHandleChangeAttachment(e){
+    //console.log(e.target.files)
     let files = e.target.files
     for (let i = 0; i < files.length; i++) {
         let reader = new FileReader();
@@ -37,9 +42,9 @@ export default class TicketNew extends React.Component {
                     name: files[i].name,
                     blob: new Blob([reader.result],{type:files[i].type}),
                 }]
-            });
-        }
-        reader.readAsBinaryString(files[i]);
+            });    
+          }
+        reader.readAsArrayBuffer(files[i]);     
     }
   }
 
@@ -56,7 +61,9 @@ export default class TicketNew extends React.Component {
     formData.append("ticketDto",JSON.stringify(ticket));
     for(let i of this.state.attachments){
       formData.append("files",i.blob,i.name)
+     // saveAs(i.blob,i.name)
     }
+
    axios
       .post(
         "http://localhost:8099/HelpDesk/tickets",
@@ -80,6 +87,7 @@ export default class TicketNew extends React.Component {
       })
       .catch((error) => {});
   }
+
   render() {
     return (
       <div>

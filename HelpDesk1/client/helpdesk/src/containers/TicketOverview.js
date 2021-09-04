@@ -2,6 +2,7 @@ import React from "react";
 import TicketOverviewView from "../view/TicketOverviewView";
 import axios from "axios";
 import history from "../history";
+import { saveAs } from "file-saver";
 
 export default class TicketOverview extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ export default class TicketOverview extends React.Component {
       comments: [],
       attachments:[],
       btnActiv: true,
-      user:JSON.parse(localStorage.User)
+      user: JSON.parse(localStorage.User)
     };
     this.onClickBtn = this.onClickBtn.bind(this);
     this.toEdit = this.toEdit.bind(this);
@@ -21,7 +22,9 @@ export default class TicketOverview extends React.Component {
     this.onAddComment = this.onAddComment.bind(this);
     this.onHandleChange = this.onHandleChange.bind(this);
     this.onDownLoad = this.onDownLoad.bind(this);
+    this.toLeaveFeedback = this.toLeaveFeedback.bind(this);
   }
+  
   componentDidMount() {
     axios
       .get(
@@ -54,18 +57,25 @@ export default class TicketOverview extends React.Component {
       )
       .then((resp) => {
         this.setState({attachments: resp.data})
-        console.log(resp.data)
-        let writer = new FileReader
-        writer.readAsText(resp.data.blob)
-        window.URL.createObjectURL(writer)
       });
   }
+
   toEdit() {
     history.push({
       pathname: "/edit",
       state: this.state.id,
     });
   }
+  toLeaveFeedback(){
+    history.push({
+      pathname:"/leaveFeedback",
+      state:{
+        id:this.state.id,
+        name:this.state.ticket.name
+      }
+    });
+  }
+
   goToTickets() {
     history.push("/tickets");
   }
@@ -87,23 +97,25 @@ export default class TicketOverview extends React.Component {
     )
     .then((responce) => {
       this.setState({comments:[...this.state.comments,responce.data]})
-    
     })
-    
   }
+
   onHandleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+
   onDownLoad(e){
-    var id=e.target.name
-    axios
-    .get(
-      "http://localhost:8099/HelpDesk/attachments/" + id,
-      JSON.parse(localStorage.AuthHeader)
-    )
-    .then((resp) => {
-      console.log(resp.data)
-    });
+    var id=e.target.id
+    var name=e.target.name
+    let url ='http://localhost:8099/HelpDesk/attachments/'+id;
+    fetch(url,JSON.parse(localStorage.AuthHeader))
+    .then((responce)=>{
+      if(responce.ok){
+        responce.blob().then((blob)=>{
+          saveAs(blob,name);
+        })
+      };
+    })
   }
 
   render() {
@@ -129,6 +141,7 @@ export default class TicketOverview extends React.Component {
         }
         toEdit={this.toEdit}
         goToTickets={this.goToTickets}
+        toLeaveFeedback={this.toLeaveFeedback}
       ></TicketOverviewView>
     );
   }

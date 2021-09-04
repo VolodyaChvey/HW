@@ -66,7 +66,7 @@ export default class TicketOverviewView extends React.Component {
 
           <div className="col-4"></div>
           <div className="col-2">
-            <Button lable="Leave Fedback" className="btn-success"></Button>
+            <Button lable="Leave Fedback" className="btn-success" onClick={this.props.toLeaveFeedback}></Button>
           </div>
         </div>
 
@@ -148,7 +148,7 @@ export default class TicketOverviewView extends React.Component {
               </div>
               <div className='col'>
                 
-              <Button lable='Download' name={a.id} onClick={this.props.onDownLoad}></Button>
+              <Button lable='Download' name={a.name} id={a.id} onClick={this.props.onDownLoad}></Button>
               </div>
             </div>
           ))}</div>

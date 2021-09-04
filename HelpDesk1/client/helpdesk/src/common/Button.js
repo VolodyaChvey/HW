@@ -16,6 +16,7 @@ class Button extends React.Component {
           className={this.props.className}
           value={this.props.value}
           name={this.props.name}
+          id={this.props.id}
           onClick={this.props.onClick}
         >
           {this.props.lable}
