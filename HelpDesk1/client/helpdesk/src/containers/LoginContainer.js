@@ -1,6 +1,7 @@
 import React from 'react';
 import LoginView from '../view/LoginView';
 import axios from 'axios';
+import history from "../history";
 
 class LoginContainer extends React.Component {
     constructor(props) {
@@ -33,7 +34,7 @@ class LoginContainer extends React.Component {
         .then((responce)=>{
             localStorage.setItem('AuthHeader',JSON.stringify(this.createHeader()))
             localStorage.setItem('User',JSON.stringify(responce.data));
-           window.location.href='/tickets'
+            history.push('/tickets');
         }).catch(error =>{
             this.setState({
                 display:'block'

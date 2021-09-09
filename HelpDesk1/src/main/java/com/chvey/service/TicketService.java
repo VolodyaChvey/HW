@@ -5,6 +5,8 @@ import com.chvey.domain.Ticket;
 import com.chvey.domain.User;
 import com.chvey.domain.enums.Role;
 import com.chvey.domain.enums.State;
+import com.chvey.mail.EmailTemplate;
+import com.chvey.mail.MailSender;
 import com.chvey.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,6 +31,8 @@ public class TicketService {
     private TicketConverter ticketConverter;
     @Autowired
     private AttachmentService attachmentService;
+    @Autowired
+    private MailSender mailSender;
 
 
     public Ticket createTicket(Ticket ticket, CommonsMultipartFile[] files, String email){
@@ -37,6 +42,9 @@ public class TicketService {
         ticket.setId(ticketRepository.saveTicket(ticket));
         historyService.createTicketHistory(ticket, user);
         attachmentService.save(files,ticket);
+        List<User> recipients = new ArrayList<>();
+        recipients.add(user);
+        mailSender.sendAcceptableEmail(recipients, ticket.getId(), EmailTemplate.NEW_TICKET_FOR_APPROVAL);
         return ticket;
     }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { ButtonGroup } from "react-bootstrap";
 import Button from "../common/Button";
+import StarBasedRating from 'star-based-rating'
 
 export default class LeaveFeedbackView extends React.Component {
   constructor(props) {
@@ -52,9 +53,15 @@ export default class LeaveFeedbackView extends React.Component {
           <i className="far fa-star h1"></i>
 
             <span className="">1</span>
-          <i className="fas fa-star"></i>
+          <i className="fas fa-star" color="#01af93"></i>
           </ButtonGroup>
           </div>
+          <div>
+                <StarBasedRating 
+                onSelectRatingStars 
+                totalStars={5}
+                previousStarsToDisplay={0} />
+            </div>
           <div className="col- "></div>
         </div>
 

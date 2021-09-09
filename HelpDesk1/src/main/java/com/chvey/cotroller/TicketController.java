@@ -37,11 +37,6 @@ public class TicketController {
                 .stream().map(ticketConverter::toDto).toArray());
     }
 
-
-    /* @PostMapping()
-     public ResponseEntity toSaveTicket(Principal principal, @RequestBody TicketDto ticketDto) {
-         return ResponseEntity.ok(ticketConverter.toDto(ticketService.getSaveTicket(principal.getName(), ticketConverter.toEntity(ticketDto))));
-     }*/
     @PostMapping()
     public ResponseEntity createTicket(@RequestParam(value = "files", required = false) CommonsMultipartFile[] files,
                                        @RequestParam(value = "ticketDto") String ticketDto, Principal principal) {
@@ -69,7 +64,6 @@ public class TicketController {
     public ResponseEntity createDraft(@RequestParam(value = "files", required = false) CommonsMultipartFile[] files,
                                       @RequestParam(value = "ticketDto") TicketDto ticketDto, Principal principal) {
         System.out.println(files + ticketDto.toString() + principal.getName());
-        // ticketService.createTicket(ticketConverter.fromJson(ticketDto), files, principal.getName(), State.DRAFT);
         return new ResponseEntity(HttpStatus.OK);
     }
 }
