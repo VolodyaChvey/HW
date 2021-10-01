@@ -25,13 +25,13 @@ public class UserRepository {
     public List<User> findAllManagers() {
         return sessionFactory.getCurrentSession()
                 .createQuery("from User where role_id=:manager")
-                .setParameter("manager", Role.MANAGER.ordinal())
+                .setParameter("manager", Role.MANAGER.name())
                 .getResultList();
     }
     public List<User> findAllEngineers(){
         return sessionFactory.getCurrentSession()
                 .createQuery("from User where role_id=:engineer")
-                .setParameter("engineer",Role.ENGINEER.ordinal())
+                .setParameter("engineer",Role.ENGINEER.name())
                 .getResultList();
     }
 }

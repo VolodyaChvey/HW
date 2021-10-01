@@ -16,7 +16,7 @@ public class Feedback {
     @Column(nullable = false)
     private LocalDate date;
 
-    @Column(nullable = false)
+    @Column
     private String text;
 
     @ManyToOne

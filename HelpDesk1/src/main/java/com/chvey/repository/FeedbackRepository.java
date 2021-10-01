@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Repository
 @Transactional
 public class FeedbackRepository {
@@ -17,10 +19,14 @@ public class FeedbackRepository {
                 .save(feedback);
     }
 
-    public Feedback findFeedbackByTicketId(Long ticketId) {
-        return (Feedback) sessionFactory.getCurrentSession()
-                .createQuery("from Feedback where ticket_id=:ticketId")
-                .setParameter("ticketId", ticketId)
-                .getSingleResult();
+    public Optional<Feedback> findFeedbackByTicketId(Long ticketId) {
+        try {
+            return Optional.of((Feedback)sessionFactory.getCurrentSession()
+                    .createQuery("from Feedback where ticket_id=:ticketId")
+                    .setParameter("ticketId", ticketId)
+                    .getSingleResult());
+        } catch (Exception e) {
+            return Optional.empty();
+        }
     }
 }

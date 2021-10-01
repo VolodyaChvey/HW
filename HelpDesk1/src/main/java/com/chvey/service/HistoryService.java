@@ -21,8 +21,6 @@ public class HistoryService {
     private HistoryRepository historyRepository;
     @Autowired
     private TicketRepository ticketRepository;
-    @Autowired
-    private MailService mailService;
 
     public List<History> getHistoriesByTicketId(Long id) {
         return historyRepository.findHistoriesByTicketId(id);
@@ -35,7 +33,6 @@ public class HistoryService {
         history.setUser(user);
         history.setDescription("Ticket is created");
         history.setAction("Ticket is created");
-       // mailService.send();
         return historyRepository.saveHistory(history);
     }
 
@@ -73,22 +70,23 @@ public class HistoryService {
         historyRepository.saveHistory(history);
     }
 
-    public void addAttachment(Attachment attachment){
-        History history= new History();
+    public void addAttachment(Attachment attachment) {
+        History history = new History();
         history.setDate(LocalDateTime.now());
         history.setTicket(attachment.getTicket());
         history.setUser(attachment.getTicket().getOwner());
         history.setAction("File is attached");
-        history.setDescription(String.format("File is attached: %s",attachment.getName()));
+        history.setDescription(String.format("File is attached: %s", attachment.getName()));
         historyRepository.saveHistory(history);
     }
-    public void removeAttachment(Attachment attachment){
-        History history= new History();
+
+    public void removeAttachment(Attachment attachment) {
+        History history = new History();
         history.setDate(LocalDateTime.now());
         history.setTicket(attachment.getTicket());
         history.setUser(attachment.getTicket().getOwner());
         history.setAction("File is removed");
-        history.setDescription(String.format("File is removed: %s",attachment.getName()));
+        history.setDescription(String.format("File is removed: %s", attachment.getName()));
         historyRepository.saveHistory(history);
     }
 }

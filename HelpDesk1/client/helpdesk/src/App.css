@@ -36,3 +36,12 @@
     transform: rotate(360deg);
   }
 }
+.yellow{
+  color: yellow;
+  background-color: yellow;
+  border: black;
+  border-style: solid 1px black;
+}
+.text-right{
+  text-align: right;
+}

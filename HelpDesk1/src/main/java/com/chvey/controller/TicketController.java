@@ -1,4 +1,4 @@
-package com.chvey.cotroller;
+package com.chvey.controller;
 
 import com.chvey.converters.TicketConverter;
 import com.chvey.dto.TicketDto;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tickets")
@@ -25,16 +26,16 @@ public class TicketController {
         this.ticketConverter = ticketConverter;
     }
 
-    @GetMapping(value = "/all")
+    @GetMapping(value = "")
     public ResponseEntity getTicketsAll(Principal principal) {
         return ResponseEntity.ok(ticketService.getTicketsByUserId(principal.getName())
-                .stream().map(ticketConverter::toDto).toArray());
+                .stream().map(ticketConverter::toDto).collect(Collectors.toList()));
     }
 
     @GetMapping(value = "/my")
     public ResponseEntity getTicketsMy(Principal principal) {
         return ResponseEntity.ok(ticketService.getMyTickets(principal.getName())
-                .stream().map(ticketConverter::toDto).toArray());
+                .stream().map(ticketConverter::toDto).collect(Collectors.toList()));
     }
 
     @PostMapping()
@@ -56,8 +57,9 @@ public class TicketController {
     }
 
     @PutMapping(value = "/{id}/{status}")
-    public void changeTicket(Principal principal, @PathVariable Long id, @PathVariable String status) {
+    public ResponseEntity changeTicket(Principal principal, @PathVariable Long id, @PathVariable String status) {
         ticketService.changeTicketState(id, status, principal.getName());
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @PostMapping(value = "/draft")

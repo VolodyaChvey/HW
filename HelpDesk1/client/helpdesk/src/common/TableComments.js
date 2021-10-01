@@ -7,10 +7,11 @@ export default class TableComments extends React.Component {
   }
 
   render() {
-
     return (
       <div className="container">
-        <h4 color="info">Show All</h4>
+        <h4 onClick={this.props.onAllShowComments} className="color-info">
+          {this.props.lableComments}
+        </h4>
         <table className="table table-bordered table-responsive table-hover">
           <thead>
             <tr className="table-active">
@@ -42,11 +43,19 @@ export default class TableComments extends React.Component {
 
         <div className="row">
           <div className="col-6 d-grid gap-2">
-            <textarea maxLength="500" name="text" onChange={this.props.onHandleChange}></textarea>
+            <textarea
+              value={this.props.text}
+              maxLength="500"
+              name="text"
+              onChange={this.props.onHandleChange}
+            ></textarea>
           </div>
 
           <div className="col-2 mt-4">
-            <Button lable="Add Comment" onClick={this.props.addComment}></Button>
+            <Button
+              lable="Add Comment"
+              onClick={this.props.addComment}
+            ></Button>
           </div>
         </div>
       </div>

@@ -16,7 +16,7 @@ export default class TicketNewView extends React.Component {
           <div className="col-2 mt-4">
             <Button
               lable="Ticket List"
-              className="btn-success"
+              className="btn btn-success"
               onClick={this.props.toTicketList}
             ></Button>
           </div>
@@ -114,7 +114,9 @@ export default class TicketNewView extends React.Component {
               ></input>
             </label>
           </div>
-          <div className="col-5"></div>
+          <div className="col-5 color-red">
+              {this.props.notification}
+          </div>
         </div>
 
         <LabelTextarea
@@ -130,6 +132,7 @@ export default class TicketNewView extends React.Component {
               lable="Save as Draft"
               value="draft"
               onClick={this.props.onSave}
+              
             ></Button>
           </div>
           <div className="col-2">

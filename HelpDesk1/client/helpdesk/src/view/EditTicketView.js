@@ -6,6 +6,30 @@ import LabelInputTicket from "../common/LabelInputTicket";
 export default class EditTicketView extends React.Component {
   constructor(props) {
     super(props);
+    this.state={
+      arrayCategory:[
+        {value:"1",
+          text:"Application & Services",},
+        { value:"2",
+          text:"Benefits & Paper Work",},
+        {value:"3",
+          text:"Hardware & Software",},
+        {value:"4",
+          text:"People Management",},
+        {value:"5",
+         text:"Security & Access",},
+        {value:"6",
+        text:"Workplaces & Facilities"}],
+      arrayUrgency:[
+        {value:"critical",
+        text:"Critical",},
+        {value:"high",
+        text:"High",},
+        {value:"average",
+        text:"Medium",},
+        {value:"low",
+        text:"Low"}],
+    }
   }
 
   render() {
@@ -13,7 +37,7 @@ export default class EditTicketView extends React.Component {
       <div className="container">
         <div className="row my-4">
           <div className="col-2 mt-1">
-          <Button
+            <Button
               lable="Ticket Overview"
               className="btn-success"
               onClick={this.props.goToOverview}
@@ -21,10 +45,13 @@ export default class EditTicketView extends React.Component {
             ></Button>
           </div>
           <div className="col-4">
-            <h2 style={{textAlign:'center'}}>Edit Ticket ({this.props.id})</h2>
+            <h2 style={{ textAlign: "center" }}>
+              Edit Ticket ({this.props.id})
+            </h2>
           </div>
           <div className="col-6"></div>
         </div>
+
         <div className="row my-3">
           <div className="col-3"></div>
           <div className="col-2">
@@ -38,21 +65,19 @@ export default class EditTicketView extends React.Component {
               name="category"
               onChange={this.props.onHandleChange}
             >
-              <option></option>
-              <option value="1">Application & Services</option>
-              <option value="2">Benefits & Paper Work</option>
-              <option value="3">Hardware & Software</option>
-              <option value="4">People Management</option>
-              <option value="5">Security & Access</option>
-              <option value="6">Workplaces & Facilities</option>
+              {this.state.arrayCategory.map((c,i)=>(
+                <option value={c.value} label={c.text}
+                 selected={c.value===String(this.props.category)}/>
+              ))}
             </select>
           </div>
           <div className="col-3"></div>
         </div>
+
         <LabelInputTicket
           label="Name"
           name="name"
-          placeholder={this.props.name}
+          value={this.props.name}
           onChange={this.props.onHandleChange}
         ></LabelInputTicket>
         <LabelTextarea
@@ -70,15 +95,14 @@ export default class EditTicketView extends React.Component {
           </div>
           <div className="col-4 d-grid gap-2">
             <select
-              className="from-select "
+              className="from-select"
               name="urgency"
               onChange={this.props.onHandleChange}
             >
-              <option></option>
-              <option value="critical">Critical</option>
-              <option value="high">High</option>
-              <option value="average">Medium</option>
-              <option value="low">Low</option>
+             {this.state.arrayUrgency.map((u,i)=>(
+                <option value={u.value} label={u.text} 
+                selected={u.value.toUpperCase()===this.props.urgency}/>
+              ))}
             </select>
           </div>
           <div className="col-3"></div>
@@ -93,6 +117,7 @@ export default class EditTicketView extends React.Component {
               type="date"
               name="desiredResolutionDate"
               onChange={this.props.onHandleChange}
+              value={this.props.desiredResolutionDate}
               min={new Date().toISOString().substr(0, 10)}
             ></input>
           </div>
@@ -104,7 +129,8 @@ export default class EditTicketView extends React.Component {
             <h6 className="text-center">Add attachments</h6>
           </div>
           <div className="col-2 ">
-          <label  class="btn btn-outline-secondary">Browse
+            <label class="btn btn-outline-secondary">
+              Browse
               <input
                 type="file"
                 multiple
@@ -116,7 +142,9 @@ export default class EditTicketView extends React.Component {
               ></input>
             </label>
           </div>
-          <div className="col-5"></div>
+          <div className="col-5 color-red">
+          {this.props.notification}
+          </div>
         </div>
 
         <LabelTextarea

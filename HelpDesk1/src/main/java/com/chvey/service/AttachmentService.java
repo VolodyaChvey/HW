@@ -19,22 +19,24 @@ public class AttachmentService {
     private TicketService ticketService;
 
     public void save(CommonsMultipartFile[] files, Ticket ticket) {
-        for (CommonsMultipartFile aFile : files) {
-            if (aFile.getContentType() != null && !aFile.getContentType().equals("image/jpeg") &&
-                    !aFile.getContentType().equals("image/png") && !aFile.getContentType().equals("application/pdf") &&
-                    !aFile.getContentType().equals("application/msword") && !aFile.getContentType().equals("image/pjpeg") &&
-                    !aFile.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
-                //   throw new IllegalFormatException(String.format("Illigal file format %s", aFile.getContentType()));
-            }
+        if (files != null) {
+            for (CommonsMultipartFile aFile : files) {
+                if (aFile.getContentType() != null && !aFile.getContentType().equals("image/jpeg") &&
+                        !aFile.getContentType().equals("image/png") && !aFile.getContentType().equals("application/pdf") &&
+                        !aFile.getContentType().equals("application/msword") && !aFile.getContentType().equals("image/pjpeg") &&
+                        !aFile.getContentType().equals("application/vnd.openxmlformats-officedocument.wordprocessingml.document")) {
+                    //   throw new IllegalFormatException(String.format("Illigal file format %s", aFile.getContentType()));
+                }
 
-        }
-        for (CommonsMultipartFile aFile : files) {
-            Attachment attachment = new Attachment();
-            attachment.setName(aFile.getOriginalFilename());
-            attachment.setBlob(aFile.getBytes());
-            attachment.setTicket(ticket);
-            attachmentRepository.save(attachment);
-            historyService.addAttachment(attachment);
+            }
+            for (CommonsMultipartFile aFile : files) {
+                Attachment attachment = new Attachment();
+                attachment.setName(aFile.getOriginalFilename());
+                attachment.setBlob(aFile.getBytes());
+                attachment.setTicket(ticket);
+                attachmentRepository.save(attachment);
+                historyService.addAttachment(attachment);
+            }
         }
     }
 
@@ -56,5 +58,10 @@ public class AttachmentService {
 
     public List<Attachment> getAttachmentsByTicketId(Long id) {
         return attachmentRepository.findAttachmentsByTicketId(id);
+    }
+    public void removeAttachmentById(Long id){
+        Attachment attachment =attachmentRepository.findAttachmentById(id);
+        attachmentRepository.remove(attachment);
+        historyService.removeAttachment(attachment);
     }
 }

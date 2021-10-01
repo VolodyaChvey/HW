@@ -1,4 +1,4 @@
-package com.chvey.cotroller;
+package com.chvey.controller;
 
 import com.chvey.converters.AttachmentConverter;
 import com.chvey.domain.Attachment;
@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/")
@@ -35,6 +36,11 @@ public class AttachmentController {
     @GetMapping(value = "tickets/{id}/attachments")
     public ResponseEntity getAttachmentsByTicketId(@PathVariable Long id,Principal principal){
         return ResponseEntity.ok(attachmentService.getAttachmentsByTicketId(id).stream()
-            .map(attachmentConverter::toDto).toArray());
+            .map(attachmentConverter::toDto).collect(Collectors.toList()));
+    }
+    @DeleteMapping(value = "attachments/{id}")
+    public ResponseEntity deleteAttachment(@PathVariable Long id, Principal principal){
+        attachmentService.removeAttachmentById(id);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }

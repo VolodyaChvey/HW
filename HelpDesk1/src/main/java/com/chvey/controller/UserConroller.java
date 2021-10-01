@@ -1,4 +1,4 @@
-package com.chvey.cotroller;
+package com.chvey.controller;
 
 import com.chvey.converters.UserConverter;
 import com.chvey.service.UserService;

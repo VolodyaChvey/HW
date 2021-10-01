@@ -22,6 +22,7 @@ export default class LabelInputTicket extends React.Component {
             type="text"
             onChange={this.props.onChange}
             name={this.props.name}
+            value={this.props.value}
           ></input>
         </div>
         <div className="col-3"></div>

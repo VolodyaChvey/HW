@@ -1,11 +1,12 @@
 import React from "react";
 import Button from "../common/Button";
 
-export default class LeaveFeedbackView extends React.Component {
+export default class FeedbackView extends React.Component {
   constructor(props) {
     super(props);
   }
   render() {
+    console.log(this.props.text)
     return (
       <div className="container">
         <div className="row mt-5">
@@ -39,7 +40,7 @@ export default class LeaveFeedbackView extends React.Component {
         <div className="row">
           <div className="col-2"></div>
           <div className="col-8">
-            <h5>Please, rate your satisfaction with the solution:</h5>
+            <h5>Feedback:</h5>
           </div>
           <div className="col- "></div>
         </div>
@@ -55,13 +56,11 @@ export default class LeaveFeedbackView extends React.Component {
                         ? "far fa-star h1 yellow"
                         : "far fa-star h1"
                     }
-                    onClick={this.props.handleStarClick}
                   ></i>
                   <p className="text-center">{i+1}</p>
                 </div>
               ))}
           </div>
-
           <div className="col- "></div>
         </div>
 
@@ -69,20 +68,17 @@ export default class LeaveFeedbackView extends React.Component {
           <div className="col-2"></div>
           <div className="col-8 d-grid gap-2">
             <textarea
-              name="text"
-              onChange={this.props.onHandleChange}
+              defaultValue={this.props.text}
+              readonly
             ></textarea>
           </div>
           <div className="col- "></div>
         </div>
 
         <div className="row">
-          <div className="col-2"></div>
-          <div className="col-8"></div>
-          <div className="col-2">
-            <Button lable="Submit" className="btn btn-success"
-             onClick={this.props.onSubmit}></Button>
-          </div>
+          <div className="col- "></div>
+          <div className="col- "></div>
+          <div className="col- "></div>
         </div>
       </div>
     );

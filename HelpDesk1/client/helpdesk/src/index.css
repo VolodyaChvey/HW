@@ -11,4 +11,23 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.yellow{
+  
+ color: rgb(0, 255, 115);
 
+}
+.text-right{
+  text-align: right;
+}
+.text-left{
+  text-align: left;
+}
+.text-center{
+  text-align: center;
+}
+.color-info{
+  color: rgb(30, 120, 180);
+}
+.color-red{
+  color: red;
+}

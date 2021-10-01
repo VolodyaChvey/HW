@@ -5,11 +5,11 @@
     <title>HelpDesk</title>
 </head>
 <body>
-<h4>Dear Managers,</h4>
+<h4>Dear Users,</h4>
 <div>
-    <span>New ticket </span>
+    <span>Ticket</span>
     <a th:href="@{http://localhost:3000/overview/{id}(id=${id})}" th:text="${id}"></a>
-    <span>is waiting for your approval </span>
+    <span> was approved by the Manager.</span>
 </div>
 </body>
 </html>

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
+import java.util.List;
 
 @Service
 @Transactional
@@ -19,7 +20,15 @@ public class UserService {
         return userRepository.findUserByEmail(email);
     }
 
-    public User getCurrentUser(Principal principal){
+    public User getCurrentUser(Principal principal) {
         return userRepository.findUserByEmail(principal.getName());
+    }
+
+    public List<User> getAllManagers() {
+        return userRepository.findAllManagers();
+    }
+
+    public List<User> getAllEngineers() {
+        return userRepository.findAllEngineers();
     }
 }

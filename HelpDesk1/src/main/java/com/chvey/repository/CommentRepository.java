@@ -16,7 +16,8 @@ public class CommentRepository {
 
     public List<Comment> findCommentsByTicketId(Long id){
         return sessionFactory.getCurrentSession()
-                .createQuery("from Comment where ticket_id=:id")
+                .createQuery("from Comment where ticket_id=:id " +
+                        "ORDER BY date desc")
                 .setParameter("id",id)
                 .getResultList();
     }

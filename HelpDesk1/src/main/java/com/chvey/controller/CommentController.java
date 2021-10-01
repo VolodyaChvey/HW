@@ -1,4 +1,4 @@
-package com.chvey.cotroller;
+package com.chvey.controller;
 
 import com.chvey.converters.CommentConverter;
 import com.chvey.dto.CommentDto;
@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/tickets")
@@ -24,7 +25,7 @@ public class CommentController {
     @GetMapping(value = "/{ticketId}/comments")
     public ResponseEntity getComments(@PathVariable Long ticketId) {
         return ResponseEntity.ok(commentService.getCommentsByTicketId(ticketId)
-                .stream().map(commentConverter::toDto).toArray());
+                .stream().map(commentConverter::toDto).collect(Collectors.toList()));
     }
 
     @PostMapping(value = "/{ticketId}/comments")
