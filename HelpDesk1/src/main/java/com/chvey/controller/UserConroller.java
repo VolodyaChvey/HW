@@ -3,6 +3,7 @@ package com.chvey.controller;
 import com.chvey.converters.UserConverter;
 import com.chvey.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,8 +26,8 @@ public class UserConroller {
 
     @GetMapping(value = "/current")
     public ResponseEntity getCurrentUser(Principal principal) {
-        return ResponseEntity.ok(userConverter.toDto(userService.getCurrentUser(principal)));
+        return userService.getCurrentUser(principal)
+                .map(user -> ResponseEntity.ok(userConverter.toDto(user)))
+                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
-
-
 }

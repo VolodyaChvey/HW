@@ -2,6 +2,7 @@ package com.chvey.converters;
 
 import com.chvey.domain.Feedback;
 import com.chvey.dto.FeedbackDto;
+import com.chvey.exceptions.TicketNotFoundException;
 import com.chvey.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -28,14 +29,15 @@ public class FeedbackConverter {
         return feedbackDto;
     }
 
-    public Feedback toEntity(FeedbackDto feedbackDto) {
+    public Feedback toEntity(FeedbackDto feedbackDto) throws TicketNotFoundException{
         Feedback feedback = new Feedback();
         feedback.setId(feedbackDto.getId());
         feedback.setRate(feedbackDto.getRate());
         feedback.setText(feedbackDto.getText());
         feedback.setDate(nonNull(feedbackDto.getDate()) ? LocalDate.parse(feedbackDto.getDate()) : null);
         feedback.setUser(nonNull(feedbackDto.getUserDto()) ? userConverter.toEntity(feedbackDto.getUserDto()) : null);
-        feedback.setTicket(ticketService.getTicketById(feedbackDto.getTicketId()));
+        feedback.setTicket(ticketService.getTicketById(feedbackDto.getTicketId())
+                .orElseThrow(()->new TicketNotFoundException("Ticket is not found")));
         return feedback;
     }
 }

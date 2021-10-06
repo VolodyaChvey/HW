@@ -14,14 +14,13 @@ public class FeedbackRepository {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public Long save(Feedback feedback) {
-        return (Long) sessionFactory.getCurrentSession()
-                .save(feedback);
+    public Optional<Long> save(Feedback feedback) {
+        return Optional.ofNullable((Long) sessionFactory.getCurrentSession().save(feedback));
     }
 
     public Optional<Feedback> findFeedbackByTicketId(Long ticketId) {
-        try {
-            return Optional.of((Feedback)sessionFactory.getCurrentSession()
+       try {
+            return Optional.of((Feedback) sessionFactory.getCurrentSession()
                     .createQuery("from Feedback where ticket_id=:ticketId")
                     .setParameter("ticketId", ticketId)
                     .getSingleResult());

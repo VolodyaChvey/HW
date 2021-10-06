@@ -12,17 +12,15 @@ public class CategoryRepository {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public Category findCategoryByName(String name) {
-        return (Category) sessionFactory.getCurrentSession()
-                .createQuery("from Category where name=:name")
-                .setParameter("name", name)
-                .getSingleResult();
-    }
-
     public Category findCategoryById(Long id) {
-        return (Category) sessionFactory.getCurrentSession()
-                .createQuery("from Category where id=:id")
-                .setParameter("id", id)
-                .getSingleResult();
+        try {
+            return (Category) sessionFactory.getCurrentSession()
+                    .createQuery("from Category where id=:id")
+                    .setParameter("id", id)
+                    .getSingleResult();
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
     }
 }

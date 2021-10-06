@@ -4,6 +4,7 @@ import com.chvey.domain.Ticket;
 import com.chvey.domain.enums.State;
 import com.chvey.domain.enums.Urgency;
 import com.chvey.dto.TicketDto;
+import com.chvey.exceptions.CategoryNotFoundException;
 import com.chvey.service.CategoryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +43,7 @@ public class TicketConverter {
         return ticketDto;
     }
 
-    public Ticket toEntity(TicketDto ticketDto) {
+    public Ticket toEntity(TicketDto ticketDto) throws CategoryNotFoundException{
         Ticket ticket = new Ticket();
         ticket.setId(ticketDto.getId());
         ticket.setName(ticketDto.getName());
@@ -60,7 +61,8 @@ public class TicketConverter {
         ticket.setAssignee(nonNull(ticketDto.getAssignee()) ?
                 userConverter.toEntity(ticketDto.getAssignee()) : null);
         ticket.setAssignee(ticket.getAssignee());
-        ticket.setCategory(categoryService.getCategoryById(ticketDto.getCategory()));
+        ticket.setCategory(categoryService.getCategoryById(ticketDto.getCategory())
+                .orElseThrow(() -> new CategoryNotFoundException("Category not found")));
         return ticket;
     }
 

@@ -15,7 +15,7 @@ public class TicketDto {
     private UserDto approver;
     private Long category;
     private String comment;
-   // private List<AttachmentDto> attachments;
+
     private List<CommentDto> comments;
     private List<HistoryDto> histories;
 

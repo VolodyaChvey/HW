@@ -50,7 +50,7 @@ export default class LeaveFeedback extends React.Component {
     }
   }
   onSubmit() {
-    if (this.state.rate > 0) {
+   if (this.state.rate > 0) {
       axios
         .post(
           "http://localhost:8099/HelpDesk/tickets/" +
@@ -63,13 +63,14 @@ export default class LeaveFeedback extends React.Component {
           },
           JSON.parse(localStorage.AuthHeader)
         )
-        .then((responce) => {})
-        .catch((error)=>{});
-        history.push({
+        .then((responce) => {
+          history.push({
             pathname: "/overview",
             state: this.state.id,
           });
-    }
+        })
+        .catch((error)=>{});
+      }
   }
 
   render() {

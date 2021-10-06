@@ -9,7 +9,7 @@ public class Attachment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 1024*5*1024, nullable = false)
+    @Column(length = 5*1024*1024, nullable = false)
     private byte[] blob;
     @Column(nullable = false)
     private String name;

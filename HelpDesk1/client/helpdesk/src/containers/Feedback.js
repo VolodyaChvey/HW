@@ -25,7 +25,6 @@ export default class Feedback extends React.Component {
   }
 
   render() {
-    console.log(this.state.text)
     return (
       <div>
         <Logout/>

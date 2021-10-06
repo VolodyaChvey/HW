@@ -10,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/tickets")
@@ -26,17 +25,18 @@ public class FeedbackController {
 
     @GetMapping(value = "/{ticketId}/feedback")
     public ResponseEntity getFeedback(@PathVariable Long ticketId) {
-        Optional<Feedback> feedback = feedbackService.getFeedbackByTicketId(ticketId);
-        if (feedback.isPresent()) {
-            return ResponseEntity.ok(feedbackConverter.toDto(feedback.get()));
-        } else {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
-        }
+        return feedbackService.getFeedbackByTicketId(ticketId)
+                .map(value -> ResponseEntity.ok(feedbackConverter.toDto(value)))
+                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping(value = "/{ticketId}/feedback")
-    public ResponseEntity saveFeedback(@RequestBody FeedbackDto feedbackDto, Principal principal) {
-        feedbackService.saveFeedback(feedbackConverter.toEntity(feedbackDto), principal.getName());
-        return new ResponseEntity(HttpStatus.CREATED);
+    public ResponseEntity saveFeedback(@PathVariable("ticketId") long ticketId,
+                                       @RequestBody FeedbackDto feedbackDto, Principal principal) {
+        Feedback feedback = feedbackService
+                .saveFeedback(feedbackConverter.toEntity(feedbackDto), principal.getName(),ticketId);
+        return feedback != null
+                ? new ResponseEntity(feedbackConverter.toDto(feedback), HttpStatus.CREATED)
+                : new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }

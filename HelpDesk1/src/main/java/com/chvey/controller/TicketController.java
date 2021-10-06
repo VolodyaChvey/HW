@@ -21,51 +21,44 @@ public class TicketController {
 
     @Autowired
     public TicketController(TicketService ticketService, TicketConverter ticketConverter) {
-
         this.ticketService = ticketService;
         this.ticketConverter = ticketConverter;
     }
 
     @GetMapping(value = "")
     public ResponseEntity getTicketsAll(Principal principal) {
-        return ResponseEntity.ok(ticketService.getTicketsByUserId(principal.getName())
-                .stream().map(ticketConverter::toDto).collect(Collectors.toList()));
-    }
-
-    @GetMapping(value = "/my")
-    public ResponseEntity getTicketsMy(Principal principal) {
-        return ResponseEntity.ok(ticketService.getMyTickets(principal.getName())
-                .stream().map(ticketConverter::toDto).collect(Collectors.toList()));
+        return ticketService.getTicketsByUserId(principal)
+                .map(value -> ResponseEntity.ok(value.stream()
+                        .map(ticketConverter::toDto).collect(Collectors.toList())))
+                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping()
     public ResponseEntity createTicket(@RequestParam(value = "files", required = false) CommonsMultipartFile[] files,
                                        @RequestParam(value = "ticketDto") String ticketDto, Principal principal) {
-        return ResponseEntity.ok(ticketConverter.toDto(ticketService.createTicket
-                (ticketConverter.toEntity(ticketConverter.fromJson(ticketDto)), files, principal.getName())));
+        return ticketService.createTicket(ticketConverter.fromJson(ticketDto), files, principal)
+                .map(ticket -> ResponseEntity.ok(ticketConverter.toDto(ticket)))
+                .orElseGet(() -> new ResponseEntity(HttpStatus.BAD_REQUEST));
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity getTicketById(@PathVariable Long id) {
-        return ResponseEntity.ok(ticketConverter.toDto(ticketService.getTicketById(id)));
+        return ticketService.getTicketById(id)
+                .map(ticket -> ResponseEntity.ok(ticketConverter.toDto(ticket)))
+                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping(value = "/{id}")
     public ResponseEntity updateTicket(@RequestBody TicketDto ticketDto, Principal principal) {
-        ticketService.editTicket(principal.getName(), ticketConverter.toEntity(ticketDto));
-        return new ResponseEntity(HttpStatus.OK);
+        return ticketService.editTicket(principal, ticketDto)
+                ? new ResponseEntity(HttpStatus.OK)
+                : new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 
     @PutMapping(value = "/{id}/{status}")
     public ResponseEntity changeTicket(Principal principal, @PathVariable Long id, @PathVariable String status) {
-        ticketService.changeTicketState(id, status, principal.getName());
-        return new ResponseEntity(HttpStatus.OK);
-    }
-
-    @PostMapping(value = "/draft")
-    public ResponseEntity createDraft(@RequestParam(value = "files", required = false) CommonsMultipartFile[] files,
-                                      @RequestParam(value = "ticketDto") TicketDto ticketDto, Principal principal) {
-        System.out.println(files + ticketDto.toString() + principal.getName());
-        return new ResponseEntity(HttpStatus.OK);
+        return ticketService.changeTicketState(id, status, principal)
+                ? new ResponseEntity(HttpStatus.OK)
+                : new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 }

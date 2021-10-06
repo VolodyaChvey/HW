@@ -2,6 +2,7 @@ package com.chvey.converters;
 
 import com.chvey.domain.Comment;
 import com.chvey.dto.CommentDto;
+import com.chvey.exceptions.TicketNotFoundException;
 import com.chvey.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,12 +28,13 @@ public class CommentConverter {
         return commentDto;
     }
 
-    public Comment toEntity(CommentDto commentDto) {
+    public Comment toEntity(CommentDto commentDto) throws TicketNotFoundException{
         Comment comment = new Comment();
         comment.setId(commentDto.getId());
         comment.setText(commentDto.getText());
         comment.setUser(nonNull(commentDto.getUserDto()) ? userConverter.toEntity(commentDto.getUserDto()) : null);
-        comment.setTicket(ticketService.getTicketById(commentDto.getTicketId()));
+        comment.setTicket(ticketService.getTicketById(commentDto.getTicketId())
+                .orElseThrow(()->new TicketNotFoundException("Ticket is not found")));
         comment.setDate(nonNull(commentDto.getDate()) ? LocalDateTime.parse(commentDto.getDate()) : null);
         return comment;
     }

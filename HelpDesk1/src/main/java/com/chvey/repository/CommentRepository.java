@@ -14,15 +14,26 @@ public class CommentRepository {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public List<Comment> findCommentsByTicketId(Long id){
-        return sessionFactory.getCurrentSession()
-                .createQuery("from Comment where ticket_id=:id " +
-                        "ORDER BY date desc")
-                .setParameter("id",id)
-                .getResultList();
+    public List<Comment> findCommentsByTicketId(Long id) {
+        try {
+            return sessionFactory.getCurrentSession()
+                    .createQuery("from Comment where ticket_id=:id " +
+                            "ORDER BY date desc")
+                    .setParameter("id", id)
+                    .getResultList();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
-    public Long saveComment(Comment comment){
-        return (Long)sessionFactory.getCurrentSession()
-                .save(comment);
+
+    public Long saveComment(Comment comment) {
+        try {
+            return (Long) sessionFactory.getCurrentSession()
+                    .save(comment);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

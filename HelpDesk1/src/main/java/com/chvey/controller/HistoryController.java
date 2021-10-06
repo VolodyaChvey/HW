@@ -3,6 +3,7 @@ package com.chvey.controller;
 import com.chvey.converters.HistoryConverter;
 import com.chvey.service.HistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,9 @@ public class HistoryController {
     }
     @GetMapping(value = "/{ticketId}/history")
     public ResponseEntity getHistories(@PathVariable Long ticketId){
-        return ResponseEntity.ok(historyService.getHistoriesByTicketId(ticketId)
-           .stream().map(historyConverter::toDto).collect(Collectors.toList()));
+        return historyService.getHistoriesByTicketId(ticketId)
+                .map(value->ResponseEntity.ok(value.stream()
+                .map(historyConverter::toDto).collect(Collectors.toList())))
+                .orElseGet(()-> new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 }

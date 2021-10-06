@@ -2,6 +2,7 @@ package com.chvey.converters;
 
 import com.chvey.domain.History;
 import com.chvey.dto.HistoryDto;
+import com.chvey.exceptions.TicketNotFoundException;
 import com.chvey.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,12 +27,13 @@ public class HistoryConverter {
         return historyDto;
     }
 
-    public History toEntity (HistoryDto historyDto){
+    public History toEntity (HistoryDto historyDto) throws TicketNotFoundException{
         History history = new History();
         history.setId(history.getId());
         history.setAction(historyDto.getAction());
         history.setDescription(historyDto.getDescription());
-        history.setTicket(ticketService.getTicketById(historyDto.getTicketId()));
+        history.setTicket(ticketService.getTicketById(historyDto.getTicketId())
+                .orElseThrow(()->new TicketNotFoundException("Ticket is not found")));
         history.setUser(userConverter.toEntity(historyDto.getUserDto()));
         history.setDate(LocalDateTime.parse(historyDto.getDate()));
         return history;
