@@ -17,16 +17,18 @@ import java.util.stream.Collectors;
 public class HistoryController {
     private HistoryConverter historyConverter;
     private HistoryService historyService;
+
     @Autowired
     public HistoryController(HistoryConverter historyConverter, HistoryService historyService) {
         this.historyConverter = historyConverter;
         this.historyService = historyService;
     }
+
     @GetMapping(value = "/{ticketId}/history")
-    public ResponseEntity getHistories(@PathVariable Long ticketId){
+    public ResponseEntity getHistories(@PathVariable Long ticketId) {
         return historyService.getHistoriesByTicketId(ticketId)
-                .map(value->ResponseEntity.ok(value.stream()
-                .map(historyConverter::toDto).collect(Collectors.toList())))
-                .orElseGet(()-> new ResponseEntity(HttpStatus.NOT_FOUND));
+                .map(value -> ResponseEntity.ok(value.stream()
+                        .map(historyConverter::toDto).collect(Collectors.toList())))
+                .orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 }

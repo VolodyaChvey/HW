@@ -30,7 +30,7 @@ public class TicketController {
         return ticketService.getTicketsByUserId(principal)
                 .map(value -> ResponseEntity.ok(value.stream()
                         .map(ticketConverter::toDto).collect(Collectors.toList())))
-                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+                .orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping()
@@ -38,14 +38,14 @@ public class TicketController {
                                        @RequestParam(value = "ticketDto") String ticketDto, Principal principal) {
         return ticketService.createTicket(ticketConverter.fromJson(ticketDto), files, principal)
                 .map(ticket -> ResponseEntity.ok(ticketConverter.toDto(ticket)))
-                .orElseGet(() -> new ResponseEntity(HttpStatus.BAD_REQUEST));
+                .orElse(new ResponseEntity(HttpStatus.BAD_REQUEST));
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity getTicketById(@PathVariable Long id) {
         return ticketService.getTicketById(id)
                 .map(ticket -> ResponseEntity.ok(ticketConverter.toDto(ticket)))
-                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+                .orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @PutMapping(value = "/{id}")

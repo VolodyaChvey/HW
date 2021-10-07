@@ -37,7 +37,7 @@ public class AttachmentController {
         return attachmentService.getAttachmentById(id)
                 .map(attachment -> ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
                         "attachment: filename-\"" + attachment.getName() + "\"").body(attachment.getBlob()))
-                .orElseGet(() -> new ResponseEntity((HttpStatus.NOT_FOUND)));
+                .orElse(new ResponseEntity((HttpStatus.NOT_FOUND)));
     }
 
     @GetMapping(value = "tickets/{id}/attachments")
@@ -45,7 +45,7 @@ public class AttachmentController {
         return attachmentService.getAttachmentsByTicketId(id)
                 .map(value -> ResponseEntity.ok(value.stream()
                         .map(attachmentConverter::toDto).collect(Collectors.toList())))
-                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+                .orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @DeleteMapping(value = "attachments/{id}")

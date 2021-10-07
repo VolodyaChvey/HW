@@ -27,14 +27,14 @@ public class FeedbackController {
     public ResponseEntity getFeedback(@PathVariable Long ticketId) {
         return feedbackService.getFeedbackByTicketId(ticketId)
                 .map(value -> ResponseEntity.ok(feedbackConverter.toDto(value)))
-                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+                .orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping(value = "/{ticketId}/feedback")
     public ResponseEntity saveFeedback(@PathVariable("ticketId") long ticketId,
                                        @RequestBody FeedbackDto feedbackDto, Principal principal) {
         Feedback feedback = feedbackService
-                .saveFeedback(feedbackConverter.toEntity(feedbackDto), principal.getName(),ticketId);
+                .saveFeedback(feedbackConverter.toEntity(feedbackDto), principal.getName(), ticketId);
         return feedback != null
                 ? new ResponseEntity(feedbackConverter.toDto(feedback), HttpStatus.CREATED)
                 : new ResponseEntity(HttpStatus.BAD_REQUEST);

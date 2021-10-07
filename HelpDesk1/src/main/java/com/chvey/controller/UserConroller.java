@@ -28,6 +28,6 @@ public class UserConroller {
     public ResponseEntity getCurrentUser(Principal principal) {
         return userService.getCurrentUser(principal)
                 .map(user -> ResponseEntity.ok(userConverter.toDto(user)))
-                .orElseGet(() -> new ResponseEntity(HttpStatus.NOT_FOUND));
+                .orElse(new ResponseEntity(HttpStatus.NOT_FOUND));
     }
 }

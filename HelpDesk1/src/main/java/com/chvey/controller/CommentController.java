@@ -28,13 +28,13 @@ public class CommentController {
         return commentService.getCommentsByTicketId(ticketId)
                 .map(value -> ResponseEntity.ok(value
                         .stream().map(commentConverter::toDto).collect(Collectors.toList())))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+                .orElse(new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
     @PostMapping(value = "/{ticketId}/comments")
     public ResponseEntity saveComment(@PathVariable Long ticketId, @RequestBody CommentDto commentDto, Principal principal) {
         return commentService.saveComment(commentDto, principal, ticketId)
                 .map(comment -> ResponseEntity.ok(commentConverter.toDto(comment)))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.BAD_REQUEST));
+                .orElse(new ResponseEntity<>(HttpStatus.BAD_REQUEST));
     }
 }
